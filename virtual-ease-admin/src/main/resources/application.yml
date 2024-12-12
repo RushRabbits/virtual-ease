@@ -1,0 +1,8 @@
+server:
+  port: 8130
+spring:
+  banner:
+    charset: UTF-8
+    location: classpath:banner.txt
+  profiles:
+    active: dev

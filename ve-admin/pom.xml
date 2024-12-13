@@ -10,7 +10,7 @@
         <version>${revision}</version>
     </parent>
 
-    <artifactId>virtual-ease-admin</artifactId>
+    <artifactId>ve-admin</artifactId>
 
     <dependencies>
         <!-- Spring Boot -->
@@ -33,6 +33,12 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-core</artifactId>
+            <version>${project.version}</version>
         </dependency>
 
     </dependencies>

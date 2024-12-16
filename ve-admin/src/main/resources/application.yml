@@ -1,0 +1,16 @@
+virtual-ease:
+  # 名称
+  name: virtual-ease
+  # 版本
+  version: ${revision}
+  # 版权年份
+  copyrightYear: 2024
+
+server:
+  port: 8130
+spring:
+  banner:
+    charset: UTF-8
+    location: classpath:banner.txt
+  profiles:
+    active: dev

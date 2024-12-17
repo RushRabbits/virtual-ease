@@ -24,6 +24,7 @@
         <module>ve-common-translation</module>
         <module>ve-common-log</module>
         <module>ve-common-mybatis</module>
+        <module>ve-common-oss</module>
     </modules>
 
 </project>

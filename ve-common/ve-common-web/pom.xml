@@ -20,10 +20,11 @@
             <version>${revision}</version>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>com.awake</groupId>-->
-<!--            <artifactId>ve-common-redis</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-redis</artifactId>
+            <version>${revision}</version>
+        </dependency>
 
         <!-- SpringBoot Web容器 -->
         <dependency>

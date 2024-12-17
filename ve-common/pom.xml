@@ -19,6 +19,7 @@
         <module>ve-common-bom</module>
         <module>ve-common-doc</module>
         <module>ve-common-web</module>
+        <module>ve-common-redis</module>
     </modules>
 
 </project>

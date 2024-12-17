@@ -23,6 +23,7 @@
         <module>ve-common-satoken</module>
         <module>ve-common-translation</module>
         <module>ve-common-log</module>
+        <module>ve-common-mybatis</module>
     </modules>
 
 </project>

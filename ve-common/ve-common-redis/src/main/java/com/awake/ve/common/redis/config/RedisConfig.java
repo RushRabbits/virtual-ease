@@ -98,7 +98,7 @@ public class RedisConfig {
      * redis集群配置 yml
      *
      * --- # redis 集群配置(单机与集群只能开启一个另一个需要注释掉)
-     * spring.data:
+     * META-INF.spring.data:
      *   redis:
      *     cluster:
      *       nodes:

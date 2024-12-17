@@ -18,6 +18,7 @@
         <module>ve-common-json</module>
         <module>ve-common-bom</module>
         <module>ve-common-doc</module>
+        <module>ve-common-web</module>
     </modules>
 
 </project>

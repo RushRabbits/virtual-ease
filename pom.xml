@@ -21,6 +21,7 @@
         <springdoc.version>2.7.0</springdoc.version>
         <therapi-javadoc.version>0.15.0</therapi-javadoc.version>
         <easyexcel.version>4.0.3</easyexcel.version>
+        <alibaba-ttl.version>2.14.4</alibaba-ttl.version>
         <velocity.version>2.3</velocity.version>
         <satoken.version>1.39.0</satoken.version>
         <mybatis-plus.version>3.5.9</mybatis-plus.version>
@@ -163,6 +164,12 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>easyexcel</artifactId>
                 <version>${easyexcel.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>transmittable-thread-local</artifactId>
+                <version>${alibaba-ttl.version}</version>
             </dependency>
 
             <!-- velocity代码生成使用模板 -->

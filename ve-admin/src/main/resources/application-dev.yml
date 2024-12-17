@@ -1,5 +1,5 @@
 redisson:
-  # redis key前缀
+  # translation key前缀
   keyPrefix:
   # 线程池数量
   threads: 4

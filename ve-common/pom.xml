@@ -21,6 +21,7 @@
         <module>ve-common-web</module>
         <module>ve-common-redis</module>
         <module>ve-common-satoken</module>
+        <module>ve-common-translation</module>
     </modules>
 
 </project>

@@ -1,4 +1,4 @@
-package com.awake.ve.common.redis.config.properties;
+package com.awake.ve.common.translation.config.properties;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

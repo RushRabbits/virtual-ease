@@ -1,4 +1,4 @@
-package com.awake.ve.common.redis.utils;
+package com.awake.ve.common.translation.utils;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

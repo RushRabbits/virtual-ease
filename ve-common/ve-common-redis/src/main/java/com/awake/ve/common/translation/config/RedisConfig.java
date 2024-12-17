@@ -1,4 +1,4 @@
-package com.awake.ve.common.redis.config;
+package com.awake.ve.common.translation.config;
 
 import cn.hutool.core.util.ObjectUtil;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -6,9 +6,9 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import lombok.extern.slf4j.Slf4j;
-import com.awake.ve.common.redis.config.properties.RedissonProperties;
-import com.awake.ve.common.redis.handler.KeyPrefixHandler;
-import com.awake.ve.common.redis.manager.PlusSpringCacheManager;
+import com.awake.ve.common.translation.config.properties.RedissonProperties;
+import com.awake.ve.common.translation.handler.KeyPrefixHandler;
+import com.awake.ve.common.translation.manager.PlusSpringCacheManager;
 import org.redisson.client.codec.StringCodec;
 import org.redisson.codec.CompositeCodec;
 import org.redisson.codec.TypedJsonJacksonCodec;
@@ -82,7 +82,7 @@ public class RedisConfig {
                     .setReadMode(clusterServersConfig.getReadMode())
                     .setSubscriptionMode(clusterServersConfig.getSubscriptionMode());
             }
-            log.info("初始化 redis 配置");
+            log.info("初始化 translation 配置");
         };
     }
 
@@ -97,9 +97,9 @@ public class RedisConfig {
     /**
      * redis集群配置 yml
      *
-     * --- # redis 集群配置(单机与集群只能开启一个另一个需要注释掉)
+     * --- # translation 集群配置(单机与集群只能开启一个另一个需要注释掉)
      * META-INF.spring.data:
-     *   redis:
+     *   translation:
      *     cluster:
      *       nodes:
      *         - 192.168.0.100:6379

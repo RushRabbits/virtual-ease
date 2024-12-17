@@ -1,4 +1,4 @@
-package com.awake.ve.common.redis.utils;
+package com.awake.ve.common.translation.utils;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -11,7 +11,7 @@ import java.util.function.Consumer;
 /**
  * 分布式队列工具
  * 轻量级队列 重量级数据量 请使用 MQ
- * 要求 redis 5.X 以上
+ * 要求 translation 5.X 以上
  *
  * @author Lion Li
  * @version 3.6.0 新增

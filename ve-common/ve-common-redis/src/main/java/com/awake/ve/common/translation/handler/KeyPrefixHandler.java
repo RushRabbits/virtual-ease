@@ -1,4 +1,4 @@
-package com.awake.ve.common.redis.handler;
+package com.awake.ve.common.translation.handler;
 
 import com.awake.ve.common.core.utils.StringUtils;
 import org.redisson.api.NameMapper;

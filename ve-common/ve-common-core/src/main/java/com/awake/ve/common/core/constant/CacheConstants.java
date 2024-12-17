@@ -8,7 +8,7 @@ package com.awake.ve.common.core.constant;
 public interface CacheConstants {
 
     /**
-     * 在线用户 redis key
+     * 在线用户 translation key
      */
     String ONLINE_TOKEN_KEY = "online_tokens:";
 

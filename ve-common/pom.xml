@@ -17,6 +17,7 @@
         <module>ve-common-ecs</module>
         <module>ve-common-json</module>
         <module>ve-common-bom</module>
+        <module>ve-common-doc</module>
     </modules>
 
 </project>

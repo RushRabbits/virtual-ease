@@ -15,6 +15,8 @@
     <modules>
         <module>ve-common-core</module>
         <module>ve-common-ecs</module>
+        <module>ve-common-json</module>
+        <module>ve-common-bom</module>
     </modules>
 
 </project>

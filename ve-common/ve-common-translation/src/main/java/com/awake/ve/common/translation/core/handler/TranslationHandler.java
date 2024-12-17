@@ -47,7 +47,12 @@ public class TranslationHandler extends JsonSerializer<Object> implements Contex
     }
 
     @Override
-    public JsonSerializer<?> createContextual(SerializerProvider serializerProvider, BeanProperty beanProperty) throws JsonMappingException {
-        return null;
+    public JsonSerializer<?> createContextual(SerializerProvider serializerProvider, BeanProperty property) throws JsonMappingException {
+        Translation translation = property.getAnnotation(Translation.class);
+        if (Objects.nonNull(translation)) {
+            this.translation = translation;
+            return this;
+        }
+        return serializerProvider.findValueSerializer(property.getType(), property);
     }
 }

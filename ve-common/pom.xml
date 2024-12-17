@@ -22,6 +22,7 @@
         <module>ve-common-redis</module>
         <module>ve-common-satoken</module>
         <module>ve-common-translation</module>
+        <module>ve-common-log</module>
     </modules>
 
 </project>

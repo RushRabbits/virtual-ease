@@ -334,6 +334,9 @@
     <modules>
         <module>ve-admin</module>
         <module>ve-common</module>
+        <module>ve-modules</module>
+        <module>ve-modules/ve-system</module>
+        <module>ve-modules/ve-generator</module>
     </modules>
     <packaging>pom</packaging>
 

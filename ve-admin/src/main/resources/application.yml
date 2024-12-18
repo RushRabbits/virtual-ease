@@ -72,3 +72,7 @@ springdoc:
 #      packages-to-scan: org.dromara.system
 #    - group: 4.代码生成模块
 #      packages-to-scan: org.dromara.generator
+
+repeat:
+  submit:
+    message: 你要设置的消息内容

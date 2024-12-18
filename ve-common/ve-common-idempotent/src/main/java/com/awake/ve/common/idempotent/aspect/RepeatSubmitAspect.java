@@ -4,6 +4,7 @@ import cn.dev33.satoken.SaManager;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.awake.ve.common.core.constant.GlobalConstants;
+import com.awake.ve.common.core.domain.R;
 import com.awake.ve.common.core.exception.ServiceException;
 import com.awake.ve.common.core.utils.MessageUtils;
 import com.awake.ve.common.core.utils.ObjectUtils;
@@ -14,6 +15,8 @@ import com.awake.ve.common.translation.utils.RedisUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.validation.BindingResult;
@@ -71,6 +74,40 @@ public class RepeatSubmitAspect {
             }
             throw new ServiceException(message);
         }
+    }
+
+    /**
+     * 处理过目标方法后
+     *
+     * @author wangjiaxing
+     * @date 2024/12/18 10:54
+     */
+    @AfterReturning(pointcut = "@annotation(repeatSubmit)", returning = "result")
+    public void doAfterReturning(JoinPoint joinPoint, RepeatSubmit repeatSubmit, Object result) {
+        if (result instanceof R<?> r) {
+            try {
+                // 请求成功不需要清除redis缓存,因为需要防止重复提交
+                if (r.getCode() == R.SUCCESS) {
+                    return;
+                }
+                // 请求失败需要清除redis缓存
+                RedisUtils.deleteObject(KEY_CACHE.get());
+            } finally {
+                KEY_CACHE.remove();
+            }
+        }
+    }
+
+    /**
+     * 目标方法抛出异常后
+     *
+     * @author wangjiaxing
+     * @date 2024/12/18 10:57
+     */
+    @AfterThrowing(pointcut = "@annotation(repeatSubmit)", throwing = "e")
+    public void doAfterThrowing(JoinPoint joinPoint, RepeatSubmit repeatSubmit, Throwable e) {
+        RedisUtils.deleteObject(KEY_CACHE.get());
+        KEY_CACHE.remove();
     }
 
     private String argsArrayToString(Object[] args) {

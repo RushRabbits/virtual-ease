@@ -16,7 +16,6 @@
 
     <modules>
         <module>ve-system</module>
-        <module>ve-generator</module>
     </modules>
 
 </project>

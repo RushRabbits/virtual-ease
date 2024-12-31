@@ -5,9 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.awake</groupId>
-        <artifactId>virtual-ease</artifactId>
-        <version>0.0.1</version>
-        <relativePath>../../pom.xml</relativePath>
+        <artifactId>ve-modules</artifactId>
+        <version>${revision}</version>
     </parent>
 
     <name>ve-generator</name>
@@ -19,31 +18,26 @@
         <dependency>
             <groupId>com.awake</groupId>
             <artifactId>ve-common-core</artifactId>
-            <version>${revision}</version>
         </dependency>
 
         <dependency>
             <groupId>com.awake</groupId>
             <artifactId>ve-common-doc</artifactId>
-            <version>${revision}</version>
         </dependency>
 
         <dependency>
             <groupId>com.awake</groupId>
             <artifactId>ve-common-mybatis</artifactId>
-            <version>${revision}</version>
         </dependency>
 
         <dependency>
             <groupId>com.awake</groupId>
             <artifactId>ve-common-web</artifactId>
-            <version>${revision}</version>
         </dependency>
 
         <dependency>
             <groupId>com.awake</groupId>
             <artifactId>ve-common-log</artifactId>
-            <version>${revision}</version>
         </dependency>
 
         <!--velocity代码生成使用模板 -->

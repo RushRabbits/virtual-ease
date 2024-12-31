@@ -1,1 +1,2 @@
 com.awake.ve.common.translation.config.TranslationConfig
+com.awake.ve.common.translation.core.impl.DictTypeTranslationImpl

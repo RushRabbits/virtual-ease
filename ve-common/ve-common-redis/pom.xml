@@ -16,7 +16,6 @@
         <dependency>
             <groupId>com.awake</groupId>
             <artifactId>ve-common-core</artifactId>
-            <version>${revision}</version>
         </dependency>
 
         <!--redisson-->

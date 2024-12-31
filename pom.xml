@@ -328,6 +328,96 @@
                 <version>${fastjson.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.awake</groupId>
+                <artifactId>ve-common-core</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.awake</groupId>
+                <artifactId>ve-common-doc</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.awake</groupId>
+                <artifactId>ve-common-ecs</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.awake</groupId>
+                <artifactId>ve-common-excel</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.awake</groupId>
+                <artifactId>ve-common-idempotent</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.awake</groupId>
+                <artifactId>ve-common-json</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.awake</groupId>
+                <artifactId>ve-common-log</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.awake</groupId>
+                <artifactId>ve-common-mybatis</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.awake</groupId>
+                <artifactId>ve-common-oss</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.awake</groupId>
+                <artifactId>ve-common-redis</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.awake</groupId>
+                <artifactId>ve-common-satoken</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.awake</groupId>
+                <artifactId>ve-common-translation</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.awake</groupId>
+                <artifactId>ve-common-web</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.awake</groupId>
+                <artifactId>ve-system</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.awake</groupId>
+                <artifactId>ve-generator</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -335,8 +425,6 @@
         <module>ve-admin</module>
         <module>ve-common</module>
         <module>ve-modules</module>
-        <module>ve-modules/ve-system</module>
-        <module>ve-modules/ve-generator</module>
     </modules>
     <packaging>pom</packaging>
 

@@ -6,12 +6,17 @@
     <parent>
         <groupId>com.awake</groupId>
         <artifactId>virtual-ease</artifactId>
-        <version>0.0.1</version>
+        <version>${revision}</version>
     </parent>
 
     <name>ve-modules</name>
     <artifactId>ve-modules</artifactId>
     <description>业务功能模块</description>
     <packaging>pom</packaging>
+
+    <modules>
+        <module>ve-system</module>
+        <module>ve-generator</module>
+    </modules>
 
 </project>

@@ -20,7 +20,6 @@
         <dependency>
             <groupId>com.awake</groupId>
             <artifactId>ve-common-json</artifactId>
-            <version>${revision}</version>
         </dependency>
 
     </dependencies>

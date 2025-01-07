@@ -121,6 +121,11 @@
             <artifactId>ve-system</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-tenant</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

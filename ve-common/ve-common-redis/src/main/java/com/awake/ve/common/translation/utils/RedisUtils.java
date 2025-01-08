@@ -38,6 +38,7 @@ public class RedisUtils {
     public static long rateLimiter(String key, RateType rateType, int rate, int rateInterval) {
         RRateLimiter rateLimiter = CLIENT.getRateLimiter(key);
         rateLimiter.trySetRate(rateType, rate, rateInterval, RateIntervalUnit.SECONDS);
+        // 获取可用的令牌,并返回可用的令牌数量(-1)
         if (rateLimiter.tryAcquire()) {
             return rateLimiter.availablePermits();
         } else {

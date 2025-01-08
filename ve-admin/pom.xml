@@ -126,6 +126,11 @@
             <artifactId>ve-common-tenant</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-rateLimiter</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

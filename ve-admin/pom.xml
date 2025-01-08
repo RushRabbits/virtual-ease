@@ -131,6 +131,11 @@
             <artifactId>ve-common-rateLimiter</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-demo</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

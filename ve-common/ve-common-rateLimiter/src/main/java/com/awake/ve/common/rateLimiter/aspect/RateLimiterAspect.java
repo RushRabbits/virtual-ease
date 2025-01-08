@@ -24,6 +24,7 @@ import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.ParserContext;
 import org.springframework.expression.common.TemplateParserContext;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 
@@ -35,6 +36,7 @@ import java.lang.reflect.Method;
  */
 @Slf4j
 @Aspect
+@Component
 public class RateLimiterAspect {
 
     /**

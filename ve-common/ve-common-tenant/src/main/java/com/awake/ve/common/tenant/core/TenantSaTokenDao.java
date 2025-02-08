@@ -2,7 +2,7 @@ package com.awake.ve.common.tenant.core;
 
 import com.awake.ve.common.core.constant.GlobalConstants;
 import com.awake.ve.common.satoken.core.dao.PlusSaTokenDao;
-import com.awake.ve.common.translation.utils.RedisUtils;
+import com.awake.ve.common.redis.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;

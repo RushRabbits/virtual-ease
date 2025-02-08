@@ -41,16 +41,16 @@
             <version>${revision}</version>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>de.codecentric</groupId>-->
-<!--            <artifactId>spring-boot-admin-starter-client</artifactId>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>de.codecentric</groupId>-->
+        <!--            <artifactId>spring-boot-admin-starter-client</artifactId>-->
+        <!--        </dependency>-->
 
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-test</artifactId>-->
-<!--            <scope>test</scope>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-starter-test</artifactId>-->
+        <!--            <scope>test</scope>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>com.awake</groupId>
             <artifactId>ve-common-core</artifactId>
@@ -129,6 +129,12 @@
         <dependency>
             <groupId>com.awake</groupId>
             <artifactId>ve-common-rateLimiter</artifactId>
+        </dependency>
+
+        <!-- 数据脱敏模块-->
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-sensitive</artifactId>
         </dependency>
 
         <dependency>

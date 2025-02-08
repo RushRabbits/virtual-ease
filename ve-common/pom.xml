@@ -29,6 +29,7 @@
         <module>ve-common-idempotent</module>
         <module>ve-common-tenant</module>
         <module>ve-common-rateLimiter</module>
+        <module>ve-common-sensitive</module>
     </modules>
 
 </project>

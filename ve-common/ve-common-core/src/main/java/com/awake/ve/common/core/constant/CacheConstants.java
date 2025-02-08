@@ -8,7 +8,7 @@ package com.awake.ve.common.core.constant;
 public interface CacheConstants {
 
     /**
-     * 在线用户 translation key
+     * 在线用户 redis key
      */
     String ONLINE_TOKEN_KEY = "online_tokens:";
 
@@ -22,4 +22,8 @@ public interface CacheConstants {
      */
     String SYS_DICT_KEY = "sys_dict:";
 
+    /**
+     * 登录账户密码错误次数 redis key
+     */
+    String PWD_ERR_CNT_KEY = "pwd_err_cnt:";
 }

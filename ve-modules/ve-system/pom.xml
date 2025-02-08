@@ -13,4 +13,90 @@
     <artifactId>ve-system</artifactId>
     <description>系统模块</description>
 
+    <dependencies>
+        <!-- 通用工具-->
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-doc</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-mybatis</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-translation</artifactId>
+        </dependency>
+
+        <!-- OSS功能模块 -->
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-oss</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-log</artifactId>
+        </dependency>
+
+        <!-- excel-->
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-excel</artifactId>
+        </dependency>
+
+        <!-- SMS功能模块 -->
+<!--        <dependency>-->
+<!--            <groupId>com.awake</groupId>-->
+<!--            <artifactId>ruoyi-common-sms</artifactId>-->
+<!--        </dependency>-->
+
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-tenant</artifactId>
+        </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>org.dromara</groupId>-->
+<!--            <artifactId>ruoyi-common-security</artifactId>-->
+<!--        </dependency>-->
+
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-idempotent</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-sensitive</artifactId>
+        </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>com.awake</groupId>-->
+<!--            <artifactId>ruoyi-common-encrypt</artifactId>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.dromara</groupId>-->
+<!--            <artifactId>ruoyi-common-websocket</artifactId>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.dromara</groupId>-->
+<!--            <artifactId>ruoyi-common-sse</artifactId>-->
+<!--        </dependency>-->
+
+    </dependencies>
 </project>

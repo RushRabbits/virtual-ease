@@ -424,6 +424,13 @@
                 <version>${revision}</version>
             </dependency>
 
+            <!-- 数据脱敏-->
+            <dependency>
+                <groupId>com.awake</groupId>
+                <artifactId>ve-common-sensitive</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
             <dependency>
                 <groupId>com.awake</groupId>
                 <artifactId>ve-demo</artifactId>

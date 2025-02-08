@@ -8,7 +8,7 @@ import com.awake.ve.common.core.utils.SpringUtils;
 import com.awake.ve.common.core.utils.StringUtils;
 import com.awake.ve.common.rateLimiter.annotation.RateLimiter;
 import com.awake.ve.common.rateLimiter.enums.LimitType;
-import com.awake.ve.common.translation.utils.RedisUtils;
+import com.awake.ve.common.redis.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;

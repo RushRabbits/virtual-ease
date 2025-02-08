@@ -37,7 +37,7 @@ spring:
 
 
 redisson:
-  # translation key前缀
+  # redis key前缀
   keyPrefix:
   # 线程池数量
   threads: 4

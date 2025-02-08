@@ -7,8 +7,8 @@ import com.awake.ve.common.oss.constant.OssConstant;
 import com.awake.ve.common.oss.core.OssClient;
 import com.awake.ve.common.oss.exception.OssException;
 import com.awake.ve.common.oss.properties.OssProperties;
-import com.awake.ve.common.translation.utils.CacheUtils;
-import com.awake.ve.common.translation.utils.RedisUtils;
+import com.awake.ve.common.redis.utils.CacheUtils;
+import com.awake.ve.common.redis.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;

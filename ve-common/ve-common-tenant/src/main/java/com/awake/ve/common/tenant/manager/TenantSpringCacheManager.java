@@ -3,7 +3,7 @@ package com.awake.ve.common.tenant.manager;
 import com.awake.ve.common.core.constant.GlobalConstants;
 import com.awake.ve.common.core.utils.StringUtils;
 import com.awake.ve.common.tenant.helper.TenantHelper;
-import com.awake.ve.common.translation.manager.PlusSpringCacheManager;
+import com.awake.ve.common.redis.manager.PlusSpringCacheManager;
 import com.baomidou.mybatisplus.core.plugins.InterceptorIgnoreHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.Cache;

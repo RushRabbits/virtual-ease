@@ -30,6 +30,7 @@
         <module>ve-common-tenant</module>
         <module>ve-common-rateLimiter</module>
         <module>ve-common-sensitive</module>
+        <module>ve-common-security</module>
     </modules>
 
 </project>

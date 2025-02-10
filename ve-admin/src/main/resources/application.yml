@@ -106,3 +106,19 @@ tenant:
     - sys_user_role
     - sys_client
     - sys_oss_config
+
+# security配置
+security:
+  # 排除路径
+  excludes:
+    # 静态资源
+    - /*.html
+    - /**/*.html
+    - /**/*.css
+    - /**/*.js
+    # 公共路径
+    - /favicon.ico
+    - /error
+    # swagger 文档配置
+    - /*/api-docs
+    - /*/api-docs/**

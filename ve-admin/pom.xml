@@ -132,6 +132,12 @@
             <artifactId>ve-common-sensitive</artifactId>
         </dependency>
 
+        <!-- 安全模块-->
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-security</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>com.awake</groupId>
             <artifactId>ve-demo</artifactId>

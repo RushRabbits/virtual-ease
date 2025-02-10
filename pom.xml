@@ -431,6 +431,13 @@
                 <version>${revision}</version>
             </dependency>
 
+            <!-- 安全-->
+            <dependency>
+                <groupId>com.awake</groupId>
+                <artifactId>ve-common-security</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
             <dependency>
                 <groupId>com.awake</groupId>
                 <artifactId>ve-demo</artifactId>

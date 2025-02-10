@@ -166,6 +166,13 @@
                 <version>${revision}</version>
             </dependency>
 
+            <!-- 安全模块 -->
+            <dependency>
+                <groupId>com.awake</groupId>
+                <artifactId>ve-common-security</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
             <!-- WebSocket模块 -->
 <!--            <dependency>-->
 <!--                <groupId>com.awake</groupId>-->

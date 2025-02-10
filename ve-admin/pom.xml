@@ -138,6 +138,12 @@
             <artifactId>ve-common-security</artifactId>
         </dependency>
 
+        <!-- 服务器端推送模块-->
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-sse</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>com.awake</groupId>
             <artifactId>ve-demo</artifactId>

@@ -8,6 +8,7 @@ import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
 import com.awake.ve.common.core.constant.HttpStatus;
+import com.awake.ve.common.core.exception.SseException;
 import com.awake.ve.common.core.utils.ServletUtils;
 import com.awake.ve.common.core.utils.SpringUtils;
 import com.awake.ve.common.core.utils.StringUtils;
@@ -92,8 +93,8 @@ public class SecurityConfig implements WebMvcConfigurer {
      */
     @Bean
     public SaServletFilter getSaServletFilter() {
-        String username = SpringUtils.getProperty("spring.boot.admin.client.username");
-        String password = SpringUtils.getProperty("spring.boot.admin.client.password");
+        String username = SpringUtils.getProperty("META-INF.spring.boot.admin.client.username");
+        String password = SpringUtils.getProperty("META-INF.spring.boot.admin.client.password");
         return new SaServletFilter()
                 .addInclude("/actuator", "/actuator/**")
                 .setAuth(obj -> SaHttpBasicUtil.check(username + ":" + password))

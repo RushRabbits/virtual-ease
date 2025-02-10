@@ -122,3 +122,8 @@ security:
     # swagger 文档配置
     - /*/api-docs
     - /*/api-docs/**
+
+--- # 默认/推荐使用sse推送
+sse:
+  enabled: true
+  path: /resource/sse

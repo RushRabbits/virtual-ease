@@ -31,6 +31,7 @@
         <module>ve-common-rateLimiter</module>
         <module>ve-common-sensitive</module>
         <module>ve-common-security</module>
+        <module>ve-common-sse</module>
     </modules>
 
 </project>

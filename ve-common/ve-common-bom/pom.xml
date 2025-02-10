@@ -173,6 +173,13 @@
                 <version>${revision}</version>
             </dependency>
 
+            <!-- 服务器端推送模块-->
+            <dependency>
+                <groupId>com.awake</groupId>
+                <artifactId>ve-common-sse</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
             <!-- WebSocket模块 -->
 <!--            <dependency>-->
 <!--                <groupId>com.awake</groupId>-->

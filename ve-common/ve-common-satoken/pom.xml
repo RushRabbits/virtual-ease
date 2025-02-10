@@ -20,7 +20,7 @@
             <artifactId>ve-common-core</artifactId>
         </dependency>
 
-        <!-- RuoYi Common Redis-->
+        <!-- ve Common Redis-->
         <dependency>
             <groupId>com.awake</groupId>
             <artifactId>ve-common-redis</artifactId>

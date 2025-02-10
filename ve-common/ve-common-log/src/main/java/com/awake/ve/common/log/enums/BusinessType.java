@@ -3,7 +3,7 @@ package com.awake.ve.common.log.enums;
 /**
  * 业务操作类型
  *
- * @author ruoyi
+ * @author ve
  */
 public enum BusinessType {
     /**

@@ -27,6 +27,7 @@ import com.awake.ve.system.mapper.SysRoleMapper;
 import com.awake.ve.system.mapper.SysRoleMenuMapper;
 import com.awake.ve.system.mapper.SysTenantPackageMapper;
 import com.awake.ve.system.service.ISysMenuService;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -38,6 +39,7 @@ import java.util.*;
  */
 @RequiredArgsConstructor
 @Service
+@Primary
 public class SysMenuServiceImpl implements ISysMenuService {
 
     private final SysMenuMapper baseMapper;

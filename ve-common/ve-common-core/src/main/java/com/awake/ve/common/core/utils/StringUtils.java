@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 /**
  * 字符串工具类
- * 取自ruoyi-vue-plus
+ * 取自ve-vue-plus
  *
  * @author Lion Li
  */

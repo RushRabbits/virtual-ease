@@ -3,7 +3,7 @@ package com.awake.ve.common.log.enums;
 /**
  * 操作人类别
  *
- * @author ruoyi
+ * @author ve
  */
 public enum OperatorType {
     /**

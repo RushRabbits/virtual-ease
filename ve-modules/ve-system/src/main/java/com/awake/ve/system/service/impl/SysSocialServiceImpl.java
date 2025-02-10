@@ -10,6 +10,7 @@ import com.awake.ve.system.domain.bo.SysSocialBo;
 import com.awake.ve.system.domain.vo.SysSocialVo;
 import com.awake.ve.system.mapper.SysSocialMapper;
 import com.awake.ve.system.service.ISysSocialService;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.List;
  */
 @RequiredArgsConstructor
 @Service
+@Primary
 public class SysSocialServiceImpl implements ISysSocialService {
 
     private final SysSocialMapper baseMapper;

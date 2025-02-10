@@ -24,6 +24,7 @@ import com.awake.ve.system.domain.vo.SysLogininforVo;
 import com.awake.ve.system.mapper.SysLogininforMapper;
 import com.awake.ve.system.service.ISysClientService;
 import com.awake.ve.system.service.ISysLogininforService;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -41,6 +42,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Slf4j
 @Service
+@Primary
 public class SysLogininforServiceImpl implements ISysLogininforService {
 
     private final SysLogininforMapper baseMapper;

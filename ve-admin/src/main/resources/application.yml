@@ -45,11 +45,11 @@ springdoc:
   #    persistAuthorization: true
   info:
     # 标题
-    title: '标题：${ruoyi.name}多租户管理系统_接口文档'
+    title: '标题：${ve.name}多租户管理系统_接口文档'
     # 描述
     description: '描述：用于管理集团旗下公司的人员信息,具体包括XXX,XXX模块...'
     # 版本
-    version: '版本号: ${ruoyi.version}'
+    version: '版本号: ${ve.version}'
     # 作者信息
     contact:
       name: 突突兔
@@ -65,20 +65,20 @@ springdoc:
   #这里定义了两个分组，可定义多个，也可以不定义
   group-configs:
 #    - group: 1.演示模块
-#      packages-to-scan: org.dromara.demo
+#      packages-to-scan: com.awake.demo
 #    - group: 2.通用模块
-#      packages-to-scan: org.dromara.web
+#      packages-to-scan: com.awake.web
 #    - group: 3.系统模块
-#      packages-to-scan: org.dromara.system
+#      packages-to-scan: com.awake.system
 #    - group: 4.代码生成模块
-#      packages-to-scan: org.dromara.generator
+#      packages-to-scan: com.awake.generator
 
 repeat:
   submit:
     message: 你要设置的消息内容
 
 mybatis-plus:
-  # 多包名使用 例如 org.dromara.**.mapper,org.xxx.**.mapper
+  # 多包名使用 例如 com.awake.**.mapper,org.xxx.**.mapper
   mapperPackage: com.awake.ve.**.mapper
   # 对应的 XML 文件位置
   mapperLocations: classpath*:mapper/**/*Mapper.xml

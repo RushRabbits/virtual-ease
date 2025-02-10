@@ -5,7 +5,7 @@ import java.io.Serial;
 /**
  * 文件名大小限制异常类
  *
- * @author ruoyi
+ * @author ve
  */
 public class FileSizeLimitExceededException extends FileException {
 

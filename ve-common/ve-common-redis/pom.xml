@@ -12,7 +12,7 @@
     <artifactId>ve-common-redis</artifactId>
 
     <dependencies>
-        <!-- RuoYi Common Core-->
+        <!-- ve Common Core-->
         <dependency>
             <groupId>com.awake</groupId>
             <artifactId>ve-common-core</artifactId>

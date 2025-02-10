@@ -3,7 +3,7 @@ package com.awake.ve.common.core.utils.file;
 /**
  * 媒体类型工具类
  *
- * @author ruoyi
+ * @author ve
  */
 public class MimeTypeUtils {
     public static final String IMAGE_PNG = "image/png";

@@ -3,7 +3,7 @@ package com.awake.ve.common.core.constant;
 /**
  * 用户常量信息
  *
- * @author ruoyi
+ * @author ve
  */
 public interface UserConstants {
 

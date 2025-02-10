@@ -23,6 +23,7 @@ import com.awake.ve.system.domain.bo.SysOssConfigBo;
 import com.awake.ve.system.domain.vo.SysOssConfigVo;
 import com.awake.ve.system.mapper.SysOssConfigMapper;
 import com.awake.ve.system.service.ISysOssConfigService;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,6 +40,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @Service
+@Primary
 public class SysOssConfigServiceImpl implements ISysOssConfigService {
 
     private final SysOssConfigMapper baseMapper;

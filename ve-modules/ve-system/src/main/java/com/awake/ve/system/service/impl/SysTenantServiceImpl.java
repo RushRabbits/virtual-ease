@@ -32,6 +32,7 @@ import com.awake.ve.system.mapper.*;
 import com.awake.ve.system.service.ISysTenantService;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,6 +45,7 @@ import java.util.*;
  */
 @RequiredArgsConstructor
 @Service
+@Primary
 public class SysTenantServiceImpl implements ISysTenantService {
 
     private final SysTenantMapper baseMapper;

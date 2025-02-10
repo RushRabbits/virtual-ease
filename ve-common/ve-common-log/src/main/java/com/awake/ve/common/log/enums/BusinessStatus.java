@@ -3,7 +3,7 @@ package com.awake.ve.common.log.enums;
 /**
  * 操作状态
  *
- * @author ruoyi
+ * @author ve
  */
 public enum BusinessStatus {
     /**

@@ -3,7 +3,7 @@ package com.awake.ve.common.core.constant;
 /**
  * 通用常量信息
  *
- * @author ruoyi
+ * @author ve
  */
 public interface Constants {
 

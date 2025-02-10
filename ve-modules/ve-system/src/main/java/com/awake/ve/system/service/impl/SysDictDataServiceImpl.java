@@ -18,6 +18,7 @@ import com.awake.ve.system.mapper.SysDictDataMapper;
 import com.awake.ve.system.service.ISysDictDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CachePut;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,6 +30,7 @@ import java.util.List;
  */
 @RequiredArgsConstructor
 @Service
+@Primary
 public class SysDictDataServiceImpl implements ISysDictDataService {
 
     private final SysDictDataMapper baseMapper;

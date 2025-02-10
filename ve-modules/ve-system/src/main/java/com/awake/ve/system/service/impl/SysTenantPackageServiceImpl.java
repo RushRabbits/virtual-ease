@@ -19,6 +19,7 @@ import com.awake.ve.system.domain.vo.SysTenantPackageVo;
 import com.awake.ve.system.mapper.SysTenantMapper;
 import com.awake.ve.system.mapper.SysTenantPackageMapper;
 import com.awake.ve.system.service.ISysTenantPackageService;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +34,7 @@ import java.util.List;
  */
 @RequiredArgsConstructor
 @Service
+@Primary
 public class SysTenantPackageServiceImpl implements ISysTenantPackageService {
 
     private final SysTenantPackageMapper baseMapper;

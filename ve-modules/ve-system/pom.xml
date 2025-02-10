@@ -55,7 +55,7 @@
         <!-- SMS功能模块 -->
 <!--        <dependency>-->
 <!--            <groupId>com.awake</groupId>-->
-<!--            <artifactId>ruoyi-common-sms</artifactId>-->
+<!--            <artifactId>ve-common-sms</artifactId>-->
 <!--        </dependency>-->
 
         <dependency>
@@ -64,8 +64,8 @@
         </dependency>
 
 <!--        <dependency>-->
-<!--            <groupId>org.dromara</groupId>-->
-<!--            <artifactId>ruoyi-common-security</artifactId>-->
+<!--            <groupId>com.awake</groupId>-->
+<!--            <artifactId>ve-common-security</artifactId>-->
 <!--        </dependency>-->
 
         <dependency>
@@ -85,17 +85,17 @@
 
 <!--        <dependency>-->
 <!--            <groupId>com.awake</groupId>-->
-<!--            <artifactId>ruoyi-common-encrypt</artifactId>-->
+<!--            <artifactId>ve-common-encrypt</artifactId>-->
 <!--        </dependency>-->
 
 <!--        <dependency>-->
-<!--            <groupId>org.dromara</groupId>-->
-<!--            <artifactId>ruoyi-common-websocket</artifactId>-->
+<!--            <groupId>com.awake</groupId>-->
+<!--            <artifactId>ve-common-websocket</artifactId>-->
 <!--        </dependency>-->
 
 <!--        <dependency>-->
-<!--            <groupId>org.dromara</groupId>-->
-<!--            <artifactId>ruoyi-common-sse</artifactId>-->
+<!--            <groupId>com.awake</groupId>-->
+<!--            <artifactId>ve-common-sse</artifactId>-->
 <!--        </dependency>-->
 
     </dependencies>

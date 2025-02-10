@@ -15,6 +15,7 @@ import com.awake.ve.common.web.core.BaseController;
 import com.awake.ve.system.domain.bo.SysLogininforBo;
 import com.awake.ve.system.domain.vo.SysLogininforVo;
 import com.awake.ve.system.service.ISysLogininforService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

@@ -12,7 +12,7 @@ import com.awake.ve.common.excel.annotation.ExcelDictFormat;
 import com.awake.ve.common.core.utils.ObjectUtils;
 import com.awake.ve.common.core.utils.SpringUtils;
 import com.awake.ve.common.core.utils.StringUtils;
-import com.awake.ve.common.service.DictService;
+import com.awake.ve.common.core.service.DictService;
 import com.awake.ve.common.excel.utils.ExcelUtil;
 import lombok.extern.slf4j.Slf4j;
 

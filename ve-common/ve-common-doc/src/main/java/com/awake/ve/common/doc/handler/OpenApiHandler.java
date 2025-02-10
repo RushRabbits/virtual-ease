@@ -112,7 +112,7 @@ public class OpenApiHandler extends OpenAPIService {
      *
      * @param openAPI                   the open api
      * @param securityParser            the security parser
-     * @param springDocConfigProperties the META-INF.META-INF.META-INF.spring doc config properties
+     * @param springDocConfigProperties the META-INF.META-INF.META-INF.META-INF.spring doc config properties
      * @param propertyResolverUtils     the property resolver utils
      * @param openApiBuilderCustomizers the open api builder customisers
      * @param serverBaseUrlCustomizers  the server base url customizers

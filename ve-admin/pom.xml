@@ -144,6 +144,13 @@
             <artifactId>ve-common-sse</artifactId>
         </dependency>
 
+        <!-- websocket模块-->
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-websocket</artifactId>
+        </dependency>
+
+
         <dependency>
             <groupId>com.awake</groupId>
             <artifactId>ve-demo</artifactId>

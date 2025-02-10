@@ -88,10 +88,10 @@
 <!--            <artifactId>ve-common-encrypt</artifactId>-->
 <!--        </dependency>-->
 
-<!--        <dependency>-->
-<!--            <groupId>com.awake</groupId>-->
-<!--            <artifactId>ve-common-websocket</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-websocket</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.awake</groupId>

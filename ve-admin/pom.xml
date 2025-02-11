@@ -162,6 +162,12 @@
             <artifactId>ve-common-mail</artifactId>
         </dependency>
 
+        <!-- 短信模块-->
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-sms</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>com.awake</groupId>
             <artifactId>ve-demo</artifactId>

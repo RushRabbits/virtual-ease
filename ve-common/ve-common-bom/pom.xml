@@ -11,8 +11,8 @@
     <packaging>pom</packaging>
 
     <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <maven.compiler.parameters>true</maven.compiler.parameters>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <revision>0.0.1</revision>
@@ -49,11 +49,11 @@
             </dependency>
 
             <!-- 调度模块 -->
-<!--            <dependency>-->
-<!--                <groupId>com.awake</groupId>-->
-<!--                <artifactId>ve-common-job</artifactId>-->
-<!--                <version>${revision}</version>-->
-<!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>com.awake</groupId>-->
+            <!--                <artifactId>ve-common-job</artifactId>-->
+            <!--                <version>${revision}</version>-->
+            <!--            </dependency>-->
 
             <!-- 日志记录 -->
             <dependency>
@@ -62,12 +62,12 @@
                 <version>${revision}</version>
             </dependency>
 
-            <!-- 邮件服务 -->
-<!--            <dependency>-->
-<!--                <groupId>com.awake</groupId>-->
-<!--                <artifactId>ve-common-mail</artifactId>-->
-<!--                <version>${revision}</version>-->
-<!--            </dependency>-->
+            <!-- 邮件服务-->
+            <dependency>
+                <groupId>com.awake</groupId>
+                <artifactId>ve-common-mail</artifactId>
+                <version>${revision}</version>
+            </dependency>
 
             <!-- 数据库服务 -->
             <dependency>
@@ -104,25 +104,18 @@
                 <version>${revision}</version>
             </dependency>
 
-            <!-- 安全模块 -->
-<!--            <dependency>-->
-<!--                <groupId>com.awake</groupId>-->
-<!--                <artifactId>ve-common-security</artifactId>-->
-<!--                <version>${revision}</version>-->
-<!--            </dependency>-->
-
             <!-- 短信模块 -->
-<!--            <dependency>-->
-<!--                <groupId>com.awake</groupId>-->
-<!--                <artifactId>ve-common-sms</artifactId>-->
-<!--                <version>${revision}</version>-->
-<!--            </dependency>-->
+            <dependency>
+                <groupId>com.awake</groupId>
+                <artifactId>ve-common-sms</artifactId>
+                <version>${revision}</version>
+            </dependency>
 
-<!--            <dependency>-->
-<!--                <groupId>com.awake</groupId>-->
-<!--                <artifactId>ve-common-social</artifactId>-->
-<!--                <version>${revision}</version>-->
-<!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>com.awake</groupId>-->
+            <!--                <artifactId>ve-common-social</artifactId>-->
+            <!--                <version>${revision}</version>-->
+            <!--            </dependency>-->
 
             <!-- web服务 -->
             <dependency>
@@ -134,7 +127,7 @@
             <!-- 翻译模块 -->
             <dependency>
                 <groupId>com.awake</groupId>
-                <artifactId>ve-common-redis</artifactId>
+                <artifactId>ve-common-translation</artifactId>
                 <version>${revision}</version>
             </dependency>
 
@@ -153,11 +146,11 @@
             </dependency>
 
             <!-- 数据库加解密模块 -->
-<!--            <dependency>-->
-<!--                <groupId>com.awake</groupId>-->
-<!--                <artifactId>ve-common-encrypt</artifactId>-->
-<!--                <version>${revision}</version>-->
-<!--            </dependency>-->
+            <dependency>
+                <groupId>com.awake</groupId>
+                <artifactId>ve-common-encrypt</artifactId>
+                <version>${revision}</version>
+            </dependency>
 
             <!-- 租户模块 -->
             <dependency>
@@ -181,11 +174,11 @@
             </dependency>
 
             <!-- WebSocket模块 -->
-<!--            <dependency>-->
-<!--                <groupId>com.awake</groupId>-->
-<!--                <artifactId>ve-common-websocket</artifactId>-->
-<!--                <version>${revision}</version>-->
-<!--            </dependency>-->
+            <dependency>
+                <groupId>com.awake</groupId>
+                <artifactId>ve-common-websocket</artifactId>
+                <version>${revision}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>

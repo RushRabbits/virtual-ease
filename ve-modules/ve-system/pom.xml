@@ -52,11 +52,11 @@
             <artifactId>ve-common-excel</artifactId>
         </dependency>
 
-        <!-- SMS功能模块 -->
-<!--        <dependency>-->
-<!--            <groupId>com.awake</groupId>-->
-<!--            <artifactId>ve-common-sms</artifactId>-->
-<!--        </dependency>-->
+        <!-- SMS功能模块-->
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-sms</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.awake</groupId>

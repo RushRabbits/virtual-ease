@@ -7,7 +7,7 @@ import com.awake.ve.common.core.constant.GlobalConstants;
 import com.awake.ve.common.core.utils.SpringUtils;
 import com.awake.ve.common.core.utils.reflect.ReflectUtils;
 import com.awake.ve.common.satoken.utils.LoginHelper;
-import com.awake.ve.common.redis.utils.RedisUtils;
+import com.awake.ve.common.translation.utils.RedisUtils;
 import com.baomidou.mybatisplus.core.plugins.IgnoreStrategy;
 import com.baomidou.mybatisplus.core.plugins.InterceptorIgnoreHelper;
 import io.micrometer.common.util.StringUtils;

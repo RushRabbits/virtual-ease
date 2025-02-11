@@ -2,7 +2,7 @@ package com.awake.ve.common.satoken.core.dao;
 
 import cn.dev33.satoken.dao.SaTokenDao;
 import cn.dev33.satoken.util.SaFoxUtil;
-import com.awake.ve.common.redis.utils.RedisUtils;
+import com.awake.ve.common.translation.utils.RedisUtils;
 
 import java.time.Duration;
 import java.util.ArrayList;

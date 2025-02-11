@@ -93,8 +93,8 @@ public class SecurityConfig implements WebMvcConfigurer {
      */
     @Bean
     public SaServletFilter getSaServletFilter() {
-        String username = SpringUtils.getProperty("META-INF.META-INF.spring.boot.admin.client.username");
-        String password = SpringUtils.getProperty("META-INF.META-INF.spring.boot.admin.client.password");
+        String username = SpringUtils.getProperty("META-INF.META-INF.META-INF.boot.admin.client.username");
+        String password = SpringUtils.getProperty("META-INF.META-INF.META-INF.boot.admin.client.password");
         return new SaServletFilter()
                 .addInclude("/actuator", "/actuator/**")
                 .setAuth(obj -> SaHttpBasicUtil.check(username + ":" + password))

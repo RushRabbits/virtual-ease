@@ -1,6 +1,6 @@
 package com.awake.ve.common.websocket.utils;
 
-import com.awake.ve.common.redis.utils.RedisUtils;
+import com.awake.ve.common.translation.utils.RedisUtils;
 import com.awake.ve.common.websocket.dto.WebSocketMessageDTO;
 import com.awake.ve.common.websocket.holder.WebSocketSessionHolder;
 import lombok.AccessLevel;

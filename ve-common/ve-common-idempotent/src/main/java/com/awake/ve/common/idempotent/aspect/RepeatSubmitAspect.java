@@ -11,7 +11,7 @@ import com.awake.ve.common.core.utils.ObjectUtils;
 import com.awake.ve.common.core.utils.ServletUtils;
 import com.awake.ve.common.core.utils.StringUtils;
 import com.awake.ve.common.idempotent.annotation.RepeatSubmit;
-import com.awake.ve.common.redis.utils.RedisUtils;
+import com.awake.ve.common.translation.utils.RedisUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.aspectj.lang.JoinPoint;

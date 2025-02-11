@@ -6,8 +6,8 @@ import io.github.linpeilie.annotations.AutoMapper;
 import lombok.Data;
 import com.awake.ve.common.excel.annotation.ExcelDictFormat;
 import com.awake.ve.common.excel.convert.ExcelDictConvert;
-import com.awake.ve.common.redis.annotation.Translation;
-import com.awake.ve.common.redis.constant.TransConstant;
+import com.awake.ve.common.translation.annotation.Translation;
+import com.awake.ve.common.translation.constant.TransConstant;
 import com.awake.ve.system.domain.SysPost;
 
 import java.io.Serial;

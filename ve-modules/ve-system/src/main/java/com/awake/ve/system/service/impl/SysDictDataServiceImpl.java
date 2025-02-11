@@ -11,7 +11,7 @@ import com.awake.ve.system.domain.SysDictData;
 import com.awake.ve.common.mybatis.core.page.TableDataInfo;
 import com.awake.ve.common.core.exception.ServiceException;
 import com.awake.ve.common.core.utils.StringUtils;
-import com.awake.ve.common.redis.utils.CacheUtils;
+import com.awake.ve.common.translation.utils.CacheUtils;
 import com.awake.ve.system.domain.bo.SysDictDataBo;
 import com.awake.ve.system.domain.vo.SysDictDataVo;
 import com.awake.ve.system.mapper.SysDictDataMapper;

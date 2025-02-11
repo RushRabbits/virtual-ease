@@ -2,7 +2,7 @@ package com.awake.ve.common.sms.core.dao;
 
 
 import com.awake.ve.common.core.constant.GlobalConstants;
-import com.awake.ve.common.redis.utils.RedisUtils;
+import com.awake.ve.common.translation.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.dromara.sms4j.api.dao.SmsDao;
 

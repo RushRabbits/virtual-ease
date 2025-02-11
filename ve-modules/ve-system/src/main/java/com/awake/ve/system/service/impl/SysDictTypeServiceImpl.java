@@ -16,7 +16,7 @@ import com.awake.ve.common.core.utils.StreamUtils;
 import com.awake.ve.common.core.utils.StringUtils;
 import com.awake.ve.common.mybatis.core.page.PageQuery;
 import com.awake.ve.common.mybatis.core.page.TableDataInfo;
-import com.awake.ve.common.redis.utils.CacheUtils;
+import com.awake.ve.common.translation.utils.CacheUtils;
 import com.awake.ve.system.domain.SysDictData;
 import com.awake.ve.system.domain.SysDictType;
 import com.awake.ve.system.domain.bo.SysDictTypeBo;

@@ -1,6 +1,6 @@
 package com.awake.ve.common.sse.core;
 
-import com.awake.ve.common.redis.utils.RedisUtils;
+import com.awake.ve.common.translation.utils.RedisUtils;
 import com.awake.ve.common.sse.dto.SseMessageDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

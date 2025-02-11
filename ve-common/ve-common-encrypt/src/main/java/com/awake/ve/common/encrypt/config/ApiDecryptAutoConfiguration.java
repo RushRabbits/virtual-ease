@@ -1,5 +1,6 @@
 package com.awake.ve.common.encrypt.config;
 
+import com.awake.ve.common.core.utils.SpringUtils;
 import com.awake.ve.common.encrypt.filter.CryptoFilter;
 import com.awake.ve.common.encrypt.properties.ApiDecryptProperties;
 import jakarta.servlet.DispatcherType;
@@ -25,9 +26,8 @@ public class ApiDecryptAutoConfiguration {
         FilterRegistrationBean<CryptoFilter> registration = new FilterRegistrationBean<>();
         // 设置仅处理REQUEST类型的请求
         registration.setDispatcherTypes(DispatcherType.REQUEST);
-
         // 注册加解密过滤器
-        registration.setFilter(new CryptoFilter(new ApiDecryptProperties()));
+        registration.setFilter(new CryptoFilter(SpringUtils.getBean(ApiDecryptProperties.class)));
 
         // 设置过滤器的URL模式，/*表示拦截所有请求
         registration.addUrlPatterns("/*");

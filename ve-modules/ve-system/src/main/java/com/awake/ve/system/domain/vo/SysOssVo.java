@@ -1,7 +1,7 @@
 package com.awake.ve.system.domain.vo;
 
-import com.awake.ve.common.redis.annotation.Translation;
-import com.awake.ve.common.redis.constant.TransConstant;
+import com.awake.ve.common.translation.annotation.Translation;
+import com.awake.ve.common.translation.constant.TransConstant;
 import com.awake.ve.system.domain.SysOss;
 import io.github.linpeilie.annotations.AutoMapper;
 import lombok.Data;

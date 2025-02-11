@@ -10,12 +10,11 @@ import com.awake.ve.common.log.annotation.Log;
 import com.awake.ve.common.log.enums.BusinessType;
 import com.awake.ve.common.mybatis.core.page.PageQuery;
 import com.awake.ve.common.mybatis.core.page.TableDataInfo;
-import com.awake.ve.common.redis.utils.RedisUtils;
+import com.awake.ve.common.translation.utils.RedisUtils;
 import com.awake.ve.common.web.core.BaseController;
 import com.awake.ve.system.domain.bo.SysLogininforBo;
 import com.awake.ve.system.domain.vo.SysLogininforVo;
 import com.awake.ve.system.service.ISysLogininforService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

@@ -19,7 +19,7 @@ spring:
           url: jdbc:mysql://101.42.36.220:33306/virtual_ease?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&autoReconnect=true&rewriteBatchedStatements=true&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true
           username: virtual_ease
           password: P1OEgcnHtykf
-  # redis 单机配置(单机与集群只能开启一个另一个需要注释掉)
+  # translation 单机配置(单机与集群只能开启一个另一个需要注释掉)
   data:
     redis:
       # 地址
@@ -28,7 +28,7 @@ spring:
       port: 6379
       # 数据库索引
       database: 15
-      # redis 密码必须配置
+      # translation 密码必须配置
 #      password: redis_seEHj3
       # 连接超时时间
       timeout: 10s
@@ -37,7 +37,7 @@ spring:
 
 
 redisson:
-  # redis key前缀
+  # translation key前缀
   keyPrefix:
   # 线程池数量
   threads: 4
@@ -91,7 +91,7 @@ sms:
   minute-max: 1
   # 短信拦截限制单手机号每日最大发送量，只对开启了拦截的配置有效
   account-max: 30
-  # 以下配置来自于 org.dromara.sms4j.provider.config.BaseConfig类中
+  # 以下配置来自于 com.awake.ve.sms4j.provider.config.BaseConfig类中
   blends:
     # 唯一ID 用于发送短信寻找具体配置 随便定义别用中文即可
     # 可以同时存在两个相同厂商 例如: ali1 ali2 两个不同的阿里短信账号 也可用于区分租户
@@ -111,3 +111,79 @@ sms:
       access-key-secret: 您的accessKeySecret
       signature: 您的短信签名
       sdk-app-id: 您的sdkAppId
+
+--- # 三方授权
+justauth:
+  # 前端外网访问地址
+  address: http://localhost:80
+  type:
+    maxkey:
+      # maxkey 服务器地址
+      # 注意 如下均配置均不需要修改 maxkey 已经内置好了数据
+      server-url: http://sso.maxkey.top
+      client-id: 876892492581044224
+      client-secret: x1Y5MTMwNzIwMjMxNTM4NDc3Mzche8
+      redirect-uri: ${justauth.address}/social-callback?source=maxkey
+    topiam:
+      # topiam 服务器地址
+      server-url: http://127.0.0.1:1989/api/v1/authorize/y0q************spq***********8ol
+      client-id: 449c4*********937************759
+      client-secret: ac7***********1e0************28d
+      redirect-uri: ${justauth.address}/social-callback?source=topiam
+      scopes: [openid, email, phone, profile]
+    qq:
+      client-id: 10**********6
+      client-secret: 1f7d08**********5b7**********29e
+      redirect-uri: ${justauth.address}/social-callback?source=qq
+      union-id: false
+    weibo:
+      client-id: 10**********6
+      client-secret: 1f7d08**********5b7**********29e
+      redirect-uri: ${justauth.address}/social-callback?source=weibo
+    gitee:
+      client-id: 91436b7940090d09c72c7daf85b959cfd5f215d67eea73acbf61b6b590751a98
+      client-secret: 02c6fcfd70342980cd8dd2f2c06c1a350645d76c754d7a264c4e125f9ba915ac
+      redirect-uri: ${justauth.address}/social-callback?source=gitee
+    dingtalk:
+      client-id: 10**********6
+      client-secret: 1f7d08**********5b7**********29e
+      redirect-uri: ${justauth.address}/social-callback?source=dingtalk
+    baidu:
+      client-id: 10**********6
+      client-secret: 1f7d08**********5b7**********29e
+      redirect-uri: ${justauth.address}/social-callback?source=baidu
+    csdn:
+      client-id: 10**********6
+      client-secret: 1f7d08**********5b7**********29e
+      redirect-uri: ${justauth.address}/social-callback?source=csdn
+    coding:
+      client-id: 10**********6
+      client-secret: 1f7d08**********5b7**********29e
+      redirect-uri: ${justauth.address}/social-callback?source=coding
+      coding-group-name: xx
+    oschina:
+      client-id: 10**********6
+      client-secret: 1f7d08**********5b7**********29e
+      redirect-uri: ${justauth.address}/social-callback?source=oschina
+    alipay_wallet:
+      client-id: 10**********6
+      client-secret: 1f7d08**********5b7**********29e
+      redirect-uri: ${justauth.address}/social-callback?source=alipay_wallet
+      alipay-public-key: MIIB**************DAQAB
+    wechat_open:
+      client-id: 10**********6
+      client-secret: 1f7d08**********5b7**********29e
+      redirect-uri: ${justauth.address}/social-callback?source=wechat_open
+    wechat_mp:
+      client-id: 10**********6
+      client-secret: 1f7d08**********5b7**********29e
+      redirect-uri: ${justauth.address}/social-callback?source=wechat_mp
+    wechat_enterprise:
+      client-id: 10**********6
+      client-secret: 1f7d08**********5b7**********29e
+      redirect-uri: ${justauth.address}/social-callback?source=wechat_enterprise
+      agent-id: 1000002
+    gitlab:
+      client-id: 10**********6
+      client-secret: 1f7d08**********5b7**********29e
+      redirect-uri: ${justauth.address}/social-callback?source=gitlab

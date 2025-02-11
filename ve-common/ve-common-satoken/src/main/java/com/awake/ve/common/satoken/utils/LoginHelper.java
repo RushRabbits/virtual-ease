@@ -38,6 +38,9 @@ public class LoginHelper {
     public static final String DEPT_KEY = "deptId";
     public static final String CLIENT_KEY = "clientid";
     public static final String TENANT_ADMIN_KEY = "isTenantAdmin";
+    public static final String USER_NAME_KEY = "userName";
+    public static final String DEPT_NAME_KEY = "deptName";
+    public static final String DEPT_CATEGORY_KEY = "deptCategory";
 
     /**
      * 登录系统 基于 设备类型

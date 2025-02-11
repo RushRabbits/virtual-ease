@@ -17,7 +17,7 @@ import com.awake.ve.common.core.utils.SpringUtils;
 import com.awake.ve.common.core.utils.StringUtils;
 import com.awake.ve.common.core.utils.TreeBuildUtils;
 import com.awake.ve.common.mybatis.helper.DataBaseHelper;
-import com.awake.ve.common.redis.utils.CacheUtils;
+import com.awake.ve.common.translation.utils.CacheUtils;
 import com.awake.ve.common.satoken.utils.LoginHelper;
 import com.awake.ve.system.domain.SysDept;
 import com.awake.ve.system.domain.SysRole;

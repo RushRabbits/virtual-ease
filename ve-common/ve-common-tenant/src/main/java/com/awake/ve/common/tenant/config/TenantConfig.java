@@ -9,8 +9,8 @@ import com.awake.ve.common.tenant.handle.PlusTenantLineHandler;
 import com.awake.ve.common.tenant.handle.TenantKeyPrefixHandler;
 import com.awake.ve.common.tenant.manager.TenantSpringCacheManager;
 import com.awake.ve.common.tenant.properties.TenantProperties;
-import com.awake.ve.common.redis.config.RedisConfig;
-import com.awake.ve.common.redis.config.properties.RedissonProperties;
+import com.awake.ve.common.translation.config.RedisConfig;
+import com.awake.ve.common.translation.config.properties.RedissonProperties;
 import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
 import org.redisson.config.ClusterServersConfig;
 import org.redisson.config.SingleServerConfig;
@@ -66,7 +66,7 @@ public class TenantConfig {
             SingleServerConfig singleServerConfig = ReflectUtils.invokeGetter(config, "singleServerConfig");
             if (ObjectUtil.isNotNull(singleServerConfig)) {
                 // 使用单机模式
-                // 设置多租户 redis key 前缀
+                // 设置多租户 translation key 前缀
                 singleServerConfig.setNameMapper(nameMapper);
                 ReflectUtils.invokeSetter(config, "singleServerConfig", singleServerConfig);
             }
@@ -75,7 +75,7 @@ public class TenantConfig {
             ClusterServersConfig clusterServersConfig = ReflectUtils.invokeGetter(config, "clusterServersConfig");
             // 集群配置方式,参考下方注释
             if (ObjectUtil.isNotNull(clusterServersConfig)) {
-                // 设置多租户 redis key 前缀
+                // 设置多租户 translation key 前缀
                 clusterServersConfig.setNameMapper(nameMapper);
                 ReflectUtils.invokeSetter(config, "clusterServersConfig", clusterServersConfig);
             }

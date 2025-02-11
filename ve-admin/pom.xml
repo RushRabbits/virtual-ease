@@ -168,6 +168,12 @@
             <artifactId>ve-common-sms</artifactId>
         </dependency>
 
+        <!-- social模块-->
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-social</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>com.awake</groupId>
             <artifactId>ve-demo</artifactId>

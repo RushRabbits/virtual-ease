@@ -58,12 +58,6 @@
         <maven-compiler-plugin.verison>3.11.0</maven-compiler-plugin.verison>
         <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
         <flatten-maven-plugin.version>1.3.0</flatten-maven-plugin.version>
-
-        <!-- bom中的信息-->
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-        <maven.compiler.parameters>true</maven.compiler.parameters>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <profiles>
@@ -139,14 +133,14 @@
                 <version>${justauth.version}</version>
             </dependency>
 
-            <!--            &lt;!&ndash; common 的依赖配置&ndash;&gt;-->
-            <!--            <dependency>-->
-            <!--                <groupId>com.zy</groupId>-->
-            <!--                <artifactId>zy-common-bom</artifactId>-->
-            <!--                <version>${revision}</version>-->
-            <!--                <type>pom</type>-->
-            <!--                <scope>import</scope>-->
-            <!--            </dependency>-->
+            <!-- common 的依赖配置-->
+            <dependency>
+                <groupId>com.awake</groupId>
+                <artifactId>ve-common-bom</artifactId>
+                <version>${revision}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
             <dependency>
                 <groupId>org.springdoc</groupId>
@@ -261,7 +255,7 @@
             </dependency>
             <!--短信sms4j-->
             <dependency>
-                <groupId>org.dromara.sms4j</groupId>
+                <groupId>com.awake.ve.sms4j</groupId>
                 <artifactId>sms4j-spring-boot-starter</artifactId>
                 <version>${sms4j.version}</version>
             </dependency>
@@ -470,6 +464,13 @@
             <dependency>
                 <groupId>com.awake</groupId>
                 <artifactId>ve-common-sms</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- social模块-->
+            <dependency>
+                <groupId>com.awake</groupId>
+                <artifactId>ve-common-social</artifactId>
                 <version>${revision}</version>
             </dependency>
 

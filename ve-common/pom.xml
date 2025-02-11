@@ -34,6 +34,7 @@
         <module>ve-common-sse</module>
         <module>ve-common-websocket</module>
         <module>ve-common-encrypt</module>
+        <module>ve-common-mail</module>
     </modules>
 
 </project>

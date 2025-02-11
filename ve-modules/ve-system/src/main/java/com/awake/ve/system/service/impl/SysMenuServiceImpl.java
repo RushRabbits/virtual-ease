@@ -39,7 +39,6 @@ import java.util.*;
  */
 @RequiredArgsConstructor
 @Service
-@Primary
 public class SysMenuServiceImpl implements ISysMenuService {
 
     private final SysMenuMapper baseMapper;

@@ -12,7 +12,6 @@ import com.awake.ve.system.domain.SysRoleDept;
 import com.awake.ve.system.mapper.SysDeptMapper;
 import com.awake.ve.system.mapper.SysRoleDeptMapper;
 import com.awake.ve.system.service.ISysDataScopeService;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,7 +26,6 @@ import java.util.List;
  */
 @RequiredArgsConstructor
 @Service("sdss")
-@Primary
 public class SysDataScopeServiceImpl implements ISysDataScopeService {
 
     private final SysRoleDeptMapper roleDeptMapper;

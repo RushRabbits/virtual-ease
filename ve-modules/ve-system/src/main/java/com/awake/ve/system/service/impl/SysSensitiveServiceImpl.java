@@ -5,7 +5,6 @@ import com.awake.ve.common.core.utils.StringUtils;
 import com.awake.ve.common.satoken.utils.LoginHelper;
 import com.awake.ve.common.sensitive.core.SensitiveService;
 import com.awake.ve.common.tenant.helper.TenantHelper;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Service;
  * @version 3.6.0
  */
 @Service
-@Primary
 public class SysSensitiveServiceImpl implements SensitiveService {
 
     /**

@@ -23,7 +23,6 @@ import com.awake.ve.system.mapper.SysDeptMapper;
 import com.awake.ve.system.mapper.SysPostMapper;
 import com.awake.ve.system.mapper.SysUserPostMapper;
 import com.awake.ve.system.service.ISysPostService;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -37,7 +36,6 @@ import java.util.stream.Collectors;
  */
 @RequiredArgsConstructor
 @Service
-@Primary
 public class SysPostServiceImpl implements ISysPostService {
 
     private final SysPostMapper baseMapper;

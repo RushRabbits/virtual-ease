@@ -1,4 +1,0 @@
-com.awake.ve.common.encrypt.config.EncryptorAutoConfiguration
-com.awake.ve.common.encrypt.properties.ApiDecryptProperties
-com.awake.ve.common.encrypt.properties.EncryptProperties
-

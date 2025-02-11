@@ -15,7 +15,6 @@ import com.awake.ve.system.domain.bo.SysOperLogBo;
 import com.awake.ve.system.domain.vo.SysOperLogVo;
 import com.awake.ve.system.mapper.SysOperLogMapper;
 import com.awake.ve.system.service.ISysOperLogService;
-import org.springframework.context.annotation.Primary;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -32,7 +31,6 @@ import java.util.Map;
  */
 @RequiredArgsConstructor
 @Service
-@Primary
 public class SysOperLogServiceImpl implements ISysOperLogService {
 
     private final SysOperLogMapper baseMapper;

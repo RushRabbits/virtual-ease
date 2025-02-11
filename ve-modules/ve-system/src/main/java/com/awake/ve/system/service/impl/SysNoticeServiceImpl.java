@@ -17,7 +17,6 @@ import com.awake.ve.system.mapper.SysNoticeMapper;
 import com.awake.ve.system.mapper.SysUserMapper;
 import com.awake.ve.system.service.ISysNoticeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -30,7 +29,6 @@ import java.util.List;
  */
 @RequiredArgsConstructor
 @Service
-@Primary
 public class SysNoticeServiceImpl implements ISysNoticeService {
 
     private final SysNoticeMapper baseMapper;

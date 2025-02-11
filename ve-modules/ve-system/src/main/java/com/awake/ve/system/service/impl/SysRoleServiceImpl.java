@@ -33,7 +33,6 @@ import com.awake.ve.system.mapper.SysRoleMapper;
 import com.awake.ve.system.mapper.SysRoleMenuMapper;
 import com.awake.ve.system.mapper.SysUserRoleMapper;
 import com.awake.ve.system.service.ISysRoleService;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,7 +45,6 @@ import java.util.*;
  */
 @RequiredArgsConstructor
 @Service
-@Primary
 public class SysRoleServiceImpl implements ISysRoleService {
 
     private final SysRoleMapper baseMapper;

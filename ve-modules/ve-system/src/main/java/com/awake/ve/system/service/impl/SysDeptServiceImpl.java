@@ -30,7 +30,6 @@ import com.awake.ve.system.mapper.SysUserMapper;
 import com.awake.ve.system.service.ISysDeptService;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -44,7 +43,6 @@ import java.util.List;
  */
 @RequiredArgsConstructor
 @Service
-@Primary
 public class SysDeptServiceImpl implements ISysDeptService, DeptService {
 
     private final SysDeptMapper baseMapper;

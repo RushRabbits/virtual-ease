@@ -27,7 +27,6 @@ import com.awake.ve.system.mapper.SysDictTypeMapper;
 import com.awake.ve.system.service.ISysDictTypeService;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,7 +43,6 @@ import java.util.stream.Collectors;
  */
 @RequiredArgsConstructor
 @Service
-@Primary
 public class SysDictTypeServiceImpl implements ISysDictTypeService, DictService {
 
     private final SysDictTypeMapper baseMapper;

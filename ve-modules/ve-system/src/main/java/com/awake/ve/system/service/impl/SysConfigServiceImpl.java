@@ -25,7 +25,6 @@ import com.awake.ve.system.service.ISysConfigService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -39,7 +38,6 @@ import java.util.Map;
  */
 @RequiredArgsConstructor
 @Service
-@Primary
 public class SysConfigServiceImpl implements ISysConfigService, ConfigService {
 
     private final SysConfigMapper baseMapper;

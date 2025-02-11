@@ -19,7 +19,6 @@ import com.awake.ve.system.mapper.SysClientMapper;
 import com.awake.ve.system.service.ISysClientService;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -34,7 +33,6 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @Service
-@Primary
 public class SysClientServiceImpl implements ISysClientService {
 
     private final SysClientMapper baseMapper;

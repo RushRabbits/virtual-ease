@@ -6,7 +6,6 @@ import com.awake.ve.system.service.ISysMenuService;
 import com.awake.ve.system.service.ISysPermissionService;
 import com.awake.ve.system.service.ISysRoleService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -19,7 +18,6 @@ import java.util.Set;
  */
 @RequiredArgsConstructor
 @Service
-@Primary
 public class SysPermissionServiceImpl implements ISysPermissionService {
 
     private final ISysRoleService roleService;

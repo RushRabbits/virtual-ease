@@ -14,8 +14,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.awake.ve.sms4j</groupId>
+            <groupId>org.dromara.sms4j</groupId>
             <artifactId>sms4j-spring-boot-starter</artifactId>
+            <version>3.3.3</version>
         </dependency>
 
         <dependency>

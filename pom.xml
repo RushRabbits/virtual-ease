@@ -486,6 +486,13 @@
                 <version>${revision}</version>
             </dependency>
 
+            <!-- 代码生成器模块-->
+            <dependency>
+                <groupId>com.awake</groupId>
+                <artifactId>ve-generator</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

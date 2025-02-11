@@ -111,11 +111,11 @@
                 <version>${revision}</version>
             </dependency>
 
-            <!--            <dependency>-->
-            <!--                <groupId>com.awake</groupId>-->
-            <!--                <artifactId>ve-common-social</artifactId>-->
-            <!--                <version>${revision}</version>-->
-            <!--            </dependency>-->
+            <dependency>
+                <groupId>com.awake</groupId>
+                <artifactId>ve-common-social</artifactId>
+                <version>${revision}</version>
+            </dependency>
 
             <!-- web服务 -->
             <dependency>
@@ -177,6 +177,13 @@
             <dependency>
                 <groupId>com.awake</groupId>
                 <artifactId>ve-common-websocket</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- 代码生成器模块-->
+            <dependency>
+                <groupId>com.awake</groupId>
+                <artifactId>ve-generator</artifactId>
                 <version>${revision}</version>
             </dependency>
 

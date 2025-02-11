@@ -63,10 +63,10 @@
             <artifactId>ve-common-tenant</artifactId>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>com.awake</groupId>-->
-<!--            <artifactId>ve-common-security</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-security</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.awake</groupId>
@@ -83,10 +83,10 @@
             <artifactId>ve-common-sensitive</artifactId>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>com.awake</groupId>-->
-<!--            <artifactId>ve-common-encrypt</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-encrypt</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.awake</groupId>

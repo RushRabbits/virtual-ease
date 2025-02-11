@@ -33,6 +33,7 @@
         <module>ve-common-security</module>
         <module>ve-common-sse</module>
         <module>ve-common-websocket</module>
+        <module>ve-common-encrypt</module>
     </modules>
 
 </project>

@@ -3,6 +3,7 @@ package com.awake.ve.admin.web.service.auth.impl;
 import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.ObjectUtil;
+import com.awake.ve.admin.web.service.SysLoginService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.zhyd.oauth.config.AuthConfig;
@@ -22,7 +23,6 @@ import com.awake.ve.system.domain.vo.SysClientVo;
 import com.awake.ve.system.domain.vo.SysUserVo;
 import com.awake.ve.admin.web.domain.vo.LoginVo;
 import com.awake.ve.admin.web.service.auth.IAuthStrategy;
-import com.awake.ve.admin.web.service.SysLoginService;
 import me.zhyd.oauth.request.AuthWechatMiniProgramRequest;
 import org.springframework.stereotype.Service;
 

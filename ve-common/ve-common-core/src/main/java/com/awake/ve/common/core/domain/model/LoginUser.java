@@ -1,5 +1,6 @@
 package com.awake.ve.common.core.domain.model;
 
+import com.awake.ve.common.core.domain.dto.PostDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import com.awake.ve.common.core.domain.dto.RoleDTO;
@@ -106,6 +107,11 @@ public class LoginUser implements Serializable {
      * 角色对象
      */
     private List<RoleDTO> roles;
+
+    /**
+     * 岗位对象
+     */
+    private List<PostDTO> posts;
 
     /**
      * 数据权限 当前角色ID

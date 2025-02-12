@@ -3,46 +3,48 @@ package com.awake.ve.admin.web.service;
 import cn.dev33.satoken.exception.NotLoginException;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.lang.Opt;
 import cn.hutool.core.util.ObjectUtil;
-import com.baomidou.lock.annotation.Lock4j;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import me.zhyd.oauth.model.AuthUser;
+import com.awake.ve.admin.web.domain.vo.LoginVo;
 import com.awake.ve.common.core.constant.CacheConstants;
 import com.awake.ve.common.core.constant.Constants;
+import com.awake.ve.common.core.constant.SystemConstants;
 import com.awake.ve.common.core.constant.TenantConstants;
+import com.awake.ve.common.core.domain.dto.PostDTO;
 import com.awake.ve.common.core.domain.dto.RoleDTO;
 import com.awake.ve.common.core.domain.model.LoginUser;
 import com.awake.ve.common.core.enums.LoginType;
-import com.awake.ve.common.core.enums.TenantStatus;
-import com.awake.ve.common.core.exception.ServiceException;
 import com.awake.ve.common.core.exception.user.UserException;
 import com.awake.ve.common.core.utils.*;
 import com.awake.ve.common.log.event.LoginInfoEvent;
 import com.awake.ve.common.mybatis.helper.DataPermissionHelper;
-import com.awake.ve.common.translation.utils.RedisUtils;
 import com.awake.ve.common.satoken.utils.LoginHelper;
 import com.awake.ve.common.tenant.exception.TenantException;
 import com.awake.ve.common.tenant.helper.TenantHelper;
+import com.awake.ve.common.translation.utils.RedisUtils;
 import com.awake.ve.system.domain.SysUser;
 import com.awake.ve.system.domain.bo.SysSocialBo;
 import com.awake.ve.system.domain.vo.*;
 import com.awake.ve.system.mapper.SysUserMapper;
 import com.awake.ve.system.service.*;
+import com.baomidou.lock.annotation.Lock4j;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import me.zhyd.oauth.model.AuthUser;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
-import java.time.Duration;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 /**
- * 登录校验方法
+ * 登录服务
  *
- * @author Lion Li
+ * @author wangjiaxing
+ * @date 2025/2/12 13:47
  */
 @RequiredArgsConstructor
 @Slf4j
@@ -55,64 +57,72 @@ public class SysLoginService {
     @Value("${user.password.lockTime}")
     private Integer lockTime;
 
-    private final ISysTenantService tenantService;
-    private final ISysPermissionService permissionService;
+    private final ISysTenantService sysTenantService;
+    private final ISysPermissionService sysPermissionService;
     private final ISysSocialService sysSocialService;
-    private final ISysRoleService roleService;
-    private final ISysDeptService deptService;
+    private final ISysRoleService sysRoleService;
+    private final ISysDeptService sysDeptService;
+    private final ISysPostService sysPostService;
     private final SysUserMapper userMapper;
-
 
     /**
      * 绑定第三方用户
      *
-     * @param authUserData 授权响应实体
+     * @param authUser {@link AuthUser}
+     * @author wangjiaxing
+     * @date 2025/2/12 13:51
      */
     @Lock4j
-    public void socialRegister(AuthUser authUserData) {
-        String authId = authUserData.getSource() + authUserData.getUuid();
+    public void socialRegister(AuthUser authUser) {
+        String authId = authUser.getSource() + authUser.getUuid();
+
         // 第三方用户信息
-        SysSocialBo bo = BeanUtil.toBean(authUserData, SysSocialBo.class);
-        BeanUtil.copyProperties(authUserData.getToken(), bo);
+        SysSocialBo socialBo = BeanUtil.toBean(authUser, SysSocialBo.class);
+        BeanUtil.copyProperties(authUser.getToken(), socialBo);
+
         Long userId = LoginHelper.getUserId();
-        bo.setUserId(userId);
-        bo.setAuthId(authId);
-        bo.setOpenId(authUserData.getUuid());
-        bo.setUserName(authUserData.getUsername());
-        bo.setNickName(authUserData.getNickname());
+        socialBo.setUserId(userId);
+        socialBo.setAuthId(authId);
+        socialBo.setOpenId(authUser.getUuid());
+        socialBo.setUserName(authUser.getUsername());
+        socialBo.setNickName(authUser.getNickname());
+
+        // 第三方账号是否已绑定其他账号
         List<SysSocialVo> checkList = sysSocialService.selectByAuthId(authId);
-        if (CollUtil.isNotEmpty(checkList)) {
-            throw new ServiceException("此三方账号已经被绑定!");
+        if (!CollectionUtils.isEmpty(checkList)) {
+            throw new RuntimeException("第三方账号已绑定其他账号");
         }
-        // 查询是否已经绑定用户
+
         SysSocialBo params = new SysSocialBo();
         params.setUserId(userId);
-        params.setSource(bo.getSource());
-        List<SysSocialVo> list = sysSocialService.queryList(params);
-        if (CollUtil.isEmpty(list)) {
-            // 没有绑定用户, 新增用户信息
-            sysSocialService.insertByBo(bo);
+        params.setSource(socialBo.getSource());
+        List<SysSocialVo> socialList = sysSocialService.queryList(params);
+        if (CollectionUtils.isEmpty(socialList)) {
+            // 没有绑定用户信息,新增用户信息
+            sysSocialService.insertByBo(socialBo);
         } else {
             // 更新用户信息
-            bo.setId(list.get(0).getId());
-            sysSocialService.updateByBo(bo);
-            // 如果要绑定的平台账号已经被绑定过了 是否抛异常自行决断
-            // throw new ServiceException("此平台账号已经被绑定!");
+            socialBo.setId(socialList.get(0).getId());
+            sysSocialService.updateByBo(socialBo);
+            // 自行判断是否要抛异常
+            // throw new RuntimeException("此平台账号已绑定其他账号");
         }
     }
 
-
     /**
      * 退出登录
+     *
+     * @author wangjiaxing
+     * @date 2025/2/12 14:07
      */
     public void logout() {
         try {
             LoginUser loginUser = LoginHelper.getLoginUser();
-            if (ObjectUtil.isNull(loginUser)) {
+            if (loginUser == null) {
                 return;
             }
+            // 超级管理员,登出清除动态租户
             if (TenantHelper.isEnable() && LoginHelper.isSuperAdmin()) {
-                // 超级管理员 登出清除动态租户
                 TenantHelper.clearDynamic();
             }
             recordLogininfor(loginUser.getTenantId(), loginUser.getUsername(), Constants.LOGOUT, MessageUtils.message("user.logout.success"));
@@ -123,28 +133,37 @@ public class SysLoginService {
             } catch (NotLoginException ignored) {
             }
         }
+
     }
 
     /**
-     * 记录登录信息
+     * 记录
      *
-     * @param tenantId 租户ID
+     * @param tenantId 租户id
      * @param username 用户名
-     * @param status   状态
-     * @param message  消息内容
+     * @param logout   登出
+     * @param message  错误消息
+     * @author wangjiaxing
+     * @date 2025/2/12 14:04
      */
-    public void recordLogininfor(String tenantId, String username, String status, String message) {
-        LoginInfoEvent logininforEvent = new LoginInfoEvent();
-        logininforEvent.setTenantId(tenantId);
-        logininforEvent.setUsername(username);
-        logininforEvent.setStatus(status);
-        logininforEvent.setMessage(message);
-        logininforEvent.setRequest(ServletUtils.getRequest());
-        SpringUtils.context().publishEvent(logininforEvent);
+    public void recordLogininfor(String tenantId, String username, String logout, String message) {
+        LoginInfoEvent event = new LoginInfoEvent();
+        event.setTenantId(tenantId);
+        event.setUsername(username);
+        event.setStatus(logout);
+        event.setMessage(message);
+        event.setRequest(ServletUtils.getRequest());
+
+        SpringUtils.context().publishEvent(event);
     }
 
     /**
-     * 构建登录用户
+     * 构建LoginUser
+     *
+     * @param user {@link SysUserVo}
+     * @return {@link LoginUser}
+     * @author wangjiaxing
+     * @date 2025/2/12 14:08
      */
     public LoginUser buildLoginUser(SysUserVo user) {
         LoginUser loginUser = new LoginUser();
@@ -154,21 +173,26 @@ public class SysLoginService {
         loginUser.setUsername(user.getUserName());
         loginUser.setNickname(user.getNickName());
         loginUser.setUserType(user.getUserType());
-        loginUser.setMenuPermission(permissionService.getMenuPermission(user.getUserId()));
-        loginUser.setRolePermission(permissionService.getRolePermission(user.getUserId()));
-        if (ObjectUtil.isNotNull(user.getDeptId())) {
-            Opt<SysDeptVo> deptOpt = Opt.of(user.getDeptId()).map(deptService::selectDeptById);
+        loginUser.setMenuPermission(sysPermissionService.getMenuPermission(user.getUserId()));
+        loginUser.setRolePermission(sysPermissionService.getRolePermission(user.getUserId()));
+        if (!Objects.isNull(user.getDeptId())) {
+            Opt<SysDeptVo> deptOpt = Opt.of(user.getDeptId()).map(sysDeptService::selectDeptById);
             loginUser.setDeptName(deptOpt.map(SysDeptVo::getDeptName).orElse(StringUtils.EMPTY));
         }
-        List<SysRoleVo> roles = roleService.selectRolesByUserId(user.getUserId());
+        List<SysRoleVo> roles = sysRoleService.selectRolesByUserId(user.getUserId());
+        List<SysPostVo> posts = sysPostService.selectPostsByUserId(user.getUserId());
         loginUser.setRoles(BeanUtil.copyToList(roles, RoleDTO.class));
+        loginUser.setPosts(BeanUtil.copyToList(posts, PostDTO.class));
         return loginUser;
     }
 
     /**
      * 记录登录信息
      *
-     * @param userId 用户ID
+     * @param userId 用户id
+     * @param ip     ip
+     * @author wangjiaxing
+     * @date 2025/2/12 14:22
      */
     public void recordLoginInfo(Long userId, String ip) {
         SysUser sysUser = new SysUser();
@@ -180,32 +204,42 @@ public class SysLoginService {
     }
 
     /**
-     * 登录校验
+     * 校验是否登录
+     *
+     * @param loginType 登陆类型
+     * @param tenantId  租户id
+     * @param username  用户名
+     * @param supplier  {@link Supplier}
+     * @author wangjiaxing
+     * @date 2025/2/12 14:23
      */
     public void checkLogin(LoginType loginType, String tenantId, String username, Supplier<Boolean> supplier) {
         String errorKey = CacheConstants.PWD_ERR_CNT_KEY + username;
         String loginFail = Constants.LOGIN_FAIL;
 
-        // 获取用户登录错误次数，默认为0 (可自定义限制策略 例如: key + username + ip)
-        int errorNumber = ObjectUtil.defaultIfNull(RedisUtils.getCacheObject(errorKey), 0);
-        // 锁定时间内登录 则踢出
-        if (errorNumber >= maxRetryCount) {
+        // 获取用户登录错误次数,默认为0 (可自定义限制策略 例如: key + username + ip)
+        Integer errorNum = ObjectUtil.defaultIfNull(RedisUtils.getCacheObject(errorKey), 0);
+
+        // 锁定时间内登录,则踢出
+        if (errorNum >= maxRetryCount) {
             recordLogininfor(tenantId, username, loginFail, MessageUtils.message(loginType.getRetryLimitExceed(), maxRetryCount, lockTime));
             throw new UserException(loginType.getRetryLimitExceed(), maxRetryCount, lockTime);
         }
 
+        // 登陆失败
         if (supplier.get()) {
             // 错误次数递增
-            errorNumber++;
-            RedisUtils.setCacheObject(errorKey, errorNumber, Duration.ofMinutes(lockTime));
-            // 达到规定错误次数 则锁定登录
-            if (errorNumber >= maxRetryCount) {
+            errorNum++;
+            RedisUtils.setCacheObject(errorKey, errorNum);
+
+            // 到达错误次数限制 锁定登录
+            if (errorNum >= maxRetryCount) {
                 recordLogininfor(tenantId, username, loginFail, MessageUtils.message(loginType.getRetryLimitExceed(), maxRetryCount, lockTime));
                 throw new UserException(loginType.getRetryLimitExceed(), maxRetryCount, lockTime);
             } else {
-                // 未达到规定错误次数
-                recordLogininfor(tenantId, username, loginFail, MessageUtils.message(loginType.getRetryLimitCount(), errorNumber));
-                throw new UserException(loginType.getRetryLimitCount(), errorNumber);
+                // 未达到错误上限
+                recordLogininfor(tenantId, username, loginFail, MessageUtils.message(loginType.getRetryLimitCount(), errorNum, maxRetryCount));
+                throw new UserException(loginType.getRetryLimitCount(), errorNum);
             }
         }
 
@@ -216,30 +250,30 @@ public class SysLoginService {
     /**
      * 校验租户
      *
-     * @param tenantId 租户ID
+     * @param tenantId 租户id
+     * @author wangjiaxing
+     * @date 2025/2/12 15:02
      */
     public void checkTenant(String tenantId) {
         if (!TenantHelper.isEnable()) {
             return;
         }
-        if (TenantConstants.DEFAULT_TENANT_ID.equals(tenantId)) {
-            return;
-        }
         if (StringUtils.isBlank(tenantId)) {
             throw new TenantException("tenant.number.not.blank");
         }
-        SysTenantVo tenant = tenantService.queryByTenantId(tenantId);
+        if (TenantConstants.DEFAULT_TENANT_ID.equals(tenantId)) {
+            return;
+        }
+        SysTenantVo tenant = sysTenantService.queryByTenantId(tenantId);
         if (ObjectUtil.isNull(tenant)) {
-            log.info("登录租户：{} 不存在.", tenantId);
+            log.info("[SysLoginService][checkTenant] 登录租户:{} 不存在", tenantId);
             throw new TenantException("tenant.not.exists");
-        } else if (TenantStatus.DISABLE.getCode().equals(tenant.getStatus())) {
-            log.info("登录租户：{} 已被停用.", tenantId);
+        } else if (SystemConstants.DISABLE.equals(tenant.getStatus())) {
+            log.info("[SysLoginService][checkTenant] 登录租户:{} 已停用", tenantId);
             throw new TenantException("tenant.blocked");
-        } else if (ObjectUtil.isNotNull(tenant.getExpireTime())
-            && new Date().after(tenant.getExpireTime())) {
-            log.info("登录租户：{} 已超过有效期.", tenantId);
+        } else if (ObjectUtil.isNotNull(tenant.getExpireTime()) && new Date().after(tenant.getExpireTime())) {
+            log.info("[SysLoginService][checkTenant] 登录租户:{} 已过期", tenantId);
             throw new TenantException("tenant.expired");
         }
     }
-
 }

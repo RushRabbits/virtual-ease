@@ -7,6 +7,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
+import com.awake.ve.admin.web.service.SysLoginService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import com.awake.ve.common.core.constant.CacheConstants;
@@ -20,7 +21,6 @@ import com.awake.ve.common.log.event.LoginInfoEvent;
 import com.awake.ve.common.translation.utils.RedisUtils;
 import com.awake.ve.common.satoken.utils.LoginHelper;
 import com.awake.ve.common.tenant.helper.TenantHelper;
-import com.awake.ve.admin.web.service.SysLoginService;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;

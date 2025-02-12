@@ -119,4 +119,12 @@ public interface ISysPostService {
      * @return 结果
      */
     int updatePost(SysPostBo bo);
+
+    /**
+     * 通过用户ID查询岗位
+     *
+     * @param userId 用户ID
+     * @return 岗位列表
+     */
+    List<SysPostVo> selectPostsByUserId(Long userId);
 }

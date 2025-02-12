@@ -4,6 +4,7 @@ import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
+import com.awake.ve.admin.web.service.SysLoginService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.zhyd.oauth.model.AuthResponse;
@@ -27,7 +28,6 @@ import com.awake.ve.system.mapper.SysUserMapper;
 import com.awake.ve.system.service.ISysSocialService;
 import com.awake.ve.admin.web.domain.vo.LoginVo;
 import com.awake.ve.admin.web.service.auth.IAuthStrategy;
-import com.awake.ve.admin.web.service.SysLoginService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

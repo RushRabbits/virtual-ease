@@ -46,7 +46,7 @@ import java.util.function.Supplier;
  */
 @RequiredArgsConstructor
 @Slf4j
-@Service()
+@Service
 public class SysLoginService {
 
     @Value("${user.password.maxRetryCount}")

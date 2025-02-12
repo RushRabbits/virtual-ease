@@ -1,8 +1,6 @@
 package com.awake.ve.admin.web.service;
 
 import cn.dev33.satoken.secure.BCrypt;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import lombok.RequiredArgsConstructor;
 import com.awake.ve.common.core.constant.Constants;
 import com.awake.ve.common.core.constant.GlobalConstants;
 import com.awake.ve.common.core.domain.model.RegisterBody;
@@ -15,80 +13,94 @@ import com.awake.ve.common.core.utils.ServletUtils;
 import com.awake.ve.common.core.utils.SpringUtils;
 import com.awake.ve.common.core.utils.StringUtils;
 import com.awake.ve.common.log.event.LoginInfoEvent;
-import com.awake.ve.common.translation.utils.RedisUtils;
 import com.awake.ve.common.tenant.helper.TenantHelper;
+import com.awake.ve.common.translation.utils.RedisUtils;
 import com.awake.ve.common.web.config.properties.CaptchaProperties;
 import com.awake.ve.system.domain.SysUser;
 import com.awake.ve.system.domain.bo.SysUserBo;
 import com.awake.ve.system.mapper.SysUserMapper;
 import com.awake.ve.system.service.ISysUserService;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 /**
- * 注册校验方法
+ * 注册校验实现类
  *
- * @author Lion Li
+ * @author wangjiaxing
+ * @date 2025/2/12 11:44
  */
 @RequiredArgsConstructor
-@Service("srs")
+@Service
 public class SysRegisterService {
 
     private final ISysUserService userService;
-    private final SysUserMapper userMapper;
+    private final SysUserMapper sysUserMapper;
     private final CaptchaProperties captchaProperties;
 
     /**
      * 注册
+     *
+     * @param registerBody {@link RegisterBody}
+     * @author wangjiaxing
+     * @date 2025/2/12 11:45
      */
     public void register(RegisterBody registerBody) {
         String tenantId = registerBody.getTenantId();
         String username = registerBody.getUsername();
         String password = registerBody.getPassword();
+
         // 校验用户类型是否存在
         String userType = UserType.getUserType(registerBody.getUserType()).getUserType();
 
-        boolean captchaEnabled = captchaProperties.getEnable();
-        // 验证码开关
+        // 验证码
+        Boolean captchaEnabled = captchaProperties.getEnable();
         if (captchaEnabled) {
             validateCaptcha(tenantId, username, registerBody.getCode(), registerBody.getUuid());
         }
-        SysUserBo sysUser = new SysUserBo();
-        sysUser.setUserName(username);
-        sysUser.setNickName(username);
-        sysUser.setPassword(BCrypt.hashpw(password));
-        sysUser.setUserType(userType);
 
-        boolean exist = TenantHelper.dynamic(tenantId, () -> {
-            return userMapper.exists(new LambdaQueryWrapper<SysUser>()
-                .eq(SysUser::getUserName, sysUser.getUserName()));
-        });
+        SysUserBo user = new SysUserBo();
+        user.setUserName(username);
+        user.setNickName(username);
+        user.setPassword(BCrypt.hashpw(password));
+        user.setUserType(userType);
+
+        Boolean exist = TenantHelper.dynamic(
+                tenantId, () -> sysUserMapper.exists(new LambdaQueryWrapper<SysUser>().eq(SysUser::getUserName, username)
+                )
+        );
+
         if (exist) {
             throw new UserException("user.register.save.error", username);
         }
-        boolean regFlag = userService.registerUser(sysUser, tenantId);
-        if (!regFlag) {
-            throw new UserException("user.register.error");
+        boolean registerFlag = userService.registerUser(user, tenantId);
+        if (!registerFlag) {
+            throw new UserException("user.register.error", username);
         }
-        recordLogininfor(tenantId, username, Constants.REGISTER, MessageUtils.message("user.register.success"));
+        recordLoggingInfo(tenantId, username, Constants.REGISTER, MessageUtils.message("user.register.success"));
     }
 
     /**
      * 校验验证码
      *
+     * @param tenantId 租户id
      * @param username 用户名
-     * @param code     验证码
      * @param uuid     唯一标识
+     * @author wangjiaxing
+     * @date 2025/2/12 11:48
      */
-    public void validateCaptcha(String tenantId, String username, String code, String uuid) {
+    private void validateCaptcha(String tenantId, String username, String code, String uuid) {
         String verifyKey = GlobalConstants.CAPTCHA_CODE_KEY + StringUtils.blankToDefault(uuid, "");
         String captcha = RedisUtils.getCacheObject(verifyKey);
         RedisUtils.deleteObject(verifyKey);
+
         if (captcha == null) {
-            recordLogininfor(tenantId, username, Constants.REGISTER, MessageUtils.message("user.jcaptcha.expire"));
+            recordLoggingInfo(tenantId, username, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.expire"));
             throw new CaptchaExpireException();
         }
+
         if (!code.equalsIgnoreCase(captcha)) {
-            recordLogininfor(tenantId, username, Constants.REGISTER, MessageUtils.message("user.jcaptcha.error"));
+            recordLoggingInfo(tenantId, username, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.error"));
             throw new CaptchaException();
         }
     }
@@ -96,20 +108,22 @@ public class SysRegisterService {
     /**
      * 记录登录信息
      *
-     * @param tenantId 租户ID
+     * @param tenantId 租户id
      * @param username 用户名
      * @param status   状态
-     * @param message  消息内容
-     * @return
+     * @param message  错误信息
+     * @author wangjiaxing
+     * @date 2025/2/12 11:51
      */
-    private void recordLogininfor(String tenantId, String username, String status, String message) {
-        LoginInfoEvent logininforEvent = new LoginInfoEvent();
-        logininforEvent.setTenantId(tenantId);
-        logininforEvent.setUsername(username);
-        logininforEvent.setStatus(status);
-        logininforEvent.setMessage(message);
-        logininforEvent.setRequest(ServletUtils.getRequest());
-        SpringUtils.context().publishEvent(logininforEvent);
-    }
+    private void recordLoggingInfo(String tenantId, String username, String status, String message) {
+        LoginInfoEvent loginInfoEvent = new LoginInfoEvent();
+        loginInfoEvent.setTenantId(tenantId);
+        loginInfoEvent.setUsername(username);
+        loginInfoEvent.setStatus(status);
+        loginInfoEvent.setMessage(message);
+        loginInfoEvent.setRequest(ServletUtils.getRequest());
 
+        // 推送事件到容器 对应的监听器(UserActionListener)会处理该事件
+        SpringUtils.context().publishEvent(loginInfoEvent);
+    }
 }

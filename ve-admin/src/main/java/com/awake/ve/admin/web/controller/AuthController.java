@@ -8,6 +8,7 @@ import cn.hutool.core.util.ObjectUtil;
 import com.awake.ve.admin.web.domain.vo.LoginTenantVo;
 import com.awake.ve.admin.web.domain.vo.LoginVo;
 import com.awake.ve.admin.web.domain.vo.TenantListVo;
+import com.awake.ve.admin.web.service.SysRegisterService;
 import com.awake.ve.admin.web.service.auth.IAuthStrategy;
 import com.awake.ve.common.core.constant.UserConstants;
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,7 +38,6 @@ import com.awake.ve.system.service.ISysConfigService;
 import com.awake.ve.system.service.ISysSocialService;
 import com.awake.ve.system.service.ISysTenantService;
 import com.awake.ve.admin.web.service.SysLoginService;
-import com.awake.ve.admin.web.service.SysRegisterService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

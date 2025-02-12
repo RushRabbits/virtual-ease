@@ -1,10 +1,10 @@
 package com.awake.ve.admin.web.service;
 
 
+import com.awake.ve.admin.web.domain.vo.LoginVo;
 import com.awake.ve.common.core.exception.ServiceException;
 import com.awake.ve.common.core.utils.SpringUtils;
 import com.awake.ve.system.domain.vo.SysClientVo;
-import com.awake.ve.admin.web.domain.vo.LoginVo;
 
 /**
  * 授权策略

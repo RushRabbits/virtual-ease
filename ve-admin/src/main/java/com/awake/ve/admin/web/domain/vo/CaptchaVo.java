@@ -3,9 +3,10 @@ package com.awake.ve.admin.web.domain.vo;
 import lombok.Data;
 
 /**
- * 验证码信息
+ * 验证码VO
  *
- * @author Michelle.Chung
+ * @author wangjiaxing
+ * @date 2025/2/12 9:13
  */
 @Data
 public class CaptchaVo {
@@ -21,5 +22,4 @@ public class CaptchaVo {
      * 验证码图片
      */
     private String img;
-
 }

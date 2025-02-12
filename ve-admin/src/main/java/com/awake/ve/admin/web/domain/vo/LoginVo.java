@@ -6,7 +6,8 @@ import lombok.Data;
 /**
  * 登录验证信息
  *
- * @author Michelle.Chung
+ * @author wangjiaxing
+ * @date 2025/2/12 9:17
  */
 @Data
 public class LoginVo {
@@ -24,19 +25,19 @@ public class LoginVo {
     private String refreshToken;
 
     /**
-     * 授权令牌 access_token 的有效期
+     * 授权令牌的有效时间
      */
     @JsonProperty("expire_in")
     private Long expireIn;
 
     /**
-     * 刷新令牌 refresh_token 的有效期
+     * 刷新令牌的有效时间
      */
     @JsonProperty("refresh_expire_in")
     private Long refreshExpireIn;
 
     /**
-     * 应用id
+     * 客户端id
      */
     @JsonProperty("client_id")
     private String clientId;
@@ -47,8 +48,7 @@ public class LoginVo {
     private String scope;
 
     /**
-     * 用户 openid
+     * 用户openId
      */
     private String openid;
-
 }

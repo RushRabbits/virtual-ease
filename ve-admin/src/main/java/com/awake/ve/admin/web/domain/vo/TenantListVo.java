@@ -1,25 +1,26 @@
 package com.awake.ve.admin.web.domain.vo;
 
+import com.awake.ve.system.domain.SysTenant;
 import io.github.linpeilie.annotations.AutoMapper;
 import lombok.Data;
-import com.awake.ve.system.domain.vo.SysTenantVo;
 
 /**
  * 租户列表
  *
- * @author Lion Li
+ * @author wangjiaxing
+ * @date 2025/2/12 9:15
  */
 @Data
-@AutoMapper(target = SysTenantVo.class)
+@AutoMapper(target = SysTenant.class)
 public class TenantListVo {
 
     /**
-     * 租户编号
+     * 租户id
      */
     private String tenantId;
 
     /**
-     * 企业名称
+     * 公司名
      */
     private String companyName;
 
@@ -27,5 +28,4 @@ public class TenantListVo {
      * 域名
      */
     private String domain;
-
 }

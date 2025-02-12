@@ -255,7 +255,7 @@
             </dependency>
             <!--短信sms4j-->
             <dependency>
-                <groupId>com.awake.ve.sms4j</groupId>
+                <groupId>org.dromara.sms4j</groupId>
                 <artifactId>sms4j-spring-boot-starter</artifactId>
                 <version>${sms4j.version}</version>
             </dependency>

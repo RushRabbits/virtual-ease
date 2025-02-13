@@ -17,6 +17,36 @@
             <groupId>com.awake</groupId>
             <artifactId>ve-common-core</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-mybatis</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-tenant</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-excel</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-log</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-idempotent</artifactId>
+        </dependency>
     </dependencies>
 
 

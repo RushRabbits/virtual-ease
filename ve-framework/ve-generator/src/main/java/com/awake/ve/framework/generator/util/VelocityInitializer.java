@@ -1,4 +1,4 @@
-package com.awake.ve.modules.generator.util;
+package com.awake.ve.framework.generator.util;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

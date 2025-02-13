@@ -1,9 +1,9 @@
-package com.awake.ve.modules.generator.service;
+package com.awake.ve.framework.generator.service;
 
 import com.awake.ve.common.mybatis.core.page.PageQuery;
 import com.awake.ve.common.mybatis.core.page.TableDataInfo;
-import com.awake.ve.modules.generator.domain.GenTable;
-import com.awake.ve.modules.generator.domain.GenTableColumn;
+import com.awake.ve.framework.generator.domain.GenTable;
+import com.awake.ve.framework.generator.domain.GenTableColumn;
 
 import java.util.List;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.awake.ve.modules.generator.config;
+package com.awake.ve.framework.generator.config;
 
 import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
 import com.baomidou.dynamic.datasource.toolkit.DynamicDataSourceContextHolder;

@@ -1,4 +1,4 @@
-package com.awake.ve.modules.generator.domain;
+package com.awake.ve.framework.generator.domain;
 
 import com.baomidou.mybatisplus.annotation.FieldStrategy;
 import com.baomidou.mybatisplus.annotation.TableField;

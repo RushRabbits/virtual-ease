@@ -1,4 +1,4 @@
-package com.awake.ve.modules.generator.controller;
+package com.awake.ve.framework.generator.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.hutool.core.convert.Convert;
@@ -12,9 +12,9 @@ import com.awake.ve.common.mybatis.core.page.PageQuery;
 import com.awake.ve.common.mybatis.core.page.TableDataInfo;
 import com.awake.ve.common.mybatis.helper.DataBaseHelper;
 import com.awake.ve.common.web.core.BaseController;
-import com.awake.ve.modules.generator.domain.GenTable;
-import com.awake.ve.modules.generator.domain.GenTableColumn;
-import com.awake.ve.modules.generator.service.IGenTableService;
+import com.awake.ve.framework.generator.domain.GenTable;
+import com.awake.ve.framework.generator.domain.GenTableColumn;
+import com.awake.ve.framework.generator.service.IGenTableService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 

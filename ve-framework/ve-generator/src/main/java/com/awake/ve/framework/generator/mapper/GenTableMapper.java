@@ -1,9 +1,9 @@
-package com.awake.ve.modules.generator.mapper;
+package com.awake.ve.framework.generator.mapper;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.annotation.InterceptorIgnore;
 import com.awake.ve.common.mybatis.core.mapper.BaseMapperPlus;
-import com.awake.ve.modules.generator.domain.GenTable;
+import com.awake.ve.framework.generator.domain.GenTable;
 
 import java.util.List;
 

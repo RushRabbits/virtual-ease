@@ -1,13 +1,13 @@
-package com.awake.ve.modules.generator.util;
+package com.awake.ve.framework.generator.util;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.RegExUtils;
 import com.awake.ve.common.core.utils.StringUtils;
-import com.awake.ve.modules.generator.config.GenConfig;
-import com.awake.ve.modules.generator.constant.GenConstants;
-import com.awake.ve.modules.generator.domain.GenTable;
-import com.awake.ve.modules.generator.domain.GenTableColumn;
+import com.awake.ve.framework.generator.config.GenConfig;
+import com.awake.ve.framework.generator.constant.GenConstants;
+import com.awake.ve.framework.generator.domain.GenTable;
+import com.awake.ve.framework.generator.domain.GenTableColumn;
 
 import java.util.Arrays;
 

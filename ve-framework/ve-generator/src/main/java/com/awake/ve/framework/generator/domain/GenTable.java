@@ -1,4 +1,4 @@
-package com.awake.ve.modules.generator.domain;
+package com.awake.ve.framework.generator.domain;
 
 import com.baomidou.mybatisplus.annotation.FieldStrategy;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -10,7 +10,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import com.awake.ve.common.core.utils.StringUtils;
 import com.awake.ve.common.mybatis.core.domain.BaseEntity;
-import com.awake.ve.modules.generator.constant.GenConstants;
+import com.awake.ve.framework.generator.constant.GenConstants;
 
 import java.util.List;
 

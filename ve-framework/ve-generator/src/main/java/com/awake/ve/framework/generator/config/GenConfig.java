@@ -1,4 +1,4 @@
-package com.awake.ve.modules.generator.config;
+package com.awake.ve.framework.generator.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;

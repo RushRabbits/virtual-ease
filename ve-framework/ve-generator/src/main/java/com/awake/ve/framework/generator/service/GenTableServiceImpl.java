@@ -1,4 +1,4 @@
-package com.awake.ve.modules.generator.service;
+package com.awake.ve.framework.generator.service;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.IoUtil;
@@ -30,14 +30,14 @@ import com.awake.ve.common.json.utils.JsonUtils;
 import com.awake.ve.common.mybatis.core.page.PageQuery;
 import com.awake.ve.common.mybatis.core.page.TableDataInfo;
 import com.awake.ve.common.satoken.utils.LoginHelper;
-import com.awake.ve.modules.generator.constant.GenConstants;
-import com.awake.ve.modules.generator.domain.GenTable;
-import com.awake.ve.modules.generator.domain.GenTableColumn;
-import com.awake.ve.modules.generator.mapper.GenTableColumnMapper;
-import com.awake.ve.modules.generator.mapper.GenTableMapper;
-import com.awake.ve.modules.generator.util.GenUtils;
-import com.awake.ve.modules.generator.util.VelocityInitializer;
-import com.awake.ve.modules.generator.util.VelocityUtils;
+import com.awake.ve.framework.generator.constant.GenConstants;
+import com.awake.ve.framework.generator.domain.GenTable;
+import com.awake.ve.framework.generator.domain.GenTableColumn;
+import com.awake.ve.framework.generator.mapper.GenTableColumnMapper;
+import com.awake.ve.framework.generator.mapper.GenTableMapper;
+import com.awake.ve.framework.generator.util.GenUtils;
+import com.awake.ve.framework.generator.util.VelocityInitializer;
+import com.awake.ve.framework.generator.util.VelocityUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

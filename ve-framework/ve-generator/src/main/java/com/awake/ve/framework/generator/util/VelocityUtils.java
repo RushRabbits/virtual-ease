@@ -1,18 +1,19 @@
-package com.awake.ve.modules.generator.util;
+package com.awake.ve.framework.generator.util;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.lang.Dict;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-import org.apache.velocity.VelocityContext;
+import cn.hutool.core.util.ObjectUtil;
+import com.awake.ve.framework.generator.constant.GenConstants;
 import com.awake.ve.common.core.utils.DateUtils;
 import com.awake.ve.common.core.utils.StringUtils;
 import com.awake.ve.common.json.utils.JsonUtils;
 import com.awake.ve.common.mybatis.helper.DataBaseHelper;
-import com.awake.ve.modules.generator.constant.GenConstants;
-import com.awake.ve.modules.generator.domain.GenTable;
-import com.awake.ve.modules.generator.domain.GenTableColumn;
+import com.awake.ve.framework.generator.domain.GenTable;
+import com.awake.ve.framework.generator.domain.GenTableColumn;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import org.apache.velocity.VelocityContext;
 
 import java.util.*;
 
@@ -74,6 +75,18 @@ public class VelocityUtils {
         if (GenConstants.TPL_TREE.equals(tplCategory)) {
             setTreeVelocityContext(velocityContext, genTable);
         }
+        // 判断是modal还是drawer
+        Dict paramsObj = JsonUtils.parseMap(genTable.getOptions());
+        if (ObjectUtil.isNotNull(paramsObj)) {
+            String popupComponent = Optional
+                .ofNullable(paramsObj.getStr("popupComponent"))
+                .orElse("modal");
+            velocityContext.put("popupComponent", popupComponent);
+            velocityContext.put("PopupComponent", StringUtils.capitalize(popupComponent));
+        } else {
+            velocityContext.put("popupComponent", "modal");
+            velocityContext.put("PopupComponent", "Modal");
+        }
         return velocityContext;
     }
 
@@ -134,6 +147,21 @@ public class VelocityUtils {
         } else if (GenConstants.TPL_TREE.equals(tplCategory)) {
             templates.add("vm/vue/index-tree.vue.vm");
         }
+
+        /**
+         * 添加vben5
+         */
+        templates.add("vm/vben5/api/index.ts.vm");
+        templates.add("vm/vben5/api/model.d.ts.vm");
+        templates.add("vm/vben5/views/data.ts.vm");
+        if (GenConstants.TPL_CRUD.equals(tplCategory)) {
+            templates.add("vm/vben5/views/index_vben.vue.vm");
+            templates.add("vm/vben5/views/popup.vue.vm");
+        } else if (GenConstants.TPL_TREE.equals(tplCategory)) {
+            templates.add("vm/vben5/views/index_vben_tree.vue.vm");
+            templates.add("vm/vben5/views/popup_tree.vue.vm");
+        }
+
         return templates;
     }
 
@@ -186,6 +214,38 @@ public class VelocityUtils {
         } else if (template.contains("index-tree.vue.vm")) {
             fileName = StringUtils.format("{}/views/{}/{}/index.vue", vuePath, moduleName, businessName);
         }
+
+        // 判断是modal还是drawer
+        Dict paramsObj = JsonUtils.parseMap(genTable.getOptions());
+        String popupComponent = "modal";
+        if (ObjectUtil.isNotNull(paramsObj)) {
+            popupComponent = Optional
+                .ofNullable(paramsObj.getStr("popupComponent"))
+                .orElse("modal");
+        }
+        String vben5Path = "vben5";
+        if (template.contains("vm/vben5/api/index.ts.vm")) {
+            fileName = StringUtils.format("{}/api/{}/{}/index.ts", vben5Path, moduleName, businessName);
+        }
+        if (template.contains("vm/vben5/api/model.d.ts.vm")) {
+            fileName = StringUtils.format("{}/api/{}/{}/model.d.ts", vben5Path, moduleName, businessName);
+        }
+        if (template.contains("vm/vben5/views/index_vben.vue.vm")) {
+            fileName = StringUtils.format("{}/views/{}/{}/index.vue", vben5Path, moduleName, businessName);
+        }
+        if (template.contains("vm/vben5/views/index_vben_tree.vue.vm")) {
+            fileName = StringUtils.format("{}/views/{}/{}/index.vue", vben5Path, moduleName, businessName);
+        }
+        if (template.contains("vm/vben5/views/data.ts.vm")) {
+            fileName = StringUtils.format("{}/views/{}/{}/data.ts", vben5Path, moduleName, businessName);
+        }
+        if (template.contains("vm/vben5/views/popup.vue.vm")) {
+            fileName = StringUtils.format("{}/views/{}/{}/{}-{}.vue", vben5Path, moduleName, businessName, businessName, popupComponent);
+        }
+        if (template.contains("vm/vben5/views/popup_tree.vue.vm")) {
+            fileName = StringUtils.format("{}/views/{}/{}/{}-{}.vue", vben5Path, moduleName, businessName, businessName, popupComponent);
+        }
+
         return fileName;
     }
 

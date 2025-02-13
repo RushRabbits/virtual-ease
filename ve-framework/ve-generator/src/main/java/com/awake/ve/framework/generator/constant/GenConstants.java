@@ -1,4 +1,4 @@
-package com.awake.ve.modules.generator.constant;
+package com.awake.ve.framework.generator.constant;
 
 /**
  * 代码生成通用常量

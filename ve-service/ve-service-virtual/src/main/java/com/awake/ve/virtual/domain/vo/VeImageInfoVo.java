@@ -1,5 +1,7 @@
 package com.awake.ve.virtual.domain.vo;
 
+import com.awake.ve.common.excel.annotation.ExcelDictFormat;
+import com.awake.ve.common.excel.convert.ExcelDictConvert;
 import com.awake.ve.virtual.domain.VeImageInfo;
 import com.alibaba.excel.annotation.ExcelIgnoreUnannotated;
 import com.alibaba.excel.annotation.ExcelProperty;
@@ -40,12 +42,15 @@ public class VeImageInfoVo implements Serializable {
     /**
      * 镜像格式
      */
+    @ExcelProperty(value = "镜像格式", converter = ExcelDictConvert.class)
+    @ExcelDictFormat(dictType = "ve_image_format")
     private String imageFormat;
 
     /**
      * 操作系统类型
      */
-    @ExcelProperty(value = "操作系统类型")
+    @ExcelProperty(value = "操作系统类型", converter = ExcelDictConvert.class)
+    @ExcelDictFormat(dictType = "ve_os_type")
     private String osType;
 
     /**

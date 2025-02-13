@@ -27,6 +27,12 @@ public class VeImageInfoBo extends BaseEntity {
     private Long imageId;
 
     /**
+     * 镜像文件的id
+     */
+    @NotNull(message = "镜像文件的id不能为空", groups = { AddGroup.class, EditGroup.class })
+    private Long fileId;
+
+    /**
      * 镜像名
      */
     @NotBlank(message = "镜像名不能为空", groups = { AddGroup.class, EditGroup.class })
@@ -35,6 +41,7 @@ public class VeImageInfoBo extends BaseEntity {
     /**
      * 镜像格式
      */
+    @NotBlank(message = "镜像格式不能为空", groups = { AddGroup.class, EditGroup.class })
     private String imageFormat;
 
     /**

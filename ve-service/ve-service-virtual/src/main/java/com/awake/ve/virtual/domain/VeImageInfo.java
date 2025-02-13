@@ -1,8 +1,7 @@
 package com.awake.ve.virtual.domain;
 
 import com.awake.ve.common.tenant.core.TenantEntity;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -27,6 +26,11 @@ public class VeImageInfo extends TenantEntity {
      */
     @TableId(value = "image_id")
     private Long imageId;
+
+    /**
+     * 镜像文件的id
+     */
+    private Long fileId;
 
     /**
      * 镜像名

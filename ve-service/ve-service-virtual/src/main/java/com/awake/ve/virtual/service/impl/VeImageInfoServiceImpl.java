@@ -71,6 +71,7 @@ public class VeImageInfoServiceImpl implements IVeImageInfoService {
     private LambdaQueryWrapper<VeImageInfo> buildQueryWrapper(VeImageInfoBo bo) {
         Map<String, Object> params = bo.getParams();
         LambdaQueryWrapper<VeImageInfo> lqw = Wrappers.lambdaQuery();
+        lqw.eq(bo.getFileId() != null, VeImageInfo::getFileId, bo.getFileId());
         lqw.like(StringUtils.isNotBlank(bo.getImageName()), VeImageInfo::getImageName, bo.getImageName());
         lqw.eq(StringUtils.isNotBlank(bo.getImageFormat()), VeImageInfo::getImageFormat, bo.getImageFormat());
         lqw.eq(StringUtils.isNotBlank(bo.getOsType()), VeImageInfo::getOsType, bo.getOsType());

@@ -493,6 +493,13 @@
                 <version>${revision}</version>
             </dependency>
 
+            <!-- 业务模块-->
+            <dependency>
+                <groupId>com.awake</groupId>
+                <artifactId>ve-service</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -500,6 +507,7 @@
         <module>ve-admin</module>
         <module>ve-common</module>
         <module>ve-framework</module>
+        <module>ve-service</module>
     </modules>
     <packaging>pom</packaging>
 

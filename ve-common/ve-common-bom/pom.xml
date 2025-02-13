@@ -187,6 +187,13 @@
                 <version>${revision}</version>
             </dependency>
 
+            <!-- 业务模块-->
+            <dependency>
+                <groupId>com.awake</groupId>
+                <artifactId>ve-service</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

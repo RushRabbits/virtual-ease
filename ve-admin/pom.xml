@@ -185,6 +185,12 @@
             <artifactId>ve-generator</artifactId>
         </dependency>
 
+        <!-- 业务模块-->
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-service</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

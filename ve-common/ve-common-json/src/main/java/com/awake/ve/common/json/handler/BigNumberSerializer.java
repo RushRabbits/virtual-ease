@@ -32,9 +32,9 @@ public class BigNumberSerializer extends NumberSerializer {
     @Override
     public void serialize(Number value, JsonGenerator generator, SerializerProvider provider) throws IOException {
         if (value.longValue() > MAX_SAFE_INTEGER || value.longValue() < MIN_SAFE_INTEGER) {
-            super.serialize(value, generator, provider);
-        } else {
             generator.writeString(value.toString());
+        } else {
+            super.serialize(value, generator, provider);
         }
     }
 }

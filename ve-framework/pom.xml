@@ -10,7 +10,7 @@
     </parent>
 
     <name>ve-modules</name>
-    <artifactId>ve-modules</artifactId>
+    <artifactId>ve-framework</artifactId>
     <description>业务功能模块</description>
     <packaging>pom</packaging>
 

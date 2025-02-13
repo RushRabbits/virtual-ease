@@ -499,7 +499,7 @@
     <modules>
         <module>ve-admin</module>
         <module>ve-common</module>
-        <module>ve-modules</module>
+        <module>ve-framework</module>
     </modules>
     <packaging>pom</packaging>
 

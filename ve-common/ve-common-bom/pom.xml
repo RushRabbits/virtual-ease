@@ -194,6 +194,14 @@
                 <version>${revision}</version>
             </dependency>
 
+            <!-- 虚拟化资源模块-->
+            <dependency>
+                <groupId>com.awake</groupId>
+                <artifactId>ve-service-virtual</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+
         </dependencies>
     </dependencyManagement>
 

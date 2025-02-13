@@ -5,17 +5,19 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.awake</groupId>
-        <artifactId>virtual-ease</artifactId>
+        <artifactId>ve-service</artifactId>
         <version>${revision}</version>
     </parent>
 
-    <artifactId>ve-service</artifactId>
-    <description>业务模块</description>
+    <artifactId>ve-service-virtual</artifactId>
+    <description>虚拟化资源模块</description>
 
-    <packaging>pom</packaging>
+    <dependencies>
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-core</artifactId>
+        </dependency>
+    </dependencies>
 
-    <modules>
-        <module>ve-service-virtual</module>
-    </modules>
 
 </project>

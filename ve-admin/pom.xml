@@ -191,6 +191,12 @@
             <artifactId>ve-service</artifactId>
         </dependency>
 
+        <!-- 虚拟化资源模块-->
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-service-virtual</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

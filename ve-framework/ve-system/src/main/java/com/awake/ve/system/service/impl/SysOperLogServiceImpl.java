@@ -1,13 +1,13 @@
 package com.awake.ve.system.service.impl;
 
 import cn.hutool.core.util.ArrayUtil;
+import com.awake.ve.common.log.event.OperaLogEvent;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import com.awake.ve.common.core.utils.MapstructUtils;
 import com.awake.ve.common.core.utils.StringUtils;
 import com.awake.ve.common.core.utils.ip.AddressUtils;
-import com.awake.ve.common.log.event.LoginInfoEvent;
 import com.awake.ve.common.mybatis.core.page.PageQuery;
 import com.awake.ve.common.mybatis.core.page.TableDataInfo;
 import com.awake.ve.system.domain.SysOperLog;
@@ -42,7 +42,7 @@ public class SysOperLogServiceImpl implements ISysOperLogService {
      */
     @Async
     @EventListener
-    public void recordOper(LoginInfoEvent operLogEvent) {
+    public void recordOper(OperaLogEvent operLogEvent) {
         SysOperLogBo operLog = MapstructUtils.convert(operLogEvent, SysOperLogBo.class);
         // 远程查询操作地点
         operLog.setOperLocation(AddressUtils.getRealAddressByIP(operLog.getOperIp()));

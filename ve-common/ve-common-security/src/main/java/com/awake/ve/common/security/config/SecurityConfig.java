@@ -72,10 +72,10 @@ public class SecurityConfig implements WebMvcConfigurer {
                                 String paramId = ServletUtils.getParameter(LoginHelper.CLIENT_KEY);
                                 String clientId = StpUtil.getExtra(LoginHelper.CLIENT_KEY).toString();
 
-                                if (!StringUtils.equalsAny(headerCid, paramId, clientId)) {
-                                    log.info("requestURI:{} , headerCid = {}", request.getRequestURI(),headerCid);
-                                    log.info("requestURI:{} , paramId = {}" , request.getRequestURI(), paramId);
-                                    log.info("requestURI:{} , clientId = {}" ,request.getRequestURI(), clientId);
+                                if (!StringUtils.equalsAny(clientId, headerCid, paramId)) {
+                                    log.info("requestURI:{} , headerCid = {}", request.getRequestURI(), headerCid);
+                                    log.info("requestURI:{} , paramId = {}", request.getRequestURI(), paramId);
+                                    log.info("requestURI:{} , clientId = {}", request.getRequestURI(), clientId);
                                     // token无效
                                     throw NotLoginException.newInstance(
                                             StpUtil.getLoginType(),

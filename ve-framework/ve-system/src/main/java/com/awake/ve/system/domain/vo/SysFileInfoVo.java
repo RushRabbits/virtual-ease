@@ -15,7 +15,7 @@ import java.io.Serializable;
  * 本地文件管理视图对象 sys_file_info
  *
  * @author wangjiaxing
- * @date 2025-02-13
+ * @date 2025-02-14
  */
 @Data
 @ExcelIgnoreUnannotated
@@ -35,7 +35,7 @@ public class SysFileInfoVo implements Serializable {
      * 文件名
      */
     @ExcelProperty(value = "文件名")
-    private String fileName;
+    private String name;
 
     /**
      * 原始文件名
@@ -44,16 +44,28 @@ public class SysFileInfoVo implements Serializable {
     private String originName;
 
     /**
+     * 文件类型
+     */
+    @ExcelProperty(value = "文件类型")
+    private String type;
+
+    /**
+     * 文件md5
+     */
+    @ExcelProperty(value = "文件md5")
+    private String md5;
+
+    /**
      * 文件后缀
      */
     @ExcelProperty(value = "文件后缀")
-    private String fileSuffix;
+    private String suffix;
 
     /**
      * 文件存储路径
      */
     @ExcelProperty(value = "文件存储路径")
-    private String filePath;
+    private String path;
 
     /**
      * 备注

@@ -13,7 +13,10 @@ import com.awake.ve.common.mybatis.core.page.PageQuery;
 import com.awake.ve.common.mybatis.core.page.TableDataInfo;
 import com.awake.ve.common.web.core.BaseController;
 import com.awake.ve.system.domain.bo.SysFileInfoBo;
+import com.awake.ve.system.domain.bo.SysFragmentInfoBo;
+import com.awake.ve.system.domain.bo.UploadRequestBo;
 import com.awake.ve.system.domain.vo.SysFileInfoVo;
+import com.awake.ve.system.domain.vo.UploadCheckVo;
 import com.awake.ve.system.service.ISysFileInfoService;
 import lombok.RequiredArgsConstructor;
 import jakarta.servlet.http.HttpServletResponse;
@@ -64,7 +67,7 @@ public class SysFileInfoController extends BaseController {
     @SaCheckPermission("file:fileInfo:query")
     @GetMapping("/{fileId}")
     public R<SysFileInfoVo> getInfo(@NotNull(message = "主键不能为空")
-                                     @PathVariable Long fileId) {
+                                    @PathVariable Long fileId) {
         return R.ok(sysFileInfoService.queryById(fileId));
     }
 
@@ -101,5 +104,55 @@ public class SysFileInfoController extends BaseController {
     public R<Void> remove(@NotEmpty(message = "主键不能为空")
                           @PathVariable Long[] fileIds) {
         return toAjax(sysFileInfoService.deleteWithValidByIds(List.of(fileIds), true));
+    }
+
+    /**
+     * 分片上传前校验文件的状态
+     *
+     * @param bo {@link UploadRequestBo}
+     * @return {@link R}<{@link UploadCheckVo}></>
+     * @author wangjiaxing
+     * @date 2025/2/14 10:35
+     */
+    @PostMapping("/before")
+    public R<UploadCheckVo> beforeUpload(UploadRequestBo bo) {
+        return R.ok(sysFileInfoService.beforeUpload(bo));
+    }
+
+    /**
+     * 删除文件及分片
+     *
+     * @param bo {@link UploadRequestBo}
+     * @author wangjiaxing
+     * @date 2025/2/14 11:23
+     */
+    @PostMapping("/deleteFileAndFragments")
+    public R<String> delete(@RequestBody UploadRequestBo bo) {
+        return R.ok(sysFileInfoService.deleteFileAndFragments(bo));
+    }
+
+    /**
+     * 上传文件分片
+     *
+     * @param bo {@link SysFragmentInfoBo}
+     * @author wangjiaxing
+     * @date 2025/2/14 11:51
+     */
+    @PostMapping("/uploadFragment")
+    public R<Boolean> uploadFragment(SysFragmentInfoBo bo) {
+        return R.ok(sysFileInfoService.uploadFragment(bo));
+    }
+
+    /**
+     * 合并文件分片
+     *
+     * @param bo {@link UploadRequestBo}
+     * @return {@link R}<{@link String}></> 合并后的文件存储地址
+     * @author wangjiaxing
+     * @date 2025/2/14 14:12
+     */
+    @PostMapping("/merge/fragments")
+    public R<String> mergeFragments(@RequestBody UploadRequestBo bo) {
+        return R.ok(sysFileInfoService.mergeFragments(bo));
     }
 }

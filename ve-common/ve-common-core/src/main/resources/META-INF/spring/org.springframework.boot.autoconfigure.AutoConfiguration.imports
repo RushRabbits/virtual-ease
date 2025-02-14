@@ -4,4 +4,3 @@ com.awake.ve.common.core.config.VirtualEaseConfig
 com.awake.ve.common.core.config.ThreadPoolConfig
 com.awake.ve.common.core.config.ValidatorConfig
 com.awake.ve.common.core.utils.SpringUtils
-com.awake.ve.common.core.config.properties.ThreadPoolProperties

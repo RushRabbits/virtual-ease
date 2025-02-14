@@ -11,7 +11,7 @@ import java.io.Serial;
  * 本地文件管理对象 sys_file_info
  *
  * @author wangjiaxing
- * @date 2025-02-13
+ * @date 2025-02-14
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -30,7 +30,7 @@ public class SysFileInfo extends TenantEntity {
     /**
      * 文件名
      */
-    private String fileName;
+    private String name;
 
     /**
      * 原始文件名
@@ -38,14 +38,24 @@ public class SysFileInfo extends TenantEntity {
     private String originName;
 
     /**
+     * 文件类型
+     */
+    private String type;
+
+    /**
+     * 文件哈希
+     */
+    private String hash;
+
+    /**
      * 文件后缀
      */
-    private String fileSuffix;
+    private String suffix;
 
     /**
      * 文件存储路径
      */
-    private String filePath;
+    private String path;
 
     /**
      * 备注

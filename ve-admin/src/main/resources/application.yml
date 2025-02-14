@@ -168,7 +168,7 @@ api-decrypt:
 # 如使用JDK21请直接使用虚拟线程 不要开启此配置
 thread-pool:
   # 是否开启线程池
-  enabled: false
+  enabled: true
   # 队列最大长度
   queueCapacity: 128
   # 线程池维护线程所允许的空闲时间
@@ -206,3 +206,10 @@ sa-token:
   is-share: false
   # jwt秘钥
   jwt-secret-key: 7RCXb63JRVGZioefRlKEWgRmbY
+
+file:
+  fragment:
+    upload:
+      host: http://localhost:${server.port} # 文件分片上传的服务器地址
+      path: /public/file/fragment/upload # 文件分片上传的路径
+      fragmentMaxSize: 5368709120 # 文件分片大小限制  5G

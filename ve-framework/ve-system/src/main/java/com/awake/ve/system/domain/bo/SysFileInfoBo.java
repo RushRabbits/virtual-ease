@@ -13,7 +13,7 @@ import jakarta.validation.constraints.*;
  * 本地文件管理业务对象 sys_file_info
  *
  * @author wangjiaxing
- * @date 2025-02-13
+ * @date 2025-02-14
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -30,7 +30,7 @@ public class SysFileInfoBo extends BaseEntity {
      * 文件名
      */
     @NotBlank(message = "文件名不能为空", groups = { AddGroup.class, EditGroup.class })
-    private String fileName;
+    private String name;
 
     /**
      * 原始文件名
@@ -39,16 +39,27 @@ public class SysFileInfoBo extends BaseEntity {
     private String originName;
 
     /**
+     * 文件类型
+     */
+    @NotBlank(message = "文件类型不能为空", groups = { AddGroup.class, EditGroup.class })
+    private String type;
+
+    /**
+     * 文件哈希
+     */
+    private String hash;
+
+    /**
      * 文件后缀
      */
     @NotBlank(message = "文件后缀不能为空", groups = { AddGroup.class, EditGroup.class })
-    private String fileSuffix;
+    private String suffix;
 
     /**
      * 文件存储路径
      */
     @NotBlank(message = "文件存储路径不能为空", groups = { AddGroup.class, EditGroup.class })
-    private String filePath;
+    private String path;
 
     /**
      * 备注

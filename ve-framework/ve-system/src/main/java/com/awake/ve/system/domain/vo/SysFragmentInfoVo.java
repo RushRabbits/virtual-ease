@@ -34,61 +34,61 @@ public class SysFragmentInfoVo implements Serializable {
      * 分片的路径
      */
     @ExcelProperty(value = "分片的路径")
-    private String fragmentPath;
+    private String path;
 
     /**
      * 分片起始的字节
      */
     @ExcelProperty(value = "分片起始的字节")
-    private Long fragmentStartByte;
+    private Long start;
 
     /**
      * 分片结束的字节
      */
     @ExcelProperty(value = "分片结束的字节")
-    private Long fragmentEndByte;
+    private Long end;
 
     /**
      * 分片的大小
      */
     @ExcelProperty(value = "分片的大小")
-    private Long fragmentSize;
+    private Long size;
 
     /**
      * 分片的序号
      */
     @ExcelProperty(value = "分片的序号")
-    private Long fragmentNum;
+    private Long num;
 
     /**
      * 父文件的hash值
      */
     @ExcelProperty(value = "父文件的hash值")
-    private String fileHash;
+    private String hash;
 
     /**
      * 父文件总字节
      */
     @ExcelProperty(value = "父文件总字节")
-    private Long fileTotalByte;
+    private Long total;
 
     /**
      * 文件的类型(分片与父文件相同)
      */
     @ExcelProperty(value = "文件的类型(分片与父文件相同)")
-    private String fileType;
+    private String type;
 
     /**
      * 文件的后缀
      */
     @ExcelProperty(value = "文件的后缀")
-    private String fileSuffix;
+    private String suffix;
 
     /**
      * 总分片数
      */
     @ExcelProperty(value = "总分片数")
-    private Long fileTotalFragments;
+    private Long sum;
 
     /**
      * 备注

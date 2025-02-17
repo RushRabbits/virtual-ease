@@ -6,6 +6,7 @@ import com.awake.ve.system.domain.SysFragmentInfo;
 import com.awake.ve.system.domain.bo.SysFragmentInfoBo;
 import com.awake.ve.system.domain.bo.UploadRequestBo;
 import com.awake.ve.system.domain.vo.SysFragmentInfoVo;
+import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.Collection;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
  * @author wangjiaxing
  * @date 2025-02-14
  */
-public interface ISysFragmentInfoService {
+public interface ISysFragmentInfoService extends IService<SysFragmentInfo> {
 
     /**
      * 查询分片

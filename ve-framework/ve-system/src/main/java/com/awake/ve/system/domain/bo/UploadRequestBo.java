@@ -23,4 +23,15 @@ public class UploadRequestBo {
      * 分片序号
      */
     private Long fragmentNum;
+
+    /**
+     * 文件名
+     */
+    private String fileName;
+
+    public UploadRequestBo(String hash, String type, Long num) {
+        this.hash = hash;
+        this.type = type;
+        this.fragmentNum = num;
+    }
 }

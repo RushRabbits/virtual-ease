@@ -2,6 +2,7 @@ package com.awake.ve.system.controller.system;
 
 import java.util.List;
 
+import cn.dev33.satoken.annotation.SaIgnore;
 import com.awake.ve.common.core.domain.R;
 import com.awake.ve.common.core.validate.AddGroup;
 import com.awake.ve.common.core.validate.EditGroup;
@@ -35,6 +36,7 @@ import org.springframework.validation.annotation.Validated;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/file/fileInfo")
+@SaIgnore
 public class SysFileInfoController extends BaseController {
 
     private final ISysFileInfoService sysFileInfoService;
@@ -115,7 +117,7 @@ public class SysFileInfoController extends BaseController {
      * @date 2025/2/14 10:35
      */
     @PostMapping("/before")
-    public R<UploadCheckVo> beforeUpload(UploadRequestBo bo) {
+    public R<UploadCheckVo> beforeUpload(@RequestBody UploadRequestBo bo) {
         return R.ok(sysFileInfoService.beforeUpload(bo));
     }
 

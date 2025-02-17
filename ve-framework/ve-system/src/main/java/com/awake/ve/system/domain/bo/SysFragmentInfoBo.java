@@ -24,7 +24,8 @@ public class SysFragmentInfoBo extends BaseEntity {
     /**
      * 分片文件
      */
-    private MultipartFile fragmentFile;
+    @NotNull(message = "分片文件不能为空", groups = {AddGroup.class, EditGroup.class})
+    private MultipartFile chunkData;
 
     /**
      * 主键
@@ -35,67 +36,67 @@ public class SysFragmentInfoBo extends BaseEntity {
     /**
      * 分片的路径
      */
-    @NotBlank(message = "分片的路径不能为空", groups = {AddGroup.class, EditGroup.class})
-    private String fragmentPath;
+    // @NotBlank(message = "分片的路径不能为空", groups = {AddGroup.class, EditGroup.class})
+    private String path;
 
     /**
      * 分片起始的字节
      */
     @NotNull(message = "分片起始的字节不能为空", groups = {AddGroup.class, EditGroup.class})
-    private Long fragmentStartByte;
+    private Long start;
 
     /**
      * 分片结束的字节
      */
     @NotNull(message = "分片结束的字节不能为空", groups = {AddGroup.class, EditGroup.class})
-    private Long fragmentEndByte;
+    private Long end;
 
     /**
      * 分片的大小
      */
     @NotNull(message = "分片的大小不能为空", groups = {AddGroup.class, EditGroup.class})
-    private Long fragmentSize;
+    private Long size;
 
     /**
      * 分片的序号
      */
     @NotNull(message = "分片的序号不能为空", groups = {AddGroup.class, EditGroup.class})
-    private Long fragmentNum;
+    private Long num;
 
     /**
      * 父文件的hash值
      */
     @NotBlank(message = "父文件的hash值不能为空", groups = {AddGroup.class, EditGroup.class})
-    private String fileHash;
+    private String hash;
 
     /**
      * 父文件总字节
      */
     @NotNull(message = "父文件总字节不能为空", groups = {AddGroup.class, EditGroup.class})
-    private Long fileTotalByte;
+    private Long total;
 
     /**
      * 文件的类型(分片与父文件相同)
      */
     @NotBlank(message = "文件的类型(分片与父文件相同)不能为空", groups = {AddGroup.class, EditGroup.class})
-    private String fileType;
+    private String type;
 
     /**
      * 文件的后缀
      */
     @NotBlank(message = "文件的后缀不能为空", groups = {AddGroup.class, EditGroup.class})
-    private String fileSuffix;
+    private String suffix;
 
     /**
      * 总分片数
      */
     @NotNull(message = "总分片数不能为空", groups = {AddGroup.class, EditGroup.class})
-    private Long fileTotalFragments;
+    private Long sum;
 
     /**
      * 备注
      */
-    @NotBlank(message = "备注不能为空", groups = {AddGroup.class, EditGroup.class})
+    // @NotBlank(message = "备注不能为空", groups = {AddGroup.class, EditGroup.class})
     private String remark;
 
 

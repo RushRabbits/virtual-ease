@@ -13,11 +13,10 @@ import com.awake.ve.system.service.ISysFragmentInfoService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +31,7 @@ import java.util.stream.Collectors;
  */
 @RequiredArgsConstructor
 @Service
-public class SysFragmentInfoServiceImpl implements ISysFragmentInfoService {
+public class SysFragmentInfoServiceImpl extends ServiceImpl<SysFragmentInfoMapper, SysFragmentInfo> implements ISysFragmentInfoService {
 
     private final SysFragmentInfoMapper baseMapper;
 
@@ -76,16 +75,16 @@ public class SysFragmentInfoServiceImpl implements ISysFragmentInfoService {
     private LambdaQueryWrapper<SysFragmentInfo> buildQueryWrapper(SysFragmentInfoBo bo) {
         Map<String, Object> params = bo.getParams();
         LambdaQueryWrapper<SysFragmentInfo> lqw = Wrappers.lambdaQuery();
-        lqw.eq(StringUtils.isNotBlank(bo.getFragmentPath()), SysFragmentInfo::getFragmentPath, bo.getFragmentPath());
-        lqw.eq(bo.getFragmentStartByte() != null, SysFragmentInfo::getFragmentStartByte, bo.getFragmentStartByte());
-        lqw.eq(bo.getFragmentEndByte() != null, SysFragmentInfo::getFragmentEndByte, bo.getFragmentEndByte());
-        lqw.eq(bo.getFragmentSize() != null, SysFragmentInfo::getFragmentSize, bo.getFragmentSize());
-        lqw.eq(bo.getFragmentNum() != null, SysFragmentInfo::getFragmentNum, bo.getFragmentNum());
-        lqw.eq(StringUtils.isNotBlank(bo.getFileHash()), SysFragmentInfo::getFileHash, bo.getFileHash());
-        lqw.eq(bo.getFileTotalByte() != null, SysFragmentInfo::getFileTotalByte, bo.getFileTotalByte());
-        lqw.eq(StringUtils.isNotBlank(bo.getFileType()), SysFragmentInfo::getFileType, bo.getFileType());
-        lqw.eq(StringUtils.isNotBlank(bo.getFileSuffix()), SysFragmentInfo::getFileSuffix, bo.getFileSuffix());
-        lqw.eq(bo.getFileTotalFragments() != null, SysFragmentInfo::getFileTotalFragments, bo.getFileTotalFragments());
+        lqw.eq(StringUtils.isNotBlank(bo.getPath()), SysFragmentInfo::getFragmentPath, bo.getPath());
+        lqw.eq(bo.getStart() != null, SysFragmentInfo::getFragmentStartByte, bo.getStart());
+        lqw.eq(bo.getEnd() != null, SysFragmentInfo::getFragmentEndByte, bo.getEnd());
+        lqw.eq(bo.getSize() != null, SysFragmentInfo::getFragmentSize, bo.getSize());
+        lqw.eq(bo.getNum() != null, SysFragmentInfo::getFragmentNum, bo.getNum());
+        lqw.eq(StringUtils.isNotBlank(bo.getHash()), SysFragmentInfo::getFileHash, bo.getHash());
+        lqw.eq(bo.getTotal() != null, SysFragmentInfo::getFileTotalByte, bo.getTotal());
+        lqw.eq(StringUtils.isNotBlank(bo.getType()), SysFragmentInfo::getFileType, bo.getType());
+        lqw.eq(StringUtils.isNotBlank(bo.getSuffix()), SysFragmentInfo::getFileSuffix, bo.getSuffix());
+        lqw.eq(bo.getSum() != null, SysFragmentInfo::getFileTotalFragments, bo.getSum());
         return lqw;
     }
 
@@ -180,7 +179,7 @@ public class SysFragmentInfoServiceImpl implements ISysFragmentInfoService {
         LambdaQueryWrapper<SysFragmentInfo> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(SysFragmentInfo::getFileHash, bo.getHash())
                 .eq(SysFragmentInfo::getFileType, bo.getType())
-                .apply("size = CAST(REGEXP_REPLACE(end, '[^0-9.]', '') AS DECIMAL) - CAST(REGEXP_REPLACE(start, '[^0-9.]', '') AS DECIMAL)")
+                .apply("fragment_size = CAST(REGEXP_REPLACE(fragment_end_byte, '[^0-9.]', '') AS DECIMAL) - CAST(REGEXP_REPLACE(fragment_start_byte, '[^0-9.]', '') AS DECIMAL)")
                 .orderByAsc(SysFragmentInfo::getFragmentNum);
         return baseMapper.selectList(wrapper);
     }

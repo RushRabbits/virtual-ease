@@ -27,9 +27,9 @@ spring:
       # 端口，默认为6379
       port: 6379
       # 数据库索引
-      database: 15
+      database: 0
       # translation 密码必须配置
-#      password: redis_seEHj3
+      password: s8CEzQiC4wdEp8M7
       # 连接超时时间
       timeout: 10s
       # 是否开启ssl

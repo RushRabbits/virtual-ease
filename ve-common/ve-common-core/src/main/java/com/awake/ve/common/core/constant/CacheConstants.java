@@ -26,4 +26,9 @@ public interface CacheConstants {
      * 登录账户密码错误次数 translation key
      */
     String PWD_ERR_CNT_KEY = "pwd_err_cnt:";
+
+    /**
+     * 分片文件的原文件名
+     */
+    String FRAGMENT_FILE_NAME = "fragment_file_name:";
 }

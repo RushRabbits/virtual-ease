@@ -216,5 +216,5 @@ file:
   fragment:
     upload:
       host: http://localhost:${server.port} # 文件分片上传的服务器地址
-      path: /public/file/fragment/upload # 文件分片上传的路径
+      path: /public/file/fragment/upload/ # 文件分片上传的路径
       fragmentMaxSize: 5368709120 # 文件分片大小限制  5G

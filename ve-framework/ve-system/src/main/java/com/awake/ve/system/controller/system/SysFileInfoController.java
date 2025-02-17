@@ -16,6 +16,7 @@ import com.awake.ve.common.web.core.BaseController;
 import com.awake.ve.system.domain.bo.SysFileInfoBo;
 import com.awake.ve.system.domain.bo.SysFragmentInfoBo;
 import com.awake.ve.system.domain.bo.UploadRequestBo;
+import com.awake.ve.system.domain.vo.FileInfoVo;
 import com.awake.ve.system.domain.vo.SysFileInfoVo;
 import com.awake.ve.system.domain.vo.UploadCheckVo;
 import com.awake.ve.system.service.ISysFileInfoService;
@@ -154,7 +155,7 @@ public class SysFileInfoController extends BaseController {
      * @date 2025/2/14 14:12
      */
     @PostMapping("/merge/fragments")
-    public R<String> mergeFragments(@RequestBody UploadRequestBo bo) {
+    public R<FileInfoVo> mergeFragments(@RequestBody UploadRequestBo bo) {
         return R.ok(sysFileInfoService.mergeFragments(bo));
     }
 }

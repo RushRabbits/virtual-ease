@@ -6,6 +6,7 @@ import com.awake.ve.system.domain.SysFileInfo;
 import com.awake.ve.system.domain.bo.SysFileInfoBo;
 import com.awake.ve.system.domain.bo.SysFragmentInfoBo;
 import com.awake.ve.system.domain.bo.UploadRequestBo;
+import com.awake.ve.system.domain.vo.FileInfoVo;
 import com.awake.ve.system.domain.vo.SysFileInfoVo;
 import com.awake.ve.system.domain.vo.UploadCheckVo;
 
@@ -121,11 +122,11 @@ public interface ISysFileInfoService {
      * 合并文件分片
      *
      * @param bo {@link UploadRequestBo}
-     * @return {@link String} 合并后的文件存储地址
+     * @return {@link FileInfoVo} 合并后的文件存储地址
      * @author wangjiaxing
      * @date 2025/2/14 14:12
      */
-    String mergeFragments(UploadRequestBo bo);
+    FileInfoVo mergeFragments(UploadRequestBo bo);
 
     /**
      * 删除已有的文件,避免重复上传

@@ -11,11 +11,13 @@ import com.awake.ve.common.mybatis.core.page.PageQuery;
 import com.awake.ve.common.mybatis.core.page.TableDataInfo;
 import com.awake.ve.common.translation.utils.RedisUtils;
 import com.awake.ve.system.config.properties.FragmentUploadProperties;
+import com.awake.ve.system.converter.FileInfoConverter;
 import com.awake.ve.system.domain.SysFileInfo;
 import com.awake.ve.system.domain.SysFragmentInfo;
 import com.awake.ve.system.domain.bo.SysFileInfoBo;
 import com.awake.ve.system.domain.bo.SysFragmentInfoBo;
 import com.awake.ve.system.domain.bo.UploadRequestBo;
+import com.awake.ve.system.domain.vo.FileInfoVo;
 import com.awake.ve.system.domain.vo.SysFileInfoVo;
 import com.awake.ve.system.domain.vo.UploadCheckVo;
 import com.awake.ve.system.mapper.SysFileInfoMapper;
@@ -56,7 +58,8 @@ public class SysFileInfoServiceImpl implements ISysFileInfoService {
     private final SysFileInfoMapper baseMapper;
     private final FragmentUploadProperties fragmentUploadProperties;
     private final ISysFragmentInfoService fragmentService;
-    private final static String PATH_SEPARATOR = File.separator;
+    private final static String SEPARATOR = "/";
+    private final static String SYSTEM_PATH = System.getProperty("user.dir") + SEPARATOR;
 
     /**
      * 查询本地文件管理
@@ -200,8 +203,12 @@ public class SysFileInfoServiceImpl implements ISysFileInfoService {
      */
     @Override
     public SysFileInfo fileInfo(UploadRequestBo bo) {
+        if (StringUtils.isBlank(bo.getHash()) && StringUtils.isBlank(bo.getType())) {
+            return null;
+        }
         LambdaQueryWrapper<SysFileInfo> wrapper = Wrappers.lambdaQuery();
-        wrapper.eq(SysFileInfo::getHash, bo.getHash()).eq(SysFileInfo::getType, bo.getType());
+        wrapper.eq(StringUtils.isNotBlank(bo.getHash()), SysFileInfo::getHash, bo.getHash())
+                .eq(StringUtils.isNotBlank(bo.getType()), SysFileInfo::getType, bo.getType());
         return baseMapper.selectOne(wrapper);
     }
 
@@ -258,13 +265,13 @@ public class SysFileInfoServiceImpl implements ISysFileInfoService {
             throw new ServiceException("分片大小不匹配", HttpStatus.WARN);
         }
 
-        String dir = fragmentUploadProperties.getPath() + PATH_SEPARATOR + getDate();
+        String dir = SYSTEM_PATH + fragmentUploadProperties.getPath() + getDate();
 
         // 确保目录存在
         FileUtils.mkdir(dir);
 
         // 保存文件
-        String filePath = dir + PATH_SEPARATOR + UUID.randomUUID();
+        String filePath = dir + SEPARATOR + UUID.randomUUID();
         File fragment = new File(filePath);
 
         try (InputStream in = fragmentFile.getInputStream(); OutputStream out = new FileOutputStream(fragment)) {
@@ -308,7 +315,7 @@ public class SysFileInfoServiceImpl implements ISysFileInfoService {
      * @date 2025/2/14 14:12
      */
     @Override
-    public String mergeFragments(UploadRequestBo bo) {
+    public FileInfoVo mergeFragments(UploadRequestBo bo) {
         // 删除已有文件,避免重复上传
         this.deleteFile(bo);
 
@@ -326,15 +333,17 @@ public class SysFileInfoServiceImpl implements ISysFileInfoService {
             throw new ServiceException("分片合并失败 , 已上传文件不完整", HttpStatus.WARN);
         }
 
-        String dir = fragmentUploadProperties.getPath() + PATH_SEPARATOR + getDate();
+        String dirPath = fragmentUploadProperties.getPath() + getDate();
+        String dir = SYSTEM_PATH + dirPath;
         // 确保目录存在
         FileUtils.mkdir(dir);
 
         // 合并分片
         String fileName = RedisUtils.getCacheObject(CacheConstants.FRAGMENT_FILE_NAME + bo.getHash());
-        String suffix = StrPool.DOT + uploadedFragments.get(0).getFileSuffix();
+        String fileType = uploadedFragments.get(0).getFileSuffix();
+        String suffix = StrPool.DOT + fileType;
         String originFileName = fileName + suffix;
-        String filePath = dir + PATH_SEPARATOR + originFileName;
+        String filePath = dir + SEPARATOR + originFileName;
         try (OutputStream out = new FileOutputStream(filePath)) {
             for (long i = 0; i < uploaded.size(); i++) {
                 File fragment = new File(uploaded.get(i));
@@ -363,19 +372,14 @@ public class SysFileInfoServiceImpl implements ISysFileInfoService {
         fragmentService.deleteByHashAndType(bo);
 
         // 记录完整的文件信息
-        SysFileInfo fileInfo = new SysFileInfo();
-        fileInfo.setHash(bo.getHash());
-        fileInfo.setName(fileName);
-        fileInfo.setOriginName(originFileName);
-        fileInfo.setPath(filePath);
-        fileInfo.setSuffix(suffix);
-        fileInfo.setType(bo.getType());
+        String path = dirPath + SEPARATOR + originFileName;
+        SysFileInfo fileInfo = FileInfoConverter.buildFileInfo(bo.getHash(), fileName, originFileName, path, suffix, fileType);
         baseMapper.insert(fileInfo);
 
         // 移除缓存
         RedisUtils.deleteObject(CacheConstants.FRAGMENT_FILE_NAME + bo.getHash());
 
-        return fragmentUploadProperties.getHost() + filePath;
+        return FileInfoConverter.buildFileInfoVo(fileInfo, fragmentUploadProperties.getHost(), filePath);
     }
 
     /**

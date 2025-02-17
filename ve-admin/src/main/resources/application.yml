@@ -29,7 +29,12 @@ xss:
 
 server:
   port: 8130
+
 spring:
+  servlet:
+    multipart:
+      max-file-size: 500MB        # 单个文件的大小限制
+      max-request-size: 500MB     # 单次请求的总大小限制
   banner:
     charset: UTF-8
     location: classpath:banner.txt

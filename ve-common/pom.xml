@@ -37,6 +37,7 @@
         <module>ve-common-mail</module>
         <module>ve-common-sms</module>
         <module>ve-common-social</module>
+        <module>ve-common-ssh</module>
     </modules>
 
 </project>

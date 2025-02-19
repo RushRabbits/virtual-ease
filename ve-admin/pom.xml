@@ -25,6 +25,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency>
+
+
+        <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
             <scope>provided</scope>
@@ -172,6 +178,12 @@
         <dependency>
             <groupId>com.awake</groupId>
             <artifactId>ve-common-social</artifactId>
+        </dependency>
+
+        <!-- ssh模块-->
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-ssh</artifactId>
         </dependency>
 
         <dependency>

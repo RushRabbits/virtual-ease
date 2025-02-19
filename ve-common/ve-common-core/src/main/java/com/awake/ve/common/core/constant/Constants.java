@@ -77,5 +77,14 @@ public interface Constants {
      */
     Long TOP_PARENT_ID = 0L;
 
+    /**
+     * 空格
+     */
+    String BLANK = " ";
+
+    /**
+     * 右箭头
+     */
+    String SYMBOLIC_LINK_POINT = "->";
 }
 

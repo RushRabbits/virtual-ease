@@ -218,3 +218,14 @@ file:
       host: http://localhost:${server.port} # 文件分片上传的服务器地址
       path: /public/file/fragment/upload/ # 文件分片上传的路径
       fragmentMaxSize: 5368709120 # 文件分片大小限制  5G
+
+ssh:
+  enabled: true
+  host: 101.42.36.220
+  port: 22
+  username: root
+  password: daohaosima74!
+  maxTotal: 50  # 最大连接数
+  maxIdle: 5  # 最大闲置数
+  minIdle: 2  # 最小闲置数
+  maxWaitMillis: 30000 # 最大等待时间

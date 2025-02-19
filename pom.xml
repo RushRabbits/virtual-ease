@@ -51,6 +51,9 @@
         <anyline.version>8.7.2-20241022</anyline.version>
         <!--工作流配置-->
         <flowable.version>7.0.1</flowable.version>
+        <!-- JSch-->
+        <jsch.version>0.2.23</jsch.version>
+        <apache.common.pool.version>2.12.1</apache.common.pool.version>
 
         <!-- 插件版本 -->
         <maven-jar-plugin.version>3.2.2</maven-jar-plugin.version>
@@ -271,6 +274,13 @@
                 <version>${spring-boot-admin.version}</version>
             </dependency>
 
+            <!-- SSH2-->
+            <dependency>
+                <groupId>com.github.mwiede</groupId>
+                <artifactId>jsch</artifactId>
+                <version>${jsch.version}</version>
+            </dependency>
+
             <!--redisson-->
             <dependency>
                 <groupId>org.redisson</groupId>
@@ -282,6 +292,13 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>lock4j-redisson-spring-boot-starter</artifactId>
                 <version>${lock4j.version}</version>
+            </dependency>
+
+            <!-- Apache Commons Pool2 依赖 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-pool2</artifactId>
+                <version>${apache.common.pool.version}</version>
             </dependency>
 
             <!-- SnailJob Client -->
@@ -471,6 +488,13 @@
             <dependency>
                 <groupId>com.awake</groupId>
                 <artifactId>ve-common-social</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- ssh模块-->
+            <dependency>
+                <groupId>com.awake</groupId>
+                <artifactId>ve-common-ssh</artifactId>
                 <version>${revision}</version>
             </dependency>
 

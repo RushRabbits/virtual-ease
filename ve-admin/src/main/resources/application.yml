@@ -29,6 +29,10 @@ xss:
 
 server:
   port: 8130
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
 
 spring:
   servlet:

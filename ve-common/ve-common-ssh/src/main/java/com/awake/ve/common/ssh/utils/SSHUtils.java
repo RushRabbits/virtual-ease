@@ -6,6 +6,7 @@ import com.awake.ve.common.core.utils.StringUtils;
 import com.awake.ve.common.ssh.config.properties.SSHProperties;
 import com.awake.ve.common.ssh.domain.SSHCommandLineResult;
 import com.awake.ve.common.ssh.domain.SSHCommandResult;
+import com.awake.ve.common.ssh.domain.dto.SSHCommandDTO;
 import com.awake.ve.common.ssh.enums.ChannelType;
 import com.jcraft.jsch.*;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
@@ -71,21 +73,23 @@ public class SSHUtils {
     /**
      * 发送命令
      *
-     * @param command 命令
+     * @param commandDTO {@link SSHCommandDTO}
      * @return {@link SSHCommandResult}
      * @author wangjiaxing
      * @date 2025/2/19 15:59
      */
-    public static SSHCommandResult sendCommand(String command, String channelType) {
+    public static SSHCommandResult sendCommand(SSHCommandDTO commandDTO) {
         Channel channel = null;
         Session session = null;
         try {
+            String channelType = commandDTO.getChannelType();
+            Queue<String> commands = commandDTO.getCommands();
             if (StringUtils.isBlank(channelType)) {
                 channelType = ChannelType.EXEC.getType();
             }
             session = openSession();
             channel = openChannel(session, channelType);
-            return send(channel, command);
+            return send(channel, commands);
         } catch (Exception e) {
             log.error("[SSHUtils][sendCommand] 发送命令失败", e);
             throw new ServiceException(e.getMessage());
@@ -100,37 +104,19 @@ public class SSHUtils {
     }
 
     /**
-     * @param commands    命令列表
-     * @param channelType 管道类型{@link com.awake.ve.common.ssh.enums.ChannelType}
-     * @author wangjiaxing
-     * @date 2025/2/19 16:01
-     */
-    public static List<SSHCommandResult> sendCommands(List<String> commands, String channelType) {
-        if (StringUtils.isBlank(channelType)) {
-            channelType = ChannelType.SHELL.getType();
-        }
-        List<SSHCommandResult> res = new ArrayList<>();
-        for (String command : commands) {
-            SSHCommandResult commandResult = sendCommand(command, channelType);
-            res.add(commandResult);
-        }
-        return res;
-    }
-
-    /**
      * 发送命令
      *
-     * @param channel {@link Channel}
-     * @param command 命令
+     * @param channel  {@link Channel}
+     * @param commands 命令队列
      * @return {@link com.awake.ve.common.ssh.domain.SSHCommandResult}
      * @author wangjiaxing
      * @date 2025/2/19 16:08
      */
-    public static SSHCommandResult send(Channel channel, String command) {
+    public static SSHCommandResult send(Channel channel, Queue<String> commands) {
         if (channel instanceof ChannelShell) {
-            return sendShell(channel, command);
+            return sendShell(channel, commands);
         } else if (channel instanceof ChannelExec) {
-            return sendExec(channel, command);
+            return sendExec(channel, commands);
         } else if (channel instanceof ChannelSftp) {
             // TODO 根据自身需求,提供具体实现
             return null;
@@ -145,15 +131,17 @@ public class SSHUtils {
     /**
      * exec类型的channel发送命令
      *
-     * @param channel {@link Channel}
-     * @param command 命令
+     * @param channel  {@link Channel}
+     * @param commands 命令队列
      * @return {@link com.awake.ve.common.ssh.domain.SSHCommandResult}
      * @author wangjiaxing
      */
-    private static SSHCommandResult sendExec(Channel channel, String command) {
+    private static SSHCommandResult sendExec(Channel channel, Queue<String> commands) {
         try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream(); ByteArrayOutputStream errorStream = new ByteArrayOutputStream()) {
             ChannelExec channelExec = (ChannelExec) channel;
-            channelExec.setCommand(command);
+            while (!commands.isEmpty()) {
+                channelExec.setCommand(commands.poll());
+            }
 
             channelExec.setOutputStream(outputStream);
             channelExec.setExtOutputStream(errorStream);
@@ -180,17 +168,17 @@ public class SSHUtils {
     /**
      * shell类型的channel发送命令
      *
-     * @param channel {@link Channel}
-     * @param command 命令
+     * @param channel  {@link Channel}
+     * @param commands 命令队列
      * @return {@link com.awake.ve.common.ssh.domain.SSHCommandResult}
      * @author wangjiaxing
      */
-    private static SSHCommandResult sendShell(Channel channel, String command) {
+    private static SSHCommandResult sendShell(Channel channel, Queue<String> commands) {
         ChannelShell channelShell = (ChannelShell) channel;
 
         // 准备输入输出流
-        try (PipedInputStream pipedIn = new PipedInputStream();
-             PipedOutputStream commandStream = new PipedOutputStream();
+        try (PipedOutputStream commandStream = new PipedOutputStream();
+             PipedInputStream pipedIn = new PipedInputStream(commandStream);
              ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
              ByteArrayOutputStream errorStream = new ByteArrayOutputStream();
              PrintStream commander = new PrintStream(commandStream)) {
@@ -204,14 +192,14 @@ public class SSHUtils {
             channelShell.connect(3000);
 
             // 执行命令
-            commander.println(command);
-
-            while (!channelShell.isClosed()) {
-                Thread.sleep(10);
+            while (!commands.isEmpty()) {
+                commander.println(commands.poll());
             }
 
-            String output = outputStream.toString();
-            String error = errorStream.toString();
+            Thread.sleep(1000);
+
+            String output = outputStream.toString(StandardCharsets.UTF_8);
+            String error = errorStream.toString(StandardCharsets.UTF_8);
 
             List<String> outputLines = Arrays.stream(StringUtils.split(output, "\n")).toList();
             outputLines = outputLines.stream()
@@ -219,7 +207,7 @@ public class SSHUtils {
                     .filter(line -> !line.matches(".*@.*:.*[#$].*"))
                     .toList();
 
-            List<SSHCommandLineResult> SSHResultLineList = outputLines.stream().map(SSHCommandLineResult::parse).toList();
+            List<SSHCommandLineResult> SSHResultLineList = outputLines.stream().map(SSHCommandLineResult::parse).filter(Objects::nonNull).toList();
             return new SSHCommandResult(SSHResultLineList, error, 0);
         } catch (Exception e) {
             log.error("[SSHUtils][sendShell] 发送Shell命令失败", e);

@@ -5,11 +5,14 @@ import com.awake.ve.common.core.domain.R;
 import com.awake.ve.common.rateLimiter.annotation.RateLimiter;
 import com.awake.ve.common.rateLimiter.enums.LimitType;
 import com.awake.ve.common.ssh.domain.SSHCommandResult;
+import com.awake.ve.common.ssh.domain.dto.SSHCommandDTO;
 import com.awake.ve.common.ssh.utils.SSHUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 
 /**
@@ -25,8 +28,10 @@ public class RedisRateLimiterController {
 
     @GetMapping("/testSSH")
     public R<SSHCommandResult> testSSH() {
-        SSHUtils.sendCommand("cd /", "exec");
-        SSHCommandResult commandResult = SSHUtils.sendCommand("ls", "exec");
+        ConcurrentLinkedQueue<String> commands = new ConcurrentLinkedQueue<>();
+        commands.offer("cd /");
+        commands.offer("ls -l");
+        SSHCommandResult commandResult = SSHUtils.sendCommand(SSHCommandDTO.createSSHCommandDTO(commands , "shell"));
         return R.ok(commandResult);
     }
 

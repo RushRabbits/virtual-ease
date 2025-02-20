@@ -16,8 +16,14 @@ public enum JschConfig {
     CHARSET_SHELL("charset.shell", "UTF-8"),
 
     CHARSET_DEFAULT("charset.default" , "UTF-8"),
+
     CHARSET_KEY("charset.kex" , "UTF-8"),
-    CHARSET_USERAUTH("charset.userauth" , "UTF-8");
+
+    CHARSET_USERAUTH("charset.userauth" , "UTF-8"),
+
+    REMOTE_CHARSET("RemoteCharset" , "UTF-8"),
+
+    TERMINAL_CHARSET("terminalEncoding" , "UTF-8");
 
     private final String key;
     private final String value;

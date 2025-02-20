@@ -107,10 +107,13 @@ public class SSHConfig {
                     );
                     session.setPassword(sshProperties.getPassword());
                     session.setConfig(STRICT_HOST_CHECKING.getKey(), STRICT_HOST_CHECKING.getValue());
+                    // 以下配置加不加都行
                     session.setConfig(CHARSET_DEFAULT.getKey(), CHARSET_DEFAULT.getValue());
                     session.setConfig(CHARSET_SHELL.getKey(), CHARSET_SHELL.getValue());
                     session.setConfig(CHARSET_KEY.getKey(), CHARSET_KEY.getValue());
                     session.setConfig(CHARSET_USERAUTH.getKey(), CHARSET_USERAUTH.getValue());
+                    session.setConfig(REMOTE_CHARSET.getKey(), REMOTE_CHARSET.getValue());
+                    session.setConfig(TERMINAL_CHARSET.getKey(), TERMINAL_CHARSET.getValue());
                     session.connect(CONNECT_TIME);
                     log.debug("host:{} 建立新的jschSession END", sshProperties.getHost());
                     return session;

@@ -1,5 +1,6 @@
 package com.awake.ve.common.ssh.domain.dto;
 
+import com.awake.ve.common.ssh.enums.ChannelType;
 import lombok.Data;
 
 import java.util.Queue;
@@ -21,18 +22,18 @@ public class SSHCommandDTO {
     /**
      * 通道类型 {@link com.awake.ve.common.ssh.enums.ChannelType}
      */
-    private static String channelType;
+    private static ChannelType channelType;
 
     // 构造器私有化
     private SSHCommandDTO() {
     }
 
-    private SSHCommandDTO(Queue<String> queue, String type) {
+    private SSHCommandDTO(Queue<String> queue, ChannelType type) {
         commands = queue;
         channelType = type;
     }
 
-    public static SSHCommandDTO createSSHCommandDTO(Queue<String> queue, String channelType) {
+    public static SSHCommandDTO createSSHCommandDTO(Queue<String> queue, ChannelType channelType) {
         commands = new ConcurrentLinkedQueue<>();
         for (String command : queue) {
             commands.offer(command);
@@ -45,7 +46,7 @@ public class SSHCommandDTO {
         return commands;
     }
 
-    public String getChannelType() {
+    public ChannelType getChannelType() {
         return channelType;
     }
 

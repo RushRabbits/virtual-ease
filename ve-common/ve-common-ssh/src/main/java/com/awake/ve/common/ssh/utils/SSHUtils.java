@@ -8,6 +8,7 @@ import com.awake.ve.common.ssh.domain.SSHCommandLineResult;
 import com.awake.ve.common.ssh.domain.SSHCommandResult;
 import com.awake.ve.common.ssh.domain.dto.SSHCommandDTO;
 import com.awake.ve.common.ssh.enums.ChannelType;
+import com.awake.ve.common.ssh.enums.PtyType;
 import com.jcraft.jsch.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -82,7 +83,7 @@ public class SSHUtils {
         Channel channel = null;
         Session session = null;
         try {
-            String channelType = commandDTO.getChannelType();
+            String channelType = commandDTO.getChannelType().getType();
             Queue<String> commands = commandDTO.getCommands();
             if (StringUtils.isBlank(channelType)) {
                 channelType = ChannelType.EXEC.getType();
@@ -175,13 +176,37 @@ public class SSHUtils {
      */
     private static SSHCommandResult sendShell(Channel channel, Queue<String> commands) {
         ChannelShell channelShell = (ChannelShell) channel;
+        /**
+         * PTY 是 Pseudo Terminal（伪终端）的缩写
+         * 当设置为 true 时，会为 shell 会话分配一个伪终端
+         * 伪终端模拟了一个真实的终端设备，提供：
+         *      命令行提示符的正确显示
+         *      命令历史记录
+         *      命令行编辑功能
+         *      终端颜色和格式化输出
+         * 如果不设置 PTY，某些命令可能无法正常工作或显示不正确
+         */
+        channelShell.setPty(true);
+        /**
+         * 设置伪终端的类型为 VT102
+         * VT102 是一种标准的终端类型，提供：
+         *      光标控制
+         *      文本格式化
+         *      屏幕清除
+         *      颜色支持
+         * 其他常见的终端类型包括：
+         *      "xterm"
+         *      "ansi"
+         *      "dumb"
+         */
+        channelShell.setPtyType(PtyType.VT102.getType());
 
         // 准备输入输出流
         try (PipedOutputStream commandStream = new PipedOutputStream();
              PipedInputStream pipedIn = new PipedInputStream(commandStream);
              ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
              ByteArrayOutputStream errorStream = new ByteArrayOutputStream();
-             PrintStream commander = new PrintStream(commandStream)) {
+             PrintStream commander = new PrintStream(commandStream, true, StandardCharsets.UTF_8)) {
 
             // 读取输入
             channelShell.setInputStream(pipedIn);

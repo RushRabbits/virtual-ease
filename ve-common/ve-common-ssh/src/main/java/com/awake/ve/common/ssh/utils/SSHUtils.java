@@ -152,7 +152,7 @@ public class SSHUtils {
 
             // 等待命令执行完成
             while (!channelExec.isClosed()) {
-                Thread.sleep(10);
+                Threads.sleep(1);
             }
 
             String output = outputStream.toString();

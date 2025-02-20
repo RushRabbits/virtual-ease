@@ -185,7 +185,8 @@ public class SSHConfig {
                     return;
                 }
                 // 只清理通道，保持会话连接
-                session.noMoreSessionChannels();
+                // 不注释掉会有bug    session is down
+                // session.noMoreSessionChannels();
             }
         };
     }

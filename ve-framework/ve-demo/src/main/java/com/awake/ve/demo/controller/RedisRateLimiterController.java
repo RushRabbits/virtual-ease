@@ -4,6 +4,8 @@ import cn.dev33.satoken.annotation.SaIgnore;
 import com.awake.ve.common.core.domain.R;
 import com.awake.ve.common.rateLimiter.annotation.RateLimiter;
 import com.awake.ve.common.rateLimiter.enums.LimitType;
+import com.awake.ve.common.ssh.domain.SSHCommandResult;
+import com.awake.ve.common.ssh.utils.SSHUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,11 +23,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/demo/rateLimiter")
 public class RedisRateLimiterController {
 
+    @GetMapping("/testSSH")
+    public R<SSHCommandResult> testSSH() {
+        SSHUtils.sendCommand("cd /", "exec");
+        SSHCommandResult commandResult = SSHUtils.sendCommand("ls", "exec");
+        return R.ok(commandResult);
+    }
+
     /**
      * 测试全局限流
      * 全局影响
      */
-    @RateLimiter(count = 2, time = 10 , message = "请稍后重试")
+    @RateLimiter(count = 2, time = 10, message = "请稍后重试")
     @GetMapping("/test")
     public R<String> test(String value) {
         return R.ok("操作成功", value);
@@ -54,7 +63,7 @@ public class RedisRateLimiterController {
     /**
      * 测试请求IP限流(key基于参数获取)
      * 同一IP请求受影响
-     *
+     * <p>
      * 简单变量获取 #变量 复杂表达式 #{#变量 != 1 ? 1 : 0}
      */
     @RateLimiter(count = 2, time = 10, limitType = LimitType.IP, key = "#value")

@@ -11,7 +11,7 @@ import lombok.Getter;
 @Getter
 public enum JschConfig {
 
-    STRICT_HOST_CHECKING("StrictHostChecking", "no");
+    STRICT_HOST_CHECKING("StrictHostKeyChecking", "no");
 
     private final String key;
     private final String value;

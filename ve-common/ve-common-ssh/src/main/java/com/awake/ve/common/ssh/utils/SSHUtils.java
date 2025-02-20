@@ -1,6 +1,7 @@
 package com.awake.ve.common.ssh.utils;
 
 import com.awake.ve.common.core.exception.ServiceException;
+import com.awake.ve.common.core.utils.SpringUtils;
 import com.awake.ve.common.core.utils.StringUtils;
 import com.awake.ve.common.ssh.config.properties.SSHProperties;
 import com.awake.ve.common.ssh.domain.SSHCommandLineResult;
@@ -27,12 +28,12 @@ public class SSHUtils {
     /**
      * ssh属性
      */
-    private static SSHProperties SSH_PROPERTIES;
+    private final SSHProperties SSH_PROPERTIES;
 
     /**
      * jsch session连接池
      */
-    private static GenericObjectPool<Session> JSCH_SESSION_POOL;
+    private static final GenericObjectPool<Session> JSCH_SESSION_POOL = SpringUtils.getBean("jschSessionPool");
 
     /**
      * 打开session

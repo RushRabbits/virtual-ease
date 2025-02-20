@@ -22,5 +22,10 @@
             <groupId>com.awake</groupId>
             <artifactId>ve-common-satoken</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-ssh</artifactId>
+        </dependency>
     </dependencies>
 </project>

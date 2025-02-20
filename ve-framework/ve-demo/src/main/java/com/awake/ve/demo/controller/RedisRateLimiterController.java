@@ -30,8 +30,19 @@ public class RedisRateLimiterController {
     @GetMapping("/testSSH")
     public R<SSHCommandResult> testSSH() {
         ConcurrentLinkedQueue<String> commands = new ConcurrentLinkedQueue<>();
-        commands.offer("ls -l /");
-        SSHCommandResult commandResult = SSHUtils.sendCommand(SSHCommandDTO.createSSHCommandDTO(commands , ChannelType.SHELL));
+        commands.offer("cd /");
+        commands.offer("ls -l");
+        commands.offer("cd /opt");
+        commands.offer("ls -l");
+        commands.offer("pwd");
+        commands.offer("cd 1panel/");
+        commands.offer("ls -l");
+        commands.offer("cd log/");
+        commands.offer("cd ssl/");
+        commands.offer("ls -l");
+        commands.offer("cd ../");
+        commands.offer("ls -l");
+        SSHCommandResult commandResult = SSHUtils.sendCommand(SSHCommandDTO.createSSHCommandDTO(commands, ChannelType.EXEC));
         return R.ok(commandResult);
     }
 

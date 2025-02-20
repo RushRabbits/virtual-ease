@@ -3,6 +3,7 @@ package com.awake.ve.common.ssh.utils;
 import com.awake.ve.common.core.exception.ServiceException;
 import com.awake.ve.common.core.utils.SpringUtils;
 import com.awake.ve.common.core.utils.StringUtils;
+import com.awake.ve.common.core.utils.Threads;
 import com.awake.ve.common.ssh.config.properties.SSHProperties;
 import com.awake.ve.common.ssh.domain.SSHCommandLineResult;
 import com.awake.ve.common.ssh.domain.SSHCommandResult;
@@ -17,6 +18,7 @@ import org.apache.commons.pool2.impl.GenericObjectPool;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.Random;
 
 /**
  * SSH工具类
@@ -156,7 +158,7 @@ public class SSHUtils {
             String output = outputStream.toString();
             String error = errorStream.toString();
 
-            List<SSHCommandLineResult> outputLines = Arrays.stream(StringUtils.split(output, "\n")).map(SSHCommandLineResult::parse).toList();
+            List<SSHCommandLineResult> outputLines = Arrays.stream(StringUtils.split(output, "\n")).map(SSHCommandLineResult::parse).filter(Objects::nonNull).toList();
 
             return new SSHCommandResult(outputLines, error, 0);
         } catch (Exception e) {
@@ -216,23 +218,56 @@ public class SSHUtils {
 
             channelShell.connect(3000);
 
+            List<String> allOutputLines = new ArrayList<>();
             // 执行命令
+            String marker = "CMD_FINISHED_" + System.currentTimeMillis() + "_" + new Random().nextInt(10000);
             while (!commands.isEmpty()) {
-                commander.println(commands.poll());
+                String command = commands.poll() + " && echo " + marker;
+                commander.println(command);
+                commander.flush();
+
+                // 命令是否完成
+                boolean commandCompleted = false;
+                long startTime = System.currentTimeMillis();
+                // command未完成且未超过30秒
+                while (!commandCompleted && System.currentTimeMillis() - startTime < 30000) {
+                    Threads.sleep(100);
+                    // 保存当前输出流中的原始字节数据
+                    String currentOutput = outputStream.toString(StandardCharsets.UTF_8);
+
+                    // 如果不包含marker，还原数据
+                    if (!currentOutput.contains(marker)) {
+                        continue;
+                    }
+
+                    commandCompleted = true;
+                    // 只记录最后一条命令的结果
+                    // TODO 这里可以在参数管理加参数判断是否只取最后一行command的结果
+                    if (!commands.isEmpty()) {
+                        // 清空当前输出流,为下一个任务做准备
+                        outputStream.reset();
+                        continue;
+                    }
+                    List<String> outputLines = Arrays.stream(StringUtils.split(currentOutput, "\n"))
+                            .filter(line -> !line.trim().isEmpty())
+                            .filter(line -> !line.matches(".*@.*:.*[#$].*"))
+                            .filter(line -> !line.contains(marker))
+                            .toList();
+
+                    allOutputLines.addAll(outputLines);
+                }
+
+                // 超过了30秒,command未完成,则
+                if (!commandCompleted) {
+                    log.error("[SSHUtils][sendShell] command:{} 执行超时", command);
+                    throw new ServiceException("command执行超时: " + command);
+                }
             }
 
-            Thread.sleep(1000);
-
-            String output = outputStream.toString(StandardCharsets.UTF_8);
+            // 错误信息
             String error = errorStream.toString(StandardCharsets.UTF_8);
-
-            List<String> outputLines = Arrays.stream(StringUtils.split(output, "\n")).toList();
-            outputLines = outputLines.stream()
-                    .filter(line -> !line.trim().isEmpty())
-                    .filter(line -> !line.matches(".*@.*:.*[#$].*"))
-                    .toList();
-
-            List<SSHCommandLineResult> SSHResultLineList = outputLines.stream().map(SSHCommandLineResult::parse).filter(Objects::nonNull).toList();
+            // 解析所有输出行
+            List<SSHCommandLineResult> SSHResultLineList = allOutputLines.stream().map(SSHCommandLineResult::parse).filter(Objects::nonNull).toList();
             return new SSHCommandResult(SSHResultLineList, error, 0);
         } catch (Exception e) {
             log.error("[SSHUtils][sendShell] 发送Shell命令失败", e);

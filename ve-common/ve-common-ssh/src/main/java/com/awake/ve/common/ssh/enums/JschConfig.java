@@ -11,7 +11,13 @@ import lombok.Getter;
 @Getter
 public enum JschConfig {
 
-    STRICT_HOST_CHECKING("StrictHostKeyChecking", "no");
+    STRICT_HOST_CHECKING("StrictHostKeyChecking", "no"),
+
+    CHARSET_SHELL("charset.shell", "UTF-8"),
+
+    CHARSET_DEFAULT("charset.default" , "UTF-8"),
+    CHARSET_KEY("charset.kex" , "UTF-8"),
+    CHARSET_USERAUTH("charset.userauth" , "UTF-8");
 
     private final String key;
     private final String value;

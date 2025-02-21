@@ -1,7 +1,7 @@
 package com.awake.ve.common.ecs.wrapper;
 
-import com.awake.ve.common.ecs.domain.apiResult.PVETicketApiResult;
-import com.awake.ve.common.ecs.domain.apiResult.base.ApiResult;
+import com.awake.ve.common.ecs.handler.impl.PVETicketApiHandler;
+import com.awake.ve.common.ecs.handler.ApiHandler;
 import com.awake.ve.common.ecs.wrapper.base.ApiWrapper;
 import lombok.Data;
 
@@ -14,19 +14,27 @@ import lombok.Data;
 @Data
 public class PVEApiResultWrapper implements ApiWrapper {
 
-    private ApiResult apiResult;
+    private ApiHandler apiHandler;
 
     public static PVEApiResultWrapper newInstance() {
         return new PVEApiResultWrapper();
     }
 
-    @Override
-    public void setApiResult(ApiResult apiResult) {
-        this.apiResult = apiResult;
+    public void setApiHandler(ApiHandler apiHandler) {
+        this.apiHandler = apiHandler;
+    }
+
+    public ApiHandler getApiHandler() {
+        return apiHandler != null ? apiHandler : PVETicketApiHandler.newInstance();
     }
 
     @Override
-    public ApiResult getApiResult() {
-        return apiResult != null ? apiResult : PVETicketApiResult.newInstance();
+    public void setApiResult(ApiHandler apiHandler) {
+
+    }
+
+    @Override
+    public ApiHandler getApiResult() {
+        return null;
     }
 }

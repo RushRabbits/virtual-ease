@@ -1,8 +1,8 @@
 package com.awake.ve.common.ecs.enums;
 
-import com.awake.ve.common.ecs.domain.apiResult.PVETicketApiResult;
-import com.awake.ve.common.ecs.wrapper.PVEApiResultWrapper;
-import com.awake.ve.common.ecs.wrapper.base.ApiWrapper;
+import com.awake.ve.common.ecs.api.response.BaseApiResponse;
+import com.awake.ve.common.ecs.handler.impl.PVETicketApiHandler;
+import com.awake.ve.common.ecs.handler.ApiHandler;
 import lombok.Getter;
 import org.springframework.http.HttpMethod;
 
@@ -15,11 +15,14 @@ import org.springframework.http.HttpMethod;
  */
 @Getter
 public enum PVEApi {
+    /**
+     * 创建ticket
+     */
     TICKET_CREATE(
             "http://{host}:{port}/api2/json/access/ticket?username={username}&password={password}",
             "pvesh post /access/ticket",
             HttpMethod.POST,
-            newApiWrapper(),
+            PVETicketApiHandler.newInstance(),
             "创建ticket,ticket是调用api的token"
     ),
 
@@ -29,21 +32,19 @@ public enum PVEApi {
     private final String api;
     private final String cli;
     private final HttpMethod httpMethod;
-    private final ApiWrapper apiWrapper;
+    private final ApiHandler apiHandler;
     private final String description;
 
 
-    PVEApi(String api, String cli, HttpMethod httpMethod, ApiWrapper apiWrapper, String description) {
+    PVEApi(String api, String cli, HttpMethod httpMethod, ApiHandler apiHandler, String description) {
         this.api = api;
         this.cli = cli;
         this.httpMethod = httpMethod;
-        this.apiWrapper = apiWrapper;
+        this.apiHandler = apiHandler;
         this.description = description;
     }
 
-    private static ApiWrapper newApiWrapper() {
-        PVEApiResultWrapper wrapper = PVEApiResultWrapper.newInstance();
-        wrapper.setApiResult(PVETicketApiResult.newInstance());
-        return wrapper;
+    private BaseApiResponse handle(){
+        return this.getApiHandler().handle();
     }
 }

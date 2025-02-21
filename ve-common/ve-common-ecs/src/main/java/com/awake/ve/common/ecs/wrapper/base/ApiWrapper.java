@@ -1,6 +1,6 @@
 package com.awake.ve.common.ecs.wrapper.base;
 
-import com.awake.ve.common.ecs.domain.apiResult.base.ApiResult;
+import com.awake.ve.common.ecs.handler.ApiHandler;
 
 /**
  * api包装类的基类
@@ -10,7 +10,7 @@ import com.awake.ve.common.ecs.domain.apiResult.base.ApiResult;
  */
 public interface ApiWrapper {
 
-    void setApiResult(ApiResult apiResult);
+    void setApiResult(ApiHandler apiHandler);
 
-    ApiResult getApiResult();
+    ApiHandler getApiResult();
 }

@@ -1,4 +1,4 @@
-package com.awake.ve.ecs.core;
+package com.awake.ve.common.ecs.core;
 
 import java.util.Collection;
 

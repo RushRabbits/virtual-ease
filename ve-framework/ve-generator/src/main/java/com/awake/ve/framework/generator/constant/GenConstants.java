@@ -44,7 +44,7 @@ public interface GenConstants {
     /**
      * 数据库字符串类型
      */
-    String[] COLUMNTYPE_STR = {"char", "varchar", "enum", "set", "nchar", "nvarchar", "varchar2", "nvarchar2"};
+    String[] COLUMNTYPE_STR = {"char", "varchar", "enums", "set", "nchar", "nvarchar", "varchar2", "nvarchar2"};
 
     /**
      * 数据库文本类型

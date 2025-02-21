@@ -13,4 +13,16 @@
 
     <description>ECS (elastic compute service) 弹性计算服务</description>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-ssh</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>

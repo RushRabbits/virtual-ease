@@ -1,6 +1,6 @@
-package com.awake.ve.ecs.core.impl;
+package com.awake.ve.common.ecs.core.impl;
 
-import com.awake.ve.ecs.core.EcsClient;
+import com.awake.ve.common.ecs.core.EcsClient;
 
 import java.util.Collection;
 import java.util.List;

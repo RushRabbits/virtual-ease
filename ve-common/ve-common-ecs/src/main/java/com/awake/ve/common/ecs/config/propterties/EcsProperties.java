@@ -7,6 +7,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "ecs")
 public class EcsProperties {
     /**
+     * ecs服务器节点名
+     */
+    private String node;
+    /**
      * ecs服务提供者
      */
     private String service;

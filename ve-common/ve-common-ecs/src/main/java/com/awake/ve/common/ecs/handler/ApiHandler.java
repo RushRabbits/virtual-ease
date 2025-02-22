@@ -2,6 +2,7 @@ package com.awake.ve.common.ecs.handler;
 
 import com.awake.ve.common.ecs.api.request.BaseApiRequest;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
+import com.awake.ve.common.ecs.director.base.BaseApiDirector;
 
 /**
  * api结果的基类
@@ -21,10 +22,10 @@ public interface ApiHandler {
     /**
      * 处理需要请求参数的api
      *
-     * @param request {@link BaseApiRequest}
+     * @param director {@link BaseApiDirector}
      * @return {@link BaseApiResponse}
      * @author wangjiaxing
      * @date 2025/2/22 12:41
      */
-    BaseApiResponse handle(BaseApiRequest request);
+    BaseApiResponse handle(BaseApiDirector director);
 }

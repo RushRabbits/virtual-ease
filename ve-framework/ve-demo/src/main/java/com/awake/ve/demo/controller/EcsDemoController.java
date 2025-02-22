@@ -3,6 +3,7 @@ package com.awake.ve.demo.controller;
 import cn.dev33.satoken.annotation.SaIgnore;
 import com.awake.ve.common.core.domain.R;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
+import com.awake.ve.common.ecs.director.PVECreateTemplateDirector;
 import com.awake.ve.common.ecs.enums.PVEApi;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,13 @@ public class EcsDemoController {
     @GetMapping("/createTicket")
     public R<BaseApiResponse> createTicket() {
         BaseApiResponse response = PVEApi.TICKET_CREATE.handle();
+        return R.ok(response);
+    }
+
+    @GetMapping("/createTemplateByVmId")
+    public R<BaseApiResponse> createTemplateByVmId() {
+        PVECreateTemplateDirector director = new PVECreateTemplateDirector("pve", "105");
+        BaseApiResponse response = PVEApi.CREATE_TEMPLATE.handle(director);
         return R.ok(response);
     }
 }

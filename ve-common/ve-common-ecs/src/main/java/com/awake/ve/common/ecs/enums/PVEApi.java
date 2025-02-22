@@ -1,6 +1,9 @@
 package com.awake.ve.common.ecs.enums;
 
+import com.awake.ve.common.ecs.api.request.BaseApiRequest;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
+import com.awake.ve.common.ecs.director.base.BaseApiDirector;
+import com.awake.ve.common.ecs.handler.impl.PVECreateTemplateApiHandler;
 import com.awake.ve.common.ecs.handler.impl.PVETicketApiHandler;
 import com.awake.ve.common.ecs.handler.ApiHandler;
 import lombok.Getter;
@@ -25,6 +28,16 @@ public enum PVEApi {
             PVETicketApiHandler.newInstance(),
             "创建ticket,ticket是调用api的token"
     ),
+    /**
+     * 创建模板
+     */
+    CREATE_TEMPLATE(
+            "http://{host}:{port}/api2/json/nodes/{node}/qemu/{vmid}/template",
+            "pvesh create /nodes/{node}/qemu/{vmid}/template",
+            HttpMethod.POST,
+            PVECreateTemplateApiHandler.newInstance(),
+            "根据虚拟机创建模板(虚拟机需关闭)"
+    ),
 
 
     ;
@@ -44,7 +57,11 @@ public enum PVEApi {
         this.description = description;
     }
 
-    public BaseApiResponse handle(){
+    public BaseApiResponse handle() {
         return this.getApiHandler().handle();
+    }
+
+    public BaseApiResponse handle(BaseApiDirector director) {
+        return this.getApiHandler().handle(director);
     }
 }

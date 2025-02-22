@@ -2,7 +2,6 @@ package com.awake.ve.common.ecs.api.request;
 
 import lombok.Data;
 
-
 @Data
 public class PVEBaseApiRequest implements BaseApiRequest {
 

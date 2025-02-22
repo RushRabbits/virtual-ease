@@ -5,20 +5,27 @@ import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSON;
 import cn.hutool.json.JSONUtil;
+import com.awake.ve.common.core.constant.CacheConstants;
+import com.awake.ve.common.core.constant.CacheNames;
 import com.awake.ve.common.core.utils.SpringUtils;
 import com.awake.ve.common.ecs.api.request.BaseApiRequest;
-import com.awake.ve.common.ecs.api.request.PVETicketApiRequest;
+import com.awake.ve.common.ecs.api.ticket.PVETicketApiRequest;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
-import com.awake.ve.common.ecs.api.response.PVETicketApiResponse;
+import com.awake.ve.common.ecs.api.ticket.PVETicketApiResponse;
 import com.awake.ve.common.ecs.config.propterties.EcsProperties;
+import com.awake.ve.common.ecs.director.base.BaseApiDirector;
 import com.awake.ve.common.ecs.enums.PVEApi;
 import com.awake.ve.common.ecs.handler.ApiHandler;
+import com.awake.ve.common.translation.utils.RedisUtils;
 import lombok.Data;
 
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
 import static com.awake.ve.common.ecs.constants.ApiParamConstants.*;
+import static com.awake.ve.common.ecs.constants.JsonPathConstants.PVE_CSRF_PREVENTION_TOKEN;
+import static com.awake.ve.common.ecs.constants.JsonPathConstants.PVE_TICKET;
 
 /**
  * PVE api GET /api2/json/access/ticket 的返回值类
@@ -54,6 +61,10 @@ public class PVETicketApiHandler implements ApiHandler {
 
     @Override
     public BaseApiResponse handle() {
+        // Object cacheObject = RedisUtils.getCacheObject(CacheConstants.PVE_API_TICKET + CacheNames.PVE_API_TICKET);
+        // if (cacheObject instanceof PVETicketApiResponse apiResponse) {
+        //     return apiResponse;
+        // }
         PVEApi ticketApi = PVEApi.TICKET_CREATE;
         String api = ticketApi.getApi();
         Map<String, Object> map = new HashMap<>();
@@ -68,13 +79,15 @@ public class PVETicketApiHandler implements ApiHandler {
         String body = response.body();
 
         JSON json = JSONUtil.parse(body);
-        String ticket = json.getByPath("$.data.ticket", String.class);
-        String CSRFPreventionToken = json.getByPath("$.data.CSRFPreventionToken", String.class);
-        return new PVETicketApiResponse(ticket, CSRFPreventionToken);
+        String ticket = json.getByPath(PVE_TICKET, String.class);
+        String CSRFPreventionToken = json.getByPath(PVE_CSRF_PREVENTION_TOKEN, String.class);
+        PVETicketApiResponse ticketApiResponse = new PVETicketApiResponse(ticket, CSRFPreventionToken);
+        RedisUtils.setCacheObject(CacheConstants.PVE_API_TICKET + CacheNames.PVE_API_TICKET, ticketApiResponse, Duration.ofMinutes(30));
+        return ticketApiResponse;
     }
 
     @Override
-    public BaseApiResponse handle(BaseApiRequest request) {
+    public BaseApiResponse handle(BaseApiDirector director) {
         return this.handle();
     }
 }

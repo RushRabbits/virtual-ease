@@ -9,14 +9,13 @@ import cn.hutool.json.JSONUtil;
 import com.awake.ve.common.core.utils.SpringUtils;
 import com.awake.ve.common.ecs.api.request.BaseApiRequest;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
-import com.awake.ve.common.ecs.api.template.PVECreateTemplateApiRequest;
-import com.awake.ve.common.ecs.api.template.PVECreateTemplateApiResponse;
+import com.awake.ve.common.ecs.api.template.request.PVECreateTemplateApiRequest;
+import com.awake.ve.common.ecs.api.template.response.PVECreateTemplateApiResponse;
 import com.awake.ve.common.ecs.api.ticket.PVETicketApiResponse;
 import com.awake.ve.common.ecs.config.propterties.EcsProperties;
 import com.awake.ve.common.ecs.enums.PVEApi;
 import com.awake.ve.common.ecs.handler.ApiHandler;
 import com.awake.ve.common.ecs.utils.EcsUtils;
-import lombok.Data;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +30,6 @@ import static com.awake.ve.common.ecs.constants.JsonPathConstants.PVE_BASE_RESP;
  * @author wangjiaxing
  * @date 2025/2/22 14:51
  */
-@Data
 public class PVECreateTemplateApiHandler implements ApiHandler {
 
     private static final EcsProperties ECS_PROPERTIES = SpringUtils.getBean(EcsProperties.class);

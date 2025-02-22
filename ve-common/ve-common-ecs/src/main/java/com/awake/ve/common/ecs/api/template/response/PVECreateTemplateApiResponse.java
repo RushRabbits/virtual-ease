@@ -1,4 +1,4 @@
-package com.awake.ve.common.ecs.api.template;
+package com.awake.ve.common.ecs.api.template.response;
 
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
 import lombok.AllArgsConstructor;

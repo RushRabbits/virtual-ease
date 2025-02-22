@@ -3,6 +3,7 @@ package com.awake.ve.common.ecs.enums;
 import com.awake.ve.common.ecs.api.request.BaseApiRequest;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
 import com.awake.ve.common.ecs.handler.impl.PVECreateTemplateApiHandler;
+import com.awake.ve.common.ecs.handler.impl.PVETemplateCreateVmApiHandler;
 import com.awake.ve.common.ecs.handler.impl.PVETicketApiHandler;
 import com.awake.ve.common.ecs.handler.ApiHandler;
 import lombok.Getter;
@@ -36,6 +37,19 @@ public enum PVEApi {
             HttpMethod.POST,
             PVECreateTemplateApiHandler.newInstance(),
             "根据虚拟机创建模板(虚拟机需关闭)"
+    ),
+    /**
+     * HTTP:   	POST
+     * <p>
+     * CLI:
+     * 模板克隆虚拟机
+     */
+    TEMPLATE_CLONE_VM(
+            "http://{host}:{port}/api2/json/nodes/{node}/qemu/{vmid}/clone",
+            "pvesh create /nodes/{node}/qemu/{vmid}/clone",
+            HttpMethod.POST,
+            PVETemplateCreateVmApiHandler.newInstance(),
+            "注意克隆分为两种模式,链接克隆和完整克隆,链接克隆本身可以保证统一模板创建的不通虚拟机之间的数据隔离(qcow2格式的虚拟机在数据隔离层面做的更好),所以我们默认采用链接克隆,效率更高"
     ),
 
 

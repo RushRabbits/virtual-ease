@@ -3,7 +3,8 @@ package com.awake.ve.demo.controller;
 import cn.dev33.satoken.annotation.SaIgnore;
 import com.awake.ve.common.core.domain.R;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
-import com.awake.ve.common.ecs.api.template.PVECreateTemplateApiRequest;
+import com.awake.ve.common.ecs.api.template.request.PVECreateTemplateApiRequest;
+import com.awake.ve.common.ecs.api.template.request.PVETemplateCreateVmApiRequest;
 import com.awake.ve.common.ecs.enums.PVEApi;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,9 +27,20 @@ public class EcsDemoController {
     public R<BaseApiResponse> createTemplateByVmId() {
         PVECreateTemplateApiRequest request = PVECreateTemplateApiRequest.builder()
                 .node("pve")
-                .vmId("115")
+                .vmId(115L)
                 .build();
         BaseApiResponse response = PVEApi.CREATE_TEMPLATE.handle(request);
+        return R.ok(response);
+    }
+
+    @GetMapping("/templateCreateVm")
+    public R<BaseApiResponse> templateCreateVm() {
+        PVETemplateCreateVmApiRequest request = PVETemplateCreateVmApiRequest.builder()
+                .node("pve")
+                .vmId(115L)
+                .newId(116L)
+                .build();
+        BaseApiResponse response = PVEApi.TEMPLATE_CLONE_VM.handle(request);
         return R.ok(response);
     }
 }

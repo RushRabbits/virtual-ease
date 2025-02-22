@@ -36,8 +36,6 @@ import static com.awake.ve.common.ecs.constants.JsonPathConstants.PVE_TICKET;
 public class PVETicketApiHandler implements ApiHandler {
 
     private static final EcsProperties ECS_PROPERTIES = SpringUtils.getBean(EcsProperties.class);
-    private PVETicketApiRequest request;
-    private PVETicketApiResponse response;
 
     /**
      * {@link PVEApi}
@@ -52,8 +50,6 @@ public class PVETicketApiHandler implements ApiHandler {
         PVETicketApiRequest request = new PVETicketApiRequest();
         request.setUsername(ECS_PROPERTIES.getApiUsername());
         request.setPassword(ECS_PROPERTIES.getApiPassword());
-
-        handler.setRequest(request);
 
         return handler;
     }

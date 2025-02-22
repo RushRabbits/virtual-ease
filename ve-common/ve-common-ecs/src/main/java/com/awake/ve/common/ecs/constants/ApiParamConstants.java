@@ -1,7 +1,5 @@
 package com.awake.ve.common.ecs.constants;
 
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author wangjiaxing
@@ -60,4 +58,36 @@ public interface ApiParamConstants {
      * json请求类型
      */
     String APPLICATION_JSON = "application/json";
+    /**
+     * IO带宽限制
+     */
+    String BW_LIMIT = "bwlimit";
+    /**
+     * 描述
+     */
+    String DESCRIPTION = "description";
+    /**
+     * 格式
+     */
+    String FORMAT = "format";
+    /**
+     * 是否完整克隆
+     */
+    String FULL = "full";
+    /**
+     * 存储池
+     */
+    String POOL = "pool";
+    /**
+     * 快照名称
+     */
+    String SNAPNAME = "snapname";
+    /**
+     * 存储
+     */
+    String STORAGE = "storage";
+    /**
+     * 目标
+     */
+    String TARGET = "target";
 }

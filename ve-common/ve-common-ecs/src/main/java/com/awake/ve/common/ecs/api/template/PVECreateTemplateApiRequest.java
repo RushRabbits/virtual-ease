@@ -1,6 +1,7 @@
 package com.awake.ve.common.ecs.api.template;
 
 import com.awake.ve.common.ecs.api.request.PVEBaseApiRequest;
+import com.esotericsoftware.kryo.serializers.FieldSerializer;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,13 +27,9 @@ public class PVECreateTemplateApiRequest extends PVEBaseApiRequest {
      */
     private String vmId;
 
-    /**
-     * 模板id
-     */
-    private String templateId;
-
-    /**
-     * 模板名
-     */
-    private String templateName;
+    public PVECreateTemplateApiRequest(String node, String vmId) {
+        this.node = node;
+        this.vmId = vmId;
+    }
 }
+

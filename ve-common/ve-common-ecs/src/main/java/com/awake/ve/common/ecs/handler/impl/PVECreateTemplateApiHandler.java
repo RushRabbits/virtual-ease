@@ -13,8 +13,6 @@ import com.awake.ve.common.ecs.api.template.PVECreateTemplateApiRequest;
 import com.awake.ve.common.ecs.api.template.PVECreateTemplateApiResponse;
 import com.awake.ve.common.ecs.api.ticket.PVETicketApiResponse;
 import com.awake.ve.common.ecs.config.propterties.EcsProperties;
-import com.awake.ve.common.ecs.director.PVECreateTemplateDirector;
-import com.awake.ve.common.ecs.director.base.BaseApiDirector;
 import com.awake.ve.common.ecs.enums.PVEApi;
 import com.awake.ve.common.ecs.handler.ApiHandler;
 import com.awake.ve.common.ecs.utils.EcsUtils;
@@ -53,13 +51,9 @@ public class PVECreateTemplateApiHandler implements ApiHandler {
     }
 
     @Override
-    public BaseApiResponse handle(BaseApiDirector director) {
+    public BaseApiResponse handle(BaseApiRequest request) {
         PVETicketApiResponse ticket = EcsUtils.checkTicket();
 
-        if (!(director instanceof PVECreateTemplateDirector createTemplateDirector)) {
-            return new PVECreateTemplateApiResponse();
-        }
-        BaseApiRequest request = createTemplateDirector.buildRequest();
         if (!(request instanceof PVECreateTemplateApiRequest createTemplateApiRequest)) {
             return new PVECreateTemplateApiResponse();
         }

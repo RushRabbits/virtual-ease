@@ -2,7 +2,6 @@ package com.awake.ve.common.ecs.enums;
 
 import com.awake.ve.common.ecs.api.request.BaseApiRequest;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
-import com.awake.ve.common.ecs.director.base.BaseApiDirector;
 import com.awake.ve.common.ecs.handler.impl.PVECreateTemplateApiHandler;
 import com.awake.ve.common.ecs.handler.impl.PVETicketApiHandler;
 import com.awake.ve.common.ecs.handler.ApiHandler;
@@ -61,7 +60,7 @@ public enum PVEApi {
         return this.getApiHandler().handle();
     }
 
-    public BaseApiResponse handle(BaseApiDirector director) {
-        return this.getApiHandler().handle(director);
+    public BaseApiResponse handle(BaseApiRequest request) {
+        return this.getApiHandler().handle(request);
     }
 }

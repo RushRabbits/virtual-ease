@@ -3,7 +3,7 @@ package com.awake.ve.demo.controller;
 import cn.dev33.satoken.annotation.SaIgnore;
 import com.awake.ve.common.core.domain.R;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
-import com.awake.ve.common.ecs.director.PVECreateTemplateDirector;
+import com.awake.ve.common.ecs.api.template.PVECreateTemplateApiRequest;
 import com.awake.ve.common.ecs.enums.PVEApi;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,8 +24,11 @@ public class EcsDemoController {
 
     @GetMapping("/createTemplateByVmId")
     public R<BaseApiResponse> createTemplateByVmId() {
-        PVECreateTemplateDirector director = new PVECreateTemplateDirector("pve", "105");
-        BaseApiResponse response = PVEApi.CREATE_TEMPLATE.handle(director);
+        PVECreateTemplateApiRequest request = PVECreateTemplateApiRequest.builder()
+                .node("pve")
+                .vmId("115")
+                .build();
+        BaseApiResponse response = PVEApi.CREATE_TEMPLATE.handle(request);
         return R.ok(response);
     }
 }

@@ -13,7 +13,6 @@ import com.awake.ve.common.ecs.api.ticket.PVETicketApiRequest;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
 import com.awake.ve.common.ecs.api.ticket.PVETicketApiResponse;
 import com.awake.ve.common.ecs.config.propterties.EcsProperties;
-import com.awake.ve.common.ecs.director.base.BaseApiDirector;
 import com.awake.ve.common.ecs.enums.PVEApi;
 import com.awake.ve.common.ecs.handler.ApiHandler;
 import com.awake.ve.common.translation.utils.RedisUtils;
@@ -61,10 +60,10 @@ public class PVETicketApiHandler implements ApiHandler {
 
     @Override
     public BaseApiResponse handle() {
-        // Object cacheObject = RedisUtils.getCacheObject(CacheConstants.PVE_API_TICKET + CacheNames.PVE_API_TICKET);
-        // if (cacheObject instanceof PVETicketApiResponse apiResponse) {
-        //     return apiResponse;
-        // }
+        Object cacheObject = RedisUtils.getCacheObject(CacheConstants.PVE_API_TICKET + CacheNames.PVE_API_TICKET);
+        if (cacheObject instanceof PVETicketApiResponse apiResponse) {
+            return apiResponse;
+        }
         PVEApi ticketApi = PVEApi.TICKET_CREATE;
         String api = ticketApi.getApi();
         Map<String, Object> map = new HashMap<>();
@@ -87,7 +86,7 @@ public class PVETicketApiHandler implements ApiHandler {
     }
 
     @Override
-    public BaseApiResponse handle(BaseApiDirector director) {
+    public BaseApiResponse handle(BaseApiRequest request) {
         return this.handle();
     }
 }

@@ -28,6 +28,11 @@
             <groupId>com.awake</groupId>
             <artifactId>ve-common-json</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-redis</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

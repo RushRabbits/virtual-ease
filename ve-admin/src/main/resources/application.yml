@@ -237,6 +237,6 @@ ssh:
 ecs:
   service: PVE
   host: 192.168.1.139
-  port: 22
-  username: root
-  password: 123456
+  port: 8006
+  apiUsername: API@pve
+  apiPassword: 123qwe...

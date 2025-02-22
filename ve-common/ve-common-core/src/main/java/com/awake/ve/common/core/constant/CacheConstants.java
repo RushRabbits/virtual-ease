@@ -31,4 +31,9 @@ public interface CacheConstants {
      * 分片文件的原文件名
      */
     String FRAGMENT_FILE_NAME = "fragment_file_name:";
+
+    /**
+     * PVE api ticket key
+     */
+    String PVE_API_TICKET = "pve_api:";
 }

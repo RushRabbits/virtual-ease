@@ -21,9 +21,9 @@ public class EcsProperties {
     /**
      * ecs服务登录用户名
      */
-    private String username;
+    private String apiUsername;
     /**
      * ecs服务登录密码
      */
-    private String password;
+    private String apiPassword;
 }

@@ -5,16 +5,20 @@ import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSON;
 import cn.hutool.json.JSONUtil;
+import com.awake.ve.common.core.utils.SpringUtils;
 import com.awake.ve.common.ecs.api.request.BaseApiRequest;
 import com.awake.ve.common.ecs.api.request.PVETicketApiRequest;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
 import com.awake.ve.common.ecs.api.response.PVETicketApiResponse;
+import com.awake.ve.common.ecs.config.propterties.EcsProperties;
 import com.awake.ve.common.ecs.enums.PVEApi;
 import com.awake.ve.common.ecs.handler.ApiHandler;
 import lombok.Data;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.awake.ve.common.ecs.constants.ApiParamConstants.*;
 
 /**
  * PVE api GET /api2/json/access/ticket 的返回值类
@@ -25,6 +29,7 @@ import java.util.Map;
 @Data
 public class PVETicketApiHandler implements ApiHandler {
 
+    private static final EcsProperties ECS_PROPERTIES = SpringUtils.getBean(EcsProperties.class);
     private PVETicketApiRequest request;
     private PVETicketApiResponse response;
 
@@ -39,8 +44,8 @@ public class PVETicketApiHandler implements ApiHandler {
     public static PVETicketApiHandler newInstance() {
         PVETicketApiHandler handler = new PVETicketApiHandler();
         PVETicketApiRequest request = new PVETicketApiRequest();
-        request.setUsername("API@pve");
-        request.setPassword("123qwe...");
+        request.setUsername(ECS_PROPERTIES.getApiUsername());
+        request.setPassword(ECS_PROPERTIES.getApiPassword());
 
         handler.setRequest(request);
 
@@ -49,16 +54,13 @@ public class PVETicketApiHandler implements ApiHandler {
 
     @Override
     public BaseApiResponse handle() {
-
         PVEApi ticketApi = PVEApi.TICKET_CREATE;
         String api = ticketApi.getApi();
-        String username = "API@pve";
-        String password = "123qwe...";
         Map<String, Object> map = new HashMap<>();
-        map.put("host", "192.168.1.139");
-        map.put("port", "8006");
-        map.put("username", username);
-        map.put("password", password);
+        map.put(HOST, ECS_PROPERTIES.getHost());
+        map.put(PORT, ECS_PROPERTIES.getPort());
+        map.put(API_USERNAME, ECS_PROPERTIES.getApiUsername());
+        map.put(API_PASSWORD, ECS_PROPERTIES.getApiPassword());
         String url = StrFormatter.format(api, map, true);
 
         HttpResponse response = HttpRequest.post(url).setFollowRedirects(true).execute();
@@ -68,7 +70,7 @@ public class PVETicketApiHandler implements ApiHandler {
         JSON json = JSONUtil.parse(body);
         String ticket = json.getByPath("$.data.ticket", String.class);
         String CSRFPreventionToken = json.getByPath("$.data.CSRFPreventionToken", String.class);
-        return new PVETicketApiResponse(ticket , CSRFPreventionToken);
+        return new PVETicketApiResponse(ticket, CSRFPreventionToken);
     }
 
     @Override

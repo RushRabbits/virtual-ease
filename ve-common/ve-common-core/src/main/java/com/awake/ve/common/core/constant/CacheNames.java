@@ -70,4 +70,9 @@ public interface CacheNames {
      */
     String ONLINE_TOKEN = "online_tokens";
 
+    /**
+     * PVE API TICKET
+     */
+    String PVE_API_TICKET = "ticket";
+
 }

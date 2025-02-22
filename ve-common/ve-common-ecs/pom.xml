@@ -23,6 +23,11 @@
             <groupId>com.awake</groupId>
             <artifactId>ve-common-ssh</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-json</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

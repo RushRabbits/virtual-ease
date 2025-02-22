@@ -5,6 +5,7 @@ import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSON;
 import cn.hutool.json.JSONUtil;
+import com.awake.ve.common.ecs.api.request.BaseApiRequest;
 import com.awake.ve.common.ecs.api.request.PVETicketApiRequest;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
 import com.awake.ve.common.ecs.api.response.PVETicketApiResponse;
@@ -33,7 +34,6 @@ public class PVETicketApiHandler implements ApiHandler {
     private PVEApi pveApi;
 
     private PVETicketApiHandler() {
-
     }
 
     public static PVETicketApiHandler newInstance() {
@@ -69,5 +69,10 @@ public class PVETicketApiHandler implements ApiHandler {
         String ticket = json.getByPath("$.data.ticket", String.class);
         String CSRFPreventionToken = json.getByPath("$.data.CSRFPreventionToken", String.class);
         return new PVETicketApiResponse(ticket , CSRFPreventionToken);
+    }
+
+    @Override
+    public BaseApiResponse handle(BaseApiRequest request) {
+        return this.handle();
     }
 }

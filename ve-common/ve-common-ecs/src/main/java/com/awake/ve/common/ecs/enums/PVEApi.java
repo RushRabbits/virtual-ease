@@ -44,7 +44,7 @@ public enum PVEApi {
         this.description = description;
     }
 
-    private BaseApiResponse handle(){
+    public BaseApiResponse handle(){
         return this.getApiHandler().handle();
     }
 }

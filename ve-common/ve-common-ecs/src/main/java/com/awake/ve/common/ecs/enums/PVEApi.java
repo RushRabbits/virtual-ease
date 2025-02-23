@@ -98,8 +98,17 @@ public enum PVEApi {
             PVERebootVmApiHandler.newInstance(),
             "重启虚拟机"
 
-    )
-    ;
+    ),
+    /**
+     * 销毁虚拟机(必须先关闭虚拟机)
+     */
+    DESTROY_VM(
+            "http://{host}:{port}/api2/json/nodes/{node}/qemu/{vmid}?",
+            "pvesh delete /nodes/{node}/qemu/{vmid}",
+            HttpMethod.DELETE,
+            PVEDestroyVmApiHandler.newInstance(),
+            "销毁虚拟机"
+    );
 
     private final String api;
     private final String cli;

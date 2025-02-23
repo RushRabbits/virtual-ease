@@ -138,4 +138,12 @@ public interface ApiParamConstants {
      * 覆盖之前的未完成的shutdown
      */
     String OVERRULE_SHUTDOWN = "overruleShutdown";
+    /**
+     * 销毁未引用的磁盘
+     */
+    String DESTROY_UNREFERENCED_DISKS = "destroyUnreferencedDisks";
+    /**
+     * 完全清理与该VM相关的所有配置
+     */
+    String PURGE = "purge";
 }

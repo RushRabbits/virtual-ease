@@ -5,10 +5,7 @@ import com.awake.ve.common.core.domain.R;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
 import com.awake.ve.common.ecs.api.template.request.PVECreateTemplateApiRequest;
 import com.awake.ve.common.ecs.api.template.request.PVETemplateCreateVmApiRequest;
-import com.awake.ve.common.ecs.api.vm.status.PVERebootVmApiRequest;
-import com.awake.ve.common.ecs.api.vm.status.PVEShutdownVmApiRequest;
-import com.awake.ve.common.ecs.api.vm.status.PVEStartVmApiRequest;
-import com.awake.ve.common.ecs.api.vm.status.PVEStopVmApiRequest;
+import com.awake.ve.common.ecs.api.vm.status.*;
 import com.awake.ve.common.ecs.enums.PVEApi;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -91,6 +88,19 @@ public class EcsDemoController {
                 .timeout(10)
                 .build();
         BaseApiResponse response = PVEApi.REBOOT_VM.handle(request);
+        return R.ok(response);
+    }
+
+    @GetMapping("/destroyVm")
+    public R<BaseApiResponse> destroyVm() {
+        PVEDestroyVmApiRequest request = PVEDestroyVmApiRequest.builder()
+                .node("pve")
+                .vmId(117L)
+                .destroyUnreferencedDisks(true)
+                .purge(true)
+                .skipLock(true)
+                .build();
+        BaseApiResponse response = PVEApi.DESTROY_VM.handle(request);
         return R.ok(response);
     }
 

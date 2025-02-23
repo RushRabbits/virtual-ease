@@ -104,4 +104,15 @@ public class EcsDemoController {
         return R.ok(response);
     }
 
+    @GetMapping("/resetVm")
+    public R<BaseApiResponse> resetVm() {
+        PVEResetVmApiRequest request = PVEResetVmApiRequest.builder()
+                .node("pve")
+                .vmId(117L)
+                .skipLock(true)
+                .build();
+        BaseApiResponse response = PVEApi.RESET_VM.handle(request);
+        return R.ok(response);
+    }
+
 }

@@ -53,7 +53,7 @@ public class PVERebootVmApiHandler implements ApiHandler {
         Map<String, Object> params = new HashMap<>();
         params.put(HOST, ECS_PROPERTIES.getHost());
         params.put(PORT, ECS_PROPERTIES.getPort());
-        params.put(NODE, ECS_PROPERTIES.getNode());
+        params.put(NODE, request.getNode());
         params.put(VM_ID, request.getVmId());
         String url = StrFormatter.format(api, params, true);
 

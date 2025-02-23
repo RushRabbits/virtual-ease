@@ -89,7 +89,7 @@ public enum PVEApi {
     /**
      * 重启虚拟机
      * TODO 不推荐使用,因为有时虚拟机会关闭失败导致无法重启,原因暂时不知道
-     * TODO 有重启的需求建议使用stop + start实现
+     * TODO 有重启的需求建议使用reset vm
      */
     REBOOT_VM(
             "http://{host}:{port}/api2/json/nodes/{node}/qemu/{vmid}/status/reboot",
@@ -98,6 +98,16 @@ public enum PVEApi {
             PVERebootVmApiHandler.newInstance(),
             "重启虚拟机"
 
+    ),
+    /**
+     * 重置虚拟机(强制重启虚拟机)
+     */
+    RESET_VM(
+            "http://{host}:{port}/api2/json/nodes/{node}/qemu/{vmid}/status/reset",
+            "pvesh create /nodes/{node}/qemu/{vmid}/status/reset",
+            HttpMethod.POST,
+            PVEResetVmApiHandler.newInstance(),
+            "重置虚拟机(强制重启虚拟机)"
     ),
     /**
      * 销毁虚拟机(必须先关闭虚拟机)

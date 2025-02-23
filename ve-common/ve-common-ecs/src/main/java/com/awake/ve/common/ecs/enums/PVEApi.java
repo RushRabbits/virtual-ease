@@ -85,6 +85,20 @@ public enum PVEApi {
             PVEStopVmApiHandler.newInstance(),
             "关闭虚拟机 此api相当于拔掉电源"
     ),
+
+    /**
+     * 重启虚拟机
+     * TODO 不推荐使用,因为有时虚拟机会关闭失败导致无法重启,原因暂时不知道
+     * TODO 有重启的需求建议使用stop + start实现
+     */
+    REBOOT_VM(
+            "http://{host}:{port}/api2/json/nodes/{node}/qemu/{vmid}/status/reboot",
+            "pvesh create /nodes/{node}/qemu/{vmid}/status/reboot",
+            HttpMethod.POST,
+            PVERebootVmApiHandler.newInstance(),
+            "重启虚拟机"
+
+    )
     ;
 
     private final String api;

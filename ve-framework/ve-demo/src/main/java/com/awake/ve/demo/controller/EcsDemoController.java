@@ -5,6 +5,7 @@ import com.awake.ve.common.core.domain.R;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
 import com.awake.ve.common.ecs.api.template.request.PVECreateTemplateApiRequest;
 import com.awake.ve.common.ecs.api.template.request.PVETemplateCreateVmApiRequest;
+import com.awake.ve.common.ecs.api.vm.status.PVERebootVmApiRequest;
 import com.awake.ve.common.ecs.api.vm.status.PVEShutdownVmApiRequest;
 import com.awake.ve.common.ecs.api.vm.status.PVEStartVmApiRequest;
 import com.awake.ve.common.ecs.api.vm.status.PVEStopVmApiRequest;
@@ -81,4 +82,16 @@ public class EcsDemoController {
         BaseApiResponse response = PVEApi.STOP_VM.handle(request);
         return R.ok(response);
     }
+
+    @GetMapping("/rebootVm")
+    public R<BaseApiResponse> rebootVm() {
+        PVERebootVmApiRequest request = PVERebootVmApiRequest.builder()
+                .node("pve")
+                .vmId(117L)
+                .timeout(10)
+                .build();
+        BaseApiResponse response = PVEApi.REBOOT_VM.handle(request);
+        return R.ok(response);
+    }
+
 }

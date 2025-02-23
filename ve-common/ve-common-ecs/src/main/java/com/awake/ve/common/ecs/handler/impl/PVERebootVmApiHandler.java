@@ -1,0 +1,89 @@
+package com.awake.ve.common.ecs.handler.impl;
+
+import cn.hutool.core.text.StrFormatter;
+import cn.hutool.http.HttpRequest;
+import cn.hutool.http.HttpResponse;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
+import com.awake.ve.common.core.utils.SpringUtils;
+import com.awake.ve.common.ecs.api.request.BaseApiRequest;
+import com.awake.ve.common.ecs.api.response.BaseApiResponse;
+import com.awake.ve.common.ecs.api.ticket.PVETicketApiResponse;
+import com.awake.ve.common.ecs.api.vm.status.*;
+import com.awake.ve.common.ecs.config.propterties.EcsProperties;
+import com.awake.ve.common.ecs.enums.PVEApi;
+import com.awake.ve.common.ecs.handler.ApiHandler;
+import com.awake.ve.common.ecs.utils.EcsUtils;
+import lombok.extern.slf4j.Slf4j;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.awake.ve.common.ecs.constants.ApiParamConstants.*;
+import static com.awake.ve.common.ecs.constants.JsonPathConstants.PVE_BASE_RESP;
+
+@Slf4j
+public class PVERebootVmApiHandler implements ApiHandler {
+
+    private static final EcsProperties ECS_PROPERTIES = SpringUtils.getBean(EcsProperties.class);
+
+    public PVERebootVmApiHandler() {
+    }
+
+    public static PVERebootVmApiHandler newInstance() {
+        return new PVERebootVmApiHandler();
+    }
+
+    @Override
+    public BaseApiResponse handle() {
+        return null;
+    }
+
+    @Override
+    public BaseApiResponse handle(BaseApiRequest baseApiRequest) {
+        // 某些虚拟机无法正常关闭,所以不使用pve api
+        // if (!(baseApiRequest instanceof PVERebootVmApiRequest request)) {
+        //     log.info("[PVERebootVmApiHandler][handle] api请求参数异常 期待:{} , 实际:{}", PVERebootVmApiRequest.class.getName(), baseApiRequest.getClass().getName());
+        //     throw new RuntimeException("api请求参数类型异常");
+        // }
+        //
+        // PVETicketApiResponse ticket = EcsUtils.checkTicket();
+        //
+        // String api = PVEApi.REBOOT_VM.getApi();
+        //
+        // Map<String, Object> params = new HashMap<>();
+        // params.put(HOST, ECS_PROPERTIES.getHost());
+        // params.put(PORT, ECS_PROPERTIES.getPort());
+        // params.put(NODE, ECS_PROPERTIES.getNode());
+        // params.put(VM_ID, request.getVmId());
+        // String url = StrFormatter.format(api, params, true);
+        //
+        // JSONObject jsonObject = JSONUtil.createObj();
+        // jsonObject.set(NODE, request.getNode());
+        // jsonObject.set(VM_ID, request.getVmId());
+        // jsonObject.set(TIMEOUT, request.getTimeout());
+        // String body = jsonObject.toString();
+        //
+        // HttpResponse response = HttpRequest.post(url)
+        //         .body(body)
+        //         .header(CSRF_PREVENTION_TOKEN, ticket.getCSRFPreventionToken(), false)
+        //         .header(COOKIE, PVE_AUTH_COOKIE + ticket.getTicket(), false)
+        //         .setFollowRedirects(true)
+        //         .execute();
+        //
+        // String string = response.body();
+        // JSONObject json = JSONUtil.parseObj(string);
+        // return new PVERebootApiResponse(json.getByPath(PVE_BASE_RESP, String.class));
+        if (!(baseApiRequest instanceof PVERebootVmApiRequest request)) {
+            log.info("[PVERebootVmApiHandler][handle] api请求参数异常 期待:{} , 实际:{}", PVERebootVmApiRequest.class.getName(), baseApiRequest.getClass().getName());
+            throw new RuntimeException("api请求参数类型异常");
+        }
+        String node = request.getNode();
+        Long vmId = request.getVmId();
+
+
+        PVEApi.STOP_VM.handle(PVEStopVmApiRequest.builder().node(node).vmId(vmId).skipLock(true).build());
+        PVEStartVmApiResponse baseApiResponse = (PVEStartVmApiResponse) PVEApi.START_VM.handle(PVEStartVmApiRequest.builder().node(node).vmId(vmId).build());
+        return new PVERebootApiResponse(baseApiResponse.getData());
+    }
+}

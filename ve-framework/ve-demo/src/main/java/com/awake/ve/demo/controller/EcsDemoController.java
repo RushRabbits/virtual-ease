@@ -7,6 +7,7 @@ import com.awake.ve.common.ecs.api.template.request.PVECreateTemplateApiRequest;
 import com.awake.ve.common.ecs.api.template.request.PVETemplateCreateVmApiRequest;
 import com.awake.ve.common.ecs.api.vm.status.PVEShutdownVmApiRequest;
 import com.awake.ve.common.ecs.api.vm.status.PVEStartVmApiRequest;
+import com.awake.ve.common.ecs.api.vm.status.PVEStopVmApiRequest;
 import com.awake.ve.common.ecs.enums.PVEApi;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -66,6 +67,18 @@ public class EcsDemoController {
                 .forceStop(true) // 如果不设置强制关闭,那么假如超过timeout还没关闭成功,就会关闭失败
                 .build();
         BaseApiResponse response = PVEApi.SHUTDOWN_VM.handle(request);
+        return R.ok(response);
+    }
+
+    @GetMapping("/stopVm")
+    public R<BaseApiResponse> stopVm() {
+        PVEStopVmApiRequest request = PVEStopVmApiRequest.builder()
+                .node("pve")
+                .vmId(116L)
+                .skipLock(true)
+                .timeout(10)
+                .build();
+        BaseApiResponse response = PVEApi.STOP_VM.handle(request);
         return R.ok(response);
     }
 }

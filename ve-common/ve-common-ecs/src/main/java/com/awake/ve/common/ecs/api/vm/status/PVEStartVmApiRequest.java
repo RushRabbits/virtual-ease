@@ -81,6 +81,6 @@ public class PVEStartVmApiRequest extends PVEBaseApiRequest {
      * 默认值：max(30, vm RAM in GB)
      * 范围：0-N
      */
-    private Integer timeout;
+    private Integer timeout = 5;
 
 }

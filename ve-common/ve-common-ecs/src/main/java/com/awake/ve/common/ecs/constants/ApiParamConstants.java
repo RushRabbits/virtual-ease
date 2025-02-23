@@ -134,4 +134,8 @@ public interface ApiParamConstants {
      * 保持连接
      */
     String KEEP_ALIVE = "keepAlive";
+    /**
+     * 覆盖之前的未完成的shutdown
+     */
+    String OVERRULE_SHUTDOWN = "overruleShutdown";
 }

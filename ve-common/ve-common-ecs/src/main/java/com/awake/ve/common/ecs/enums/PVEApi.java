@@ -73,6 +73,18 @@ public enum PVEApi {
             PVEShutdownVmApiHandler.newInstance(),
             "关闭虚拟机 此api相当于按下关机按钮"
     ),
+
+    /**
+     * 从速率上考虑,更推荐这个
+     * 关闭虚拟机(拔掉电源)
+     */
+    STOP_VM(
+            "http://{host}:{port}/api2/json/nodes/{node}/qemu/{vmid}/status/stop",
+            "pvesh create /nodes/{node}/qemu/{vmid}/status/stop",
+            HttpMethod.POST,
+            PVEStopVmApiHandler.newInstance(),
+            "关闭虚拟机 此api相当于拔掉电源"
+    ),
     ;
 
     private final String api;

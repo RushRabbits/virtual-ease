@@ -41,6 +41,19 @@ public enum QemuCommand {
             "VM_MUST_STOP",
             "强制关闭虚拟机. 在调试中发现,有时虚拟机无法关闭是由于该配置文件被一个线程一直占用且加了锁,导致关闭虚拟机的指令卡死在这里"),
     /**
+     * 停止虚拟机
+     */
+    VM_SHUTDOWN("qm shutdown {vmId}",
+            "VM_SHUTDOWN",
+            "停止虚拟机"
+    ),
+    /**
+     * 强制停止虚拟机
+     */
+    VM_MUST_SHUTDOWN("rm /var/lock/qemu-server/lock-{vmId}.conf && qm shutdown {vmId}",
+            "VM_MUST_SHUTDOWN",
+            "强制关闭虚拟机. 在调试中发现,有时虚拟机无法关闭是由于该配置文件被一个线程一直占用且加了锁,导致关闭虚拟机的指令卡死在这里"),
+    /**
      * 虚拟机转为模板
      */
     VM_TO_TEMPLATE("qm template {vmId}",

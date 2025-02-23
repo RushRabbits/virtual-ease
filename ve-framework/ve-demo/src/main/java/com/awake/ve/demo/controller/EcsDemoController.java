@@ -5,7 +5,8 @@ import com.awake.ve.common.core.domain.R;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
 import com.awake.ve.common.ecs.api.template.request.PVECreateTemplateApiRequest;
 import com.awake.ve.common.ecs.api.template.request.PVETemplateCreateVmApiRequest;
-import com.awake.ve.common.ecs.api.vm.PVEStartVmApiRequest;
+import com.awake.ve.common.ecs.api.vm.status.PVEShutdownVmApiRequest;
+import com.awake.ve.common.ecs.api.vm.status.PVEStartVmApiRequest;
 import com.awake.ve.common.ecs.enums.PVEApi;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,6 +53,16 @@ public class EcsDemoController {
                 .vmId(116L)
                 .build();
         BaseApiResponse response = PVEApi.START_VM.handle(request);
+        return R.ok(response);
+    }
+
+    @GetMapping("/shutdownVm")
+    public R<BaseApiResponse> shutdownVm() {
+        PVEShutdownVmApiRequest request = PVEShutdownVmApiRequest.builder()
+                .node("pve")
+                .vmId(116L)
+                .build();
+        BaseApiResponse response = PVEApi.SHUTDOWN_VM.handle(request);
         return R.ok(response);
     }
 }

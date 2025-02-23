@@ -126,4 +126,12 @@ public interface ApiParamConstants {
      * 超时
      */
     String TIMEOUT = "timeout";
+    /**
+     * 强制停止
+     */
+    String FORCE_STOP = "forceStop";
+    /**
+     * 保持连接
+     */
+    String KEEP_ALIVE = "keepAlive";
 }

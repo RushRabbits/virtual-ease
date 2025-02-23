@@ -1,4 +1,4 @@
-package com.awake.ve.common.ecs.api.vm;
+package com.awake.ve.common.ecs.api.vm.status;
 
 import com.awake.ve.common.ecs.api.request.PVEBaseApiRequest;
 import com.awake.ve.common.ecs.enums.MigrateType;

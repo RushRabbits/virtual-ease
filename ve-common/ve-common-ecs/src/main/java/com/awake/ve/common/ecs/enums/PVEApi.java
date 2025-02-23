@@ -2,10 +2,7 @@ package com.awake.ve.common.ecs.enums;
 
 import com.awake.ve.common.ecs.api.request.BaseApiRequest;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
-import com.awake.ve.common.ecs.handler.impl.PVECreateTemplateApiHandler;
-import com.awake.ve.common.ecs.handler.impl.PVEStartVmApiHandler;
-import com.awake.ve.common.ecs.handler.impl.PVETemplateCreateVmApiHandler;
-import com.awake.ve.common.ecs.handler.impl.PVETicketApiHandler;
+import com.awake.ve.common.ecs.handler.impl.*;
 import com.awake.ve.common.ecs.handler.ApiHandler;
 import lombok.Getter;
 import org.springframework.http.HttpMethod;
@@ -64,7 +61,19 @@ public enum PVEApi {
             HttpMethod.POST,
             PVEStartVmApiHandler.newInstance(),
             "启动虚拟机"
-    );
+    ),
+
+    /**
+     * 关闭虚拟机(按下关机键)
+     */
+    SHUTDOWN_VM(
+            "http://{host}:{port}/api2/json/nodes/{node}/qemu/{vmid}/status/shutdown",
+            "pvesh create /nodes/{node}/qemu/{vmid}/status/shutdown",
+            HttpMethod.POST,
+            PVEShutdownVmApiHandler.newInstance(),
+            "关闭虚拟机 此api相当于按下关机按钮"
+    ),
+    ;
 
     private final String api;
     private final String cli;

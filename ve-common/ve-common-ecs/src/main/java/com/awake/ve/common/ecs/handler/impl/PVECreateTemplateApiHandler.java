@@ -50,11 +50,11 @@ public class PVECreateTemplateApiHandler implements ApiHandler {
 
     @Override
     public BaseApiResponse handle(BaseApiRequest request) {
-        PVETicketApiResponse ticket = EcsUtils.checkTicket();
-
         if (!(request instanceof PVECreateTemplateApiRequest createTemplateApiRequest)) {
             return new PVECreateTemplateApiResponse();
         }
+
+        PVETicketApiResponse ticket = EcsUtils.checkTicket();
 
         PVEApi pveApi = PVEApi.CREATE_TEMPLATE;
         String api = pveApi.getApi();

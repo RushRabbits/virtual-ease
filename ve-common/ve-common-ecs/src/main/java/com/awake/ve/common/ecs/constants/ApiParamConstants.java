@@ -90,4 +90,40 @@ public interface ApiParamConstants {
      * 目标
      */
     String TARGET = "target";
+    /**
+     * 强制覆盖cpu
+     */
+    String FORCE_CPU = "force_cpu";
+    /**
+     * 虚拟机类型
+     */
+    String MACHINE = "machine";
+    /**
+     * 原节点
+     */
+    String MIGRATED_FROM = "migratedfrom";
+    /**
+     * 迁移使用的网络的CIDR
+     */
+    String MIGRATION_NETWORK = "migration_network";
+    /**
+     * 迁移类型
+     */
+    String MIGRATION_TYPE = "migration_type";
+    /**
+     * 忽略锁定
+     */
+    String SKIP_LOCK = "skiplock";
+    /**
+     * 状态uri
+     */
+    String STATE_URI = "stateuri";
+    /**
+     * 目标存储
+     */
+    String TARGET_STORAGE = "targetstorage";
+    /**
+     * 超时
+     */
+    String TIMEOUT = "timeout";
 }

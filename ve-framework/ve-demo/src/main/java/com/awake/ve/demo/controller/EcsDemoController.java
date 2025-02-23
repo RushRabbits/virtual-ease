@@ -5,6 +5,7 @@ import com.awake.ve.common.core.domain.R;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
 import com.awake.ve.common.ecs.api.template.request.PVECreateTemplateApiRequest;
 import com.awake.ve.common.ecs.api.template.request.PVETemplateCreateVmApiRequest;
+import com.awake.ve.common.ecs.api.vm.PVEStartVmApiRequest;
 import com.awake.ve.common.ecs.enums.PVEApi;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,6 +42,16 @@ public class EcsDemoController {
                 .newId(116L)
                 .build();
         BaseApiResponse response = PVEApi.TEMPLATE_CLONE_VM.handle(request);
+        return R.ok(response);
+    }
+
+    @GetMapping("/startVm")
+    public R<BaseApiResponse> startVm() {
+        PVEStartVmApiRequest request = PVEStartVmApiRequest.builder()
+                .node("pve")
+                .vmId(116L)
+                .build();
+        BaseApiResponse response = PVEApi.START_VM.handle(request);
         return R.ok(response);
     }
 }

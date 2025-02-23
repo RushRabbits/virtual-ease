@@ -44,6 +44,7 @@ public class PVEShutdownVmApiRequest extends PVEBaseApiRequest {
     /**
      * 选填
      * 超时（秒）
+     * 建议与forceStop一起使用
      */
     private Integer timeout;
 

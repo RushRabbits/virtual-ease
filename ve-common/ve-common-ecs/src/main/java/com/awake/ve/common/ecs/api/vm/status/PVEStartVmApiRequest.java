@@ -59,8 +59,9 @@ public class PVEStartVmApiRequest extends PVEBaseApiRequest {
      * 选填
      * 忽略锁定
      * 仅root用户可以使用此选项
+     * 不建议开启
      */
-    private Boolean skipLock = false;
+    // private Boolean skipLock = false;
     /**
      * 选填
      * 保存/恢复状态的位置

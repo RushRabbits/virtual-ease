@@ -74,7 +74,7 @@ public class PVEStartVmApiHandler implements ApiHandler {
         jsonObject.set(MIGRATED_FROM, request.getMigratedFrom());
         jsonObject.set(MIGRATION_NETWORK, request.getMigrateNetwork());
         jsonObject.set(MIGRATION_TYPE, request.getMigrateType());
-        jsonObject.set(SKIP_LOCK, request.getSkipLock());
+        // jsonObject.set(SKIP_LOCK, request.getSkipLock()); 不建议开启
         jsonObject.set(STATE_URI, request.getStateUri());
         jsonObject.set(TARGET_STORAGE, request.getTargetStorage());
         jsonObject.set(TIMEOUT, request.getTimeout());

@@ -61,6 +61,9 @@ public class EcsDemoController {
         PVEShutdownVmApiRequest request = PVEShutdownVmApiRequest.builder()
                 .node("pve")
                 .vmId(116L)
+                .skipLock(true)
+                .timeout(10)
+                .forceStop(true) // 如果不设置强制关闭,那么假如超过timeout还没关闭成功,就会关闭失败
                 .build();
         BaseApiResponse response = PVEApi.SHUTDOWN_VM.handle(request);
         return R.ok(response);

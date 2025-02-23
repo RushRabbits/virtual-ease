@@ -239,5 +239,5 @@ ecs:
   service: PVE
   host: 192.168.1.139
   port: 8006
-  apiUsername: API@pve
-  apiPassword: 123qwe...
+  apiUsername: root@pam
+  apiPassword: 123456

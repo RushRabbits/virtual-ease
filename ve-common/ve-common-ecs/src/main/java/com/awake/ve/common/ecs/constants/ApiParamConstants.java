@@ -7,6 +7,14 @@ package com.awake.ve.common.ecs.constants;
  */
 public interface ApiParamConstants {
     /**
+     * ？
+     */
+    String QUESTION_MARK = "?";
+    /**
+     * 等号
+     */
+    String EQUAL_MARK = "=";
+    /**
      * 节点
      */
     String NODE = "node";

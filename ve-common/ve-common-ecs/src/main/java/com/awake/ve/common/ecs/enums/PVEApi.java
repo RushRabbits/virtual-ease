@@ -149,6 +149,16 @@ public enum PVEApi {
             PVEVmStatusApiHandler.newInstance(),
             "虚拟机状态"
     ),
+    /**
+     * 获取节点下的虚拟机列表
+     */
+    NODE_VM_LIST(
+            "http://{host}:{port}/api2/json/nodes/{node}/qemu",
+            "pvesh get /nodes/{node}/qemu",
+            HttpMethod.GET,
+            PVENodeVmListApiHandler.newInstance(),
+            "获取节点下的虚拟机列表"
+    ),
     ;
 
     private final String api;

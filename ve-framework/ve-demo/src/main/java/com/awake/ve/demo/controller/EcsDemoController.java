@@ -147,4 +147,14 @@ public class EcsDemoController {
         return R.ok(response);
     }
 
+    @GetMapping("/vmList")
+    public R<BaseApiResponse> vmList() {
+        PVENodeVmListApiRequest request = PVENodeVmListApiRequest.builder()
+                .node("pve")
+                .full(0)
+                .build();
+        BaseApiResponse response = PVEApi.NODE_VM_LIST.handle(request);
+        return R.ok(response);
+    }
+
 }

@@ -131,9 +131,6 @@ public enum PVEApi {
     ),
     /**
      * 恢复虚拟机
-     * HTTP:   	POST
-     * <p>
-     * CLI:
      */
     RESUME_VM(
             "http://{host}:{port}/api2/json/nodes/{node}/qemu/{vmid}/status/resume",
@@ -141,7 +138,18 @@ public enum PVEApi {
             HttpMethod.POST,
             PVEResumeVmApiHandler.newInstance(),
             "恢复虚拟机"
-    );
+    ),
+    /**
+     * 虚拟机状态
+     */
+    VM_STATUS(
+            "http://{host}:{port}/api2/json/nodes/{node}/qemu/{vmid}/status/current",
+            "pvesh get /nodes/{node}/qemu/{vmid}/status/current",
+            HttpMethod.GET,
+            PVEVmStatusApiHandler.newInstance(),
+            "虚拟机状态"
+    ),
+    ;
 
     private final String api;
     private final String cli;

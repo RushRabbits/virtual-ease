@@ -137,4 +137,14 @@ public class EcsDemoController {
         return R.ok(response);
     }
 
+    @GetMapping("/vmStatus")
+    public R<BaseApiResponse> vmStatus() {
+        PVEVmStatusApiRequest request = PVEVmStatusApiRequest.builder()
+                .node("pve")
+                .vmId(117L)
+                .build();
+        BaseApiResponse response = PVEApi.VM_STATUS.handle(request);
+        return R.ok(response);
+    }
+
 }

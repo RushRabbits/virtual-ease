@@ -126,4 +126,15 @@ public class EcsDemoController {
         return R.ok(response);
     }
 
+    @GetMapping("/resumeVm")
+    public R<BaseApiResponse> resumeVm() {
+        PVEResumeVmApiRequest request = PVEResumeVmApiRequest.builder()
+                .node("pve")
+                .vmId(117L)
+                .skipLock(true)
+                .build();
+        BaseApiResponse response = PVEApi.RESUME_VM.handle(request);
+        return R.ok(response);
+    }
+
 }

@@ -128,6 +128,19 @@ public enum PVEApi {
             HttpMethod.POST,
             PVESuspendVmApiHandler.newInstance(),
             "暂停虚拟机"
+    ),
+    /**
+     * 恢复虚拟机
+     * HTTP:   	POST
+     * <p>
+     * CLI:
+     */
+    RESUME_VM(
+            "http://{host}:{port}/api2/json/nodes/{node}/qemu/{vmid}/status/resume",
+            "pvesh create /nodes/{node}/qemu/{vmid}/status/resume",
+            HttpMethod.POST,
+            PVEResumeVmApiHandler.newInstance(),
+            "恢复虚拟机"
     );
 
     private final String api;

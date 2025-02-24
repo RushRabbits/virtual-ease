@@ -154,4 +154,8 @@ public interface ApiParamConstants {
      * 是否将虚拟机保存到磁盘
      */
     String TO_DISK = "todisk";
+    /**
+     * 跳过状态检查
+     */
+    String NO_CHECK = "nocheck";
 }

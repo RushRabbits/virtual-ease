@@ -1,17 +1,15 @@
-package com.awake.ve.common.ecs.handler.impl;
+package com.awake.ve.common.ecs.handler.impl.vm;
 
 import cn.hutool.core.text.StrFormatter;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
-import cn.hutool.json.JSON;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.awake.ve.common.core.utils.SpringUtils;
 import com.awake.ve.common.ecs.api.request.BaseApiRequest;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
 import com.awake.ve.common.ecs.api.ticket.PVETicketApiResponse;
-import com.awake.ve.common.ecs.api.vm.status.PVEShutdownVmApiRequest;
-import com.awake.ve.common.ecs.api.vm.status.PVEShutdownVmApiResponse;
+import com.awake.ve.common.ecs.api.vm.status.*;
 import com.awake.ve.common.ecs.config.propterties.EcsProperties;
 import com.awake.ve.common.ecs.enums.PVEApi;
 import com.awake.ve.common.ecs.handler.ApiHandler;
@@ -25,15 +23,15 @@ import static com.awake.ve.common.ecs.constants.ApiParamConstants.*;
 import static com.awake.ve.common.ecs.constants.JsonPathConstants.PVE_BASE_RESP;
 
 @Slf4j
-public class PVEShutdownVmApiHandler implements ApiHandler {
+public class PVERebootVmApiHandler implements ApiHandler {
 
     private static final EcsProperties ECS_PROPERTIES = SpringUtils.getBean(EcsProperties.class);
 
-    private PVEShutdownVmApiHandler() {
+    public PVERebootVmApiHandler() {
     }
 
-    public static PVEShutdownVmApiHandler newInstance() {
-        return new PVEShutdownVmApiHandler();
+    public static PVERebootVmApiHandler newInstance() {
+        return new PVERebootVmApiHandler();
     }
 
     @Override
@@ -43,39 +41,37 @@ public class PVEShutdownVmApiHandler implements ApiHandler {
 
     @Override
     public BaseApiResponse handle(BaseApiRequest baseApiRequest) {
-        if(!(baseApiRequest instanceof PVEShutdownVmApiRequest request)){
-            log.info("[PVEShutdownVmApiHandler][handle] api请求参数异常 期待:{} , 实际:{}", PVEShutdownVmApiRequest.class.getName(), baseApiRequest.getClass().getName());
+        if (!(baseApiRequest instanceof PVERebootVmApiRequest request)) {
+            log.info("[PVERebootVmApiHandler][handle] api请求参数异常 期待:{} , 实际:{}", PVERebootVmApiRequest.class.getName(), baseApiRequest.getClass().getName());
             throw new RuntimeException("api请求参数类型异常");
         }
 
         PVETicketApiResponse ticket = EcsUtils.checkTicket();
 
-        String api = PVEApi.SHUTDOWN_VM.getApi();
-        Map<String , Object> params = new HashMap<>();
+        String api = PVEApi.REBOOT_VM.getApi();
+
+        Map<String, Object> params = new HashMap<>();
         params.put(HOST, ECS_PROPERTIES.getHost());
         params.put(PORT, ECS_PROPERTIES.getPort());
         params.put(NODE, request.getNode());
         params.put(VM_ID, request.getVmId());
+        String url = StrFormatter.format(api, params, true);
 
         JSONObject jsonObject = JSONUtil.createObj();
         jsonObject.set(NODE, request.getNode());
         jsonObject.set(VM_ID, request.getVmId());
-        jsonObject.set(FORCE_STOP, request.getForceStop()); // 如果不设置强制关闭,那么假如超过timeout还没关闭成功,就会关闭失败
-        jsonObject.set(KEEP_ALIVE, request.getKeepAlive());
-        jsonObject.set(SKIP_LOCK , request.getSkipLock());
         jsonObject.set(TIMEOUT, request.getTimeout());
         String body = jsonObject.toString();
 
-        String url = StrFormatter.format(api, params, true);
         HttpResponse response = HttpRequest.post(url)
-                .body(body, APPLICATION_JSON)
+                .body(body)
                 .header(CSRF_PREVENTION_TOKEN, ticket.getCSRFPreventionToken(), false)
                 .header(COOKIE, PVE_AUTH_COOKIE + ticket.getTicket(), false)
                 .setFollowRedirects(true)
                 .execute();
-        EcsUtils.rmLockConf(request.getVmId());
 
-        JSON json = JSONUtil.parse(response.body());
-        return new PVEShutdownVmApiResponse(json.getByPath(PVE_BASE_RESP, String.class));
+        String string = response.body();
+        JSONObject json = JSONUtil.parseObj(string);
+        return new PVERebootApiResponse(json.getByPath(PVE_BASE_RESP, String.class));
     }
 }

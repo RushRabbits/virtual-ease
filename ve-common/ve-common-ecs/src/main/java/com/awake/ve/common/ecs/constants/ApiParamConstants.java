@@ -146,4 +146,12 @@ public interface ApiParamConstants {
      * 完全清理与该VM相关的所有配置
      */
     String PURGE = "purge";
+    /**
+     * 虚拟机的状态存储的位置
+     */
+    String STATE_STORAGE = "statestorage";
+    /**
+     * 是否将虚拟机保存到磁盘
+     */
+    String TO_DISK = "todisk";
 }

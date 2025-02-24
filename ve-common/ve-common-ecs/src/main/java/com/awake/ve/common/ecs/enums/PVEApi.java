@@ -2,8 +2,8 @@ package com.awake.ve.common.ecs.enums;
 
 import com.awake.ve.common.ecs.api.request.BaseApiRequest;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
-import com.awake.ve.common.ecs.handler.impl.*;
 import com.awake.ve.common.ecs.handler.ApiHandler;
+import com.awake.ve.common.ecs.handler.impl.vm.*;
 import lombok.Getter;
 import org.springframework.http.HttpMethod;
 
@@ -118,6 +118,16 @@ public enum PVEApi {
             HttpMethod.DELETE,
             PVEDestroyVmApiHandler.newInstance(),
             "销毁虚拟机"
+    ),
+    /**
+     * 暂停虚拟机
+     */
+    SUSPEND_VM(
+            "http://{host}:{port}/api2/json/nodes/{node}/qemu/{vmid}/status/suspend",
+            "pvesh create /nodes/{node}/qemu/{vmid}/status/suspend",
+            HttpMethod.POST,
+            PVESuspendVmApiHandler.newInstance(),
+            "暂停虚拟机"
     );
 
     private final String api;

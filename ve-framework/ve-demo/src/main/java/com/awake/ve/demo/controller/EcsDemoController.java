@@ -115,4 +115,15 @@ public class EcsDemoController {
         return R.ok(response);
     }
 
+    @GetMapping("/suspendVm")
+    public R<BaseApiResponse> suspendVm() {
+        PVESuspendVmApiRequest request = PVESuspendVmApiRequest.builder()
+                .node("pve")
+                .vmId(117L)
+                .skipLock(true)
+                .build();
+        BaseApiResponse response = PVEApi.SUSPEND_VM.handle(request);
+        return R.ok(response);
+    }
+
 }

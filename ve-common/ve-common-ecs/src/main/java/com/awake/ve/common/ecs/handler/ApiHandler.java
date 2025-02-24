@@ -21,10 +21,10 @@ public interface ApiHandler {
     /**
      * 处理需要请求参数的api
      *
-     * @param director {@link BaseApiRequest}
+     * @param baseApiRequest {@link BaseApiRequest}
      * @return {@link BaseApiResponse}
      * @author wangjiaxing
      * @date 2025/2/22 12:41
      */
-    BaseApiResponse handle(BaseApiRequest request);
+    BaseApiResponse handle(BaseApiRequest baseApiRequest);
 }

@@ -567,4 +567,54 @@ public interface ApiParamConstants {
      */
     String WATCH_DOG = "watchdog";
 
+    /**
+     * dhcp
+     */
+    String DHCP = "dhcp";
+
+    /**
+     * IP
+     */
+    String IP = "ip";
+
+    /**
+     * ip6
+     */
+    String IP6 = "ip6";
+
+    /**
+     * 镜像路径
+     */
+    String IMAGE_PATH = "imagePath";
+
+    /**
+     * 桥接网络
+     */
+    String BRIDGE = "bridge";
+
+    /**
+     * 防火墙
+     */
+    String FIREWALL = "firewall";
+
+    /**
+     * 模型
+     */
+    String MODEL = "model";
+
+    /**
+     * 本地
+     */
+    String LOCAL = "local";
+
+    /**
+     * enabled
+     */
+    String ENABLED = "enabled";
+
+    /**
+     * 类型
+     */
+    String TYPE = "type";
+
 }

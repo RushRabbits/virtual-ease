@@ -1,19 +1,23 @@
 package com.awake.ve.demo.controller;
 
 import cn.dev33.satoken.annotation.SaIgnore;
+import cn.hutool.core.text.StrFormatter;
 import com.awake.ve.common.core.domain.R;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
 import com.awake.ve.common.ecs.api.template.request.PVECreateTemplateApiRequest;
 import com.awake.ve.common.ecs.api.template.request.PVETemplateCreateVmApiRequest;
 import com.awake.ve.common.ecs.api.vm.status.*;
-import com.awake.ve.common.ecs.enums.OSType;
-import com.awake.ve.common.ecs.enums.PVEApi;
+import com.awake.ve.common.ecs.enums.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static com.awake.ve.common.ecs.constants.ApiParamConstants.*;
 
 
 @Slf4j
@@ -162,32 +166,61 @@ public class EcsDemoController {
 
     @GetMapping("/createVm")
     public R<BaseApiResponse> createVm() {
-        List<String> ipconfigList = List.of("ip=dhcp,ip6=dhcp");
+        String ipConfigParam = PVEApiParam.IP_CONFIG.getParam();
+        Map<String, Object> ipParam = new HashMap<>();
+        ipParam.put(IP, DHCP);
+        ipParam.put(IP6, DHCP);
+        List<String> ipconfigList = List.of(StrFormatter.format(ipConfigParam, ipParam, true));
+
+        String scsiParam = PVEApiParam.SCSI.getParam();
+        Map<String, Object> scsiParamMap = new HashMap<>();
+        scsiParamMap.put(IMAGE_PATH, "/opt/images/ubuntu-22.04.qcow2");
+        List<String> scsiList = List.of(StrFormatter.format(scsiParam, scsiParamMap, true));
+
+        String netParam = PVEApiParam.NET.getParam();
+        Map<String, Object> netParamMap = new HashMap<>();
+        netParamMap.put(BRIDGE, "vmbr0");
+        netParamMap.put(FIREWALL, 1);
+        netParamMap.put(MODEL, NetworkCardModel.VIRTIO.getType());
+        List<String> netList = List.of(StrFormatter.format(netParam, netParamMap, true));
+
+
         // List<String> scsiList = List.of("local:0,import-from=/opt/images/jammy-server-cloudimg-amd64.img,format=qcow2");
         // List<String> scsiList = List.of("local:0,import-from=/opt/images/ubuntu-22.04.qcow2,format=qcow2");
-        List<String> scsiList = List.of("local:0,import-from=/opt/images/网络安全工具应用-任务2_使用XSSer进行自动化渗透测试-渗透机-disk1-ES10U.qcow2,format=qcow2");
-        List<String> netList = List.of("model=virtio,bridge=vmbr0,firewall=1");
-        List<String> ideList = List.of("local:cloudinit");
+        String ideParam = PVEApiParam.IDE.getParam();
+        Map<String, Object> ideParamMap = new HashMap<>();
+        ideParamMap.put(LOCAL, "cloudinit");
+        List<String> ideList = List.of(StrFormatter.format(ideParam, ideParamMap, true));
+
+        String bootParam = PVEApiParam.BOOT_ORDER.getParam();
+        Map<String, Object> bootParamMap = new HashMap<>();
+        bootParamMap.put(BOOT, "scsi0");
+
+        String agentParam = PVEApiParam.AGENT.getParam();
+        Map<String, Object> agentParamMap = new HashMap<>();
+        agentParamMap.put(ENABLED, 1);
+        agentParamMap.put(TYPE, "virtio");
 
         PVECreateOrRestoreVmApiRequest request = PVECreateOrRestoreVmApiRequest.builder()
                 .node("pve")
-                .vmId(120L)
+                .vmId(125L)
                 .ipConfig(ipconfigList)
                 .memory(2048D)
-                .boot("order=scsi0")
+                .boot(StrFormatter.format(bootParam, bootParamMap, true))
                 .ciUser("root")
                 .ciPassword("123456789")
                 .ciUpgrade(true)
                 .sockets(2)
                 .cores(4)
-                .vga("qxl")
-                .agent("enabled=1,type=virtio")
-                .cpu("x86-64-v2-AES")
+                .vga(VgaType.QXL.getType())
+                .agent(StrFormatter.format(agentParam, agentParamMap, true))
+                .cpu(ArchType.X86_64_V2_AES.getType())
                 .osType(OSType.L26.getType())
-                .scsiHw("virtio-scsi-single")
+                .scsiHw(ScsiHwType.VIRTIO_SCSI_PCI.getType())
                 .net(netList)
                 .scsi(scsiList)
                 .ide(ideList)
+                .bios(BiosType.SEA_BIOS.getType())
                 // .lock("migrate")
                 .build();
         BaseApiResponse response = PVEApi.CREATE_OR_RESTORE_VM.handle(request);

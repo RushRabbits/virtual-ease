@@ -493,7 +493,7 @@ public class PVECreateOrRestoreVmApiRequest extends PVEBaseApiRequest {
      * 格式：[current=]<integer>
      * 描述：内存属性设置
      */
-    private String memory;
+    private Double memory;
 
     /**
      * migrate_downtime: number
@@ -800,7 +800,7 @@ public class PVECreateOrRestoreVmApiRequest extends PVEBaseApiRequest {
      * Copysockets=2,cores=4
      * 创建具有2个插槽、每插槽4核，总共8个vCPU的虚拟机
      */
-    private String sockets;
+    private Integer sockets;
 
     /**
      * spice_enhancements 参数

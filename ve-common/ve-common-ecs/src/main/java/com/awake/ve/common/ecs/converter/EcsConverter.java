@@ -11,6 +11,7 @@ import com.awake.ve.common.ecs.api.vm.status.PVENodeVmListApiResponse;
 import com.awake.ve.common.ecs.api.vm.status.PVEVmStatusApiResponse;
 import com.awake.ve.common.ecs.domain.PveHaObject;
 import com.awake.ve.common.ecs.domain.PveVmInfo;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -193,12 +194,9 @@ public class EcsConverter {
         jsonObject.set(FORCE, request.getForce() != null && request.getForce() ? 1 : null);
         jsonObject.set(FREEZE, request.getFreeze() != null && request.getFreeze() ? 1 : null);
         jsonObject.set(HOOK_SCRIPT, request.getHookScript());
-        jsonObject.set(HOSTPCI, request.getHostPci()); // TODO list
         jsonObject.set(HOT_PLUG, request.getHotPlug());
         jsonObject.set(HUGE_PAGES, request.getHugePages());
-        jsonObject.set(IDE, request.getIde()); // TODO list
         jsonObject.set(IMPORT_WORKING_STORAGE, request.getImportWorkingStorage());
-        jsonObject.set(IP_CONFIG, request.getIpConfig()); // TODO list
         jsonObject.set(IVSH_MEM, request.getIvshmem());
         jsonObject.set(KEEP_HUGE_PAGES, request.getKeepHugePages());
         jsonObject.set(KEY_BOARD, request.getKeyBoard());
@@ -212,20 +210,14 @@ public class EcsConverter {
         jsonObject.set(MIGRATE_SPEED, request.getMigrateSpeed());
         jsonObject.set(NAME, request.getName());
         jsonObject.set(NAME_SERVER, request.getNameserver());
-        jsonObject.set(NET, request.getNet()); // TODO list
-        jsonObject.set(NUMA, request.getNuma()); // TODO list
         jsonObject.set(ON_BOOT, request.getOnBoot() != null && request.getOnBoot() ? 1 : null);
         jsonObject.set(OS_TYPE, request.getOsType());
-        jsonObject.set(PARALLEL, request.getParallel()); // TODO list
         jsonObject.set(POOL, request.getPool());
         jsonObject.set(PROTECTION, request.getProtection());
         jsonObject.set(REBOOT, request.getReboot());
         jsonObject.set(RNG0, request.getRng0());
-        jsonObject.set(SATA, request.getSata()); // TODO list
-        jsonObject.set(SCSI, request.getScsi()); // TODO list
         jsonObject.set(SCSI_HW, request.getScsiHw());
         jsonObject.set(SEARCH_DOMAIN, request.getSearchDomain());
-        jsonObject.set(SERIAL, request.getSerial()); // TODO list
         jsonObject.set(SHARES, request.getShares());
         jsonObject.set(SM_BIOS1, request.getSmBios1());
         jsonObject.set(SMP, request.getSmp());
@@ -242,14 +234,71 @@ public class EcsConverter {
         jsonObject.set(TEMPLATE, request.getTemplate());
         jsonObject.set(TPM_STATE0, request.getTpmState0());
         jsonObject.set(UNIQUE, request.getUnique());
-        jsonObject.set(UNUSED, request.getUnused()); // TODO list
-        jsonObject.set(USB, request.getUsb()); // TODO list
         jsonObject.set(V_CPUS, request.getVCpus());
         jsonObject.set(VGA, request.getVga());
-        jsonObject.set(VIRTIO, request.getVirtio()); // TODO list
         jsonObject.set(VM_GEN_ID, request.getVmGenId());
         jsonObject.set(VM_STATE_STORAGE, request.getVmStateStorage());
         jsonObject.set(WATCH_DOG, request.getWatchDog());
+        if (!CollectionUtils.isEmpty(request.getHostPci())) {
+            for (int i = 0; i < request.getHostPci().size(); i++) {
+                jsonObject.set(HOSTPCI + i, request.getHostPci().get(i));
+            }
+        }
+        if (!CollectionUtils.isEmpty(request.getIde())) {
+            for (int i = 0; i < request.getIde().size(); i++) {
+                jsonObject.set(IDE + i, request.getIde().get(i));
+            }
+        }
+        if (!CollectionUtils.isEmpty(request.getIpConfig())) {
+            for (int i = 0; i < request.getIpConfig().size(); i++) {
+                jsonObject.set(IP_CONFIG + i, request.getIpConfig().get(i));
+            }
+        }
+        if (!CollectionUtils.isEmpty(request.getNet())) {
+            for (int i = 0; i < request.getNet().size(); i++) {
+                jsonObject.set(NET + i, request.getNet().get(i));
+            }
+        }
+        if (!CollectionUtils.isEmpty(request.getNuma())) {
+            for (int i = 0; i < request.getNuma().size(); i++) {
+                jsonObject.set(NUMA + i, request.getNuma().get(i));
+            }
+        }
+        if (!CollectionUtils.isEmpty(request.getParallel())) {
+            for (int i = 1; i < request.getParallel().size(); i++) {
+                jsonObject.set(PARALLEL + i, request.getParallel().get(i));
+            }
+        }
+        if (!CollectionUtils.isEmpty(request.getSata())) {
+            for (int i = 0; i < request.getSata().size(); i++) {
+                jsonObject.set(SATA + i, request.getSata().get(i));
+            }
+        }
+        if (!CollectionUtils.isEmpty(request.getScsi())) {
+            for (int i = 0; i < request.getScsi().size(); i++) {
+                jsonObject.set(SCSI + i, request.getScsi().get(i));
+            }
+        }
+        if (!CollectionUtils.isEmpty(request.getSerial())) {
+            for (int i = 0; i < request.getSerial().size(); i++) {
+                jsonObject.set(SERIAL + i, request.getSerial().get(i));
+            }
+        }
+        if (!CollectionUtils.isEmpty(request.getUnused())) {
+            for (int i = 0; i < request.getUnused().size(); i++) {
+                jsonObject.set(UNUSED + i, request.getUnused().get(i));
+            }
+        }
+        if (!CollectionUtils.isEmpty(request.getUsb())) {
+            for (int i = 0; i < request.getUsb().size(); i++) {
+                jsonObject.set(USB + i, request.getUsb().get(i));
+            }
+        }
+        if (!CollectionUtils.isEmpty(request.getVirtio())) {
+            for (int i = 0; i < request.getVirtio().size(); i++) {
+                jsonObject.set(VIRTIO + i, request.getVirtio().get(i));
+            }
+        }
         return jsonObject;
     }
 }

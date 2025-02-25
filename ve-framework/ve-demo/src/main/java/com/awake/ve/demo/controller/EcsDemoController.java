@@ -157,4 +157,15 @@ public class EcsDemoController {
         return R.ok(response);
     }
 
+    @GetMapping("/createVm")
+    public R<BaseApiResponse> createVm() {
+        PVECreateOrRestoreVmApiRequest request = PVECreateOrRestoreVmApiRequest.builder()
+                .node("pve")
+                .vmId(118L)
+                // .name("test-api-create")
+                .build();
+        BaseApiResponse response = PVEApi.CREATE_OR_RESTORE_VM.handle(request);
+        return R.ok(response);
+    }
+
 }

@@ -159,6 +159,16 @@ public enum PVEApi {
             PVENodeVmListApiHandler.newInstance(),
             "获取节点下的虚拟机列表"
     ),
+    /**
+     * 创建或者恢复虚拟机
+     */
+    CREATE_OR_RESTORE_VM(
+            "http://{host}:{port}/api2/json/nodes/{node}/qemu",
+            "pvesh create /nodes/{node}/qemu",
+            HttpMethod.POST,
+            PVECreateOrRestoreVmApiHandler.newInstance(),
+            "创建或者恢复虚拟机"
+    ),
     ;
 
     private final String api;

@@ -6,6 +6,7 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.awake.ve.common.core.utils.StringUtils;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
+import com.awake.ve.common.ecs.api.vm.status.PVECreateOrRestoreVmApiRequest;
 import com.awake.ve.common.ecs.api.vm.status.PVENodeVmListApiResponse;
 import com.awake.ve.common.ecs.api.vm.status.PVEVmStatusApiResponse;
 import com.awake.ve.common.ecs.domain.PveHaObject;
@@ -14,8 +15,15 @@ import com.awake.ve.common.ecs.domain.PveVmInfo;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.awake.ve.common.ecs.constants.ApiParamConstants.*;
 import static com.awake.ve.common.ecs.constants.JsonPathConstants.*;
 
+/**
+ * ecs 模块转换器
+ *
+ * @author wangjiaxing
+ * @date 2025/2/25 12:14
+ */
 public class EcsConverter {
 
     /**
@@ -138,5 +146,110 @@ public class EcsConverter {
 
         }).toList();
         return new PVENodeVmListApiResponse(pveVmInfoList);
+    }
+
+    /**
+     * 构建json
+     *
+     * @param request {@link PVECreateOrRestoreVmApiRequest}
+     * @return {@link JSONObject}
+     * @author wangjiaxing
+     * @date 2025/2/25 11:55
+     */
+    public static JSONObject buildJSONObject(PVECreateOrRestoreVmApiRequest request) {
+        /**
+         * 注意 以下api的参数,如果没填的话,一定传null
+         * 例如boolean的值,false时传了false,就会导致最后的jsonBody中的结构包含很多多余的键值对,这就会导致PVE认为你有缺失的参数
+         * 例如缺失force,archive
+         */
+        JSONObject jsonObject = JSONUtil.createObj();
+        jsonObject.set(VM_ID, request.getVmId());
+        jsonObject.set(ACPI, request.getAcpi() != null && request.getAcpi() ? 1 : null);
+        jsonObject.set(AFFINITY, request.getAffinity());
+        jsonObject.set(AGENT, request.getAgent());
+        jsonObject.set(AMD_SEV, request.getAmdSev());
+        jsonObject.set(ARCH, request.getArch());
+        jsonObject.set(ARCHIVE, request.getArchive());
+        jsonObject.set(ARGS, request.getArgs());
+        jsonObject.set(AUDIO0, request.getAudio0());
+        jsonObject.set(AUTO_START, request.getAutoStart());
+        jsonObject.set(BALLOON, request.getBalloon());
+        jsonObject.set(BIOS, request.getBios());
+        jsonObject.set(BOOT, request.getBoot());
+        jsonObject.set(BOOK_DISK, request.getBootDisk());
+        jsonObject.set(BW_LIMIT, request.getBwLimit());
+        jsonObject.set(CD_ROM, request.getCdrom());
+        jsonObject.set(CI_CUSTOM, request.getCiCustom());
+        jsonObject.set(CI_PASSWORD, request.getCiPassword());
+        jsonObject.set(CI_TYPE, request.getCiType());
+        jsonObject.set(CI_UPGRADE, request.getCiUpgrade() != null && request.getCiUpgrade() ? 1 : null);
+        jsonObject.set(CI_USER, request.getCiUser());
+        jsonObject.set(CORES, request.getCores());
+        jsonObject.set(CPU, request.getCpu());
+        jsonObject.set(CPU_LIMIT, request.getCpuLimits());
+        jsonObject.set(CPU_UNITS, request.getCpuUnits());
+        jsonObject.set(DESCRIPTION, request.getDescription());
+        jsonObject.set(EFI_DISK_0, request.getEfiDisk0());
+        jsonObject.set(FORCE, request.getForce() != null && request.getForce() ? 1 : null);
+        jsonObject.set(FREEZE, request.getFreeze() != null && request.getFreeze() ? 1 : null);
+        jsonObject.set(HOOK_SCRIPT, request.getHookScript());
+        jsonObject.set(HOSTPCI, request.getHostPci()); // TODO list
+        jsonObject.set(HOT_PLUG, request.getHotPlug());
+        jsonObject.set(HUGE_PAGES, request.getHugePages());
+        jsonObject.set(IDE, request.getIde()); // TODO list
+        jsonObject.set(IMPORT_WORKING_STORAGE, request.getImportWorkingStorage());
+        jsonObject.set(IP_CONFIG, request.getIpConfig()); // TODO list
+        jsonObject.set(IVSH_MEM, request.getIvshmem());
+        jsonObject.set(KEEP_HUGE_PAGES, request.getKeepHugePages());
+        jsonObject.set(KEY_BOARD, request.getKeyBoard());
+        jsonObject.set(KVM, request.getKvm());
+        jsonObject.set(LIVE_RESTORE, request.getLiveRestore());
+        jsonObject.set(LOCAL_TIME, request.getLocalTime());
+        jsonObject.set(LOCK, request.getLock());
+        jsonObject.set(MACHINE, request.getMachine());
+        jsonObject.set(MEMORY, request.getMemory());
+        jsonObject.set(MIGRATE_DOWNTIME, request.getMigrateDowntime());
+        jsonObject.set(MIGRATE_SPEED, request.getMigrateSpeed());
+        jsonObject.set(NAME, request.getName());
+        jsonObject.set(NAME_SERVER, request.getNameserver());
+        jsonObject.set(NET, request.getNet()); // TODO list
+        jsonObject.set(NUMA, request.getNuma()); // TODO list
+        jsonObject.set(ON_BOOT, request.getOnBoot() != null && request.getOnBoot() ? 1 : null);
+        jsonObject.set(OS_TYPE, request.getOsType());
+        jsonObject.set(PARALLEL, request.getParallel()); // TODO list
+        jsonObject.set(POOL, request.getPool());
+        jsonObject.set(PROTECTION, request.getProtection());
+        jsonObject.set(REBOOT, request.getReboot());
+        jsonObject.set(RNG0, request.getRng0());
+        jsonObject.set(SATA, request.getSata()); // TODO list
+        jsonObject.set(SCSI, request.getScsi()); // TODO list
+        jsonObject.set(SCSI_HW, request.getScsiHw());
+        jsonObject.set(SEARCH_DOMAIN, request.getSearchDomain());
+        jsonObject.set(SERIAL, request.getSerial()); // TODO list
+        jsonObject.set(SHARES, request.getShares());
+        jsonObject.set(SM_BIOS1, request.getSmBios1());
+        jsonObject.set(SMP, request.getSmp());
+        jsonObject.set(SOCKETS, request.getSockets());
+        jsonObject.set(SPICE_ENHANCEMENTS, request.getSpiceEnhancements());
+        jsonObject.set(SSH_KEYS, request.getSshKeys());
+        jsonObject.set(START, request.getStart());
+        jsonObject.set(START_UP, request.getStartup());
+        jsonObject.set(START_DATE, request.getStartDate());
+        jsonObject.set(STORAGE, request.getStorage());
+        jsonObject.set(TABLET, request.getTablet());
+        jsonObject.set(TAGS, request.getTags());
+        jsonObject.set(TDF, request.getTdf());
+        jsonObject.set(TEMPLATE, request.getTemplate());
+        jsonObject.set(TPM_STATE0, request.getTpmState0());
+        jsonObject.set(UNIQUE, request.getUnique());
+        jsonObject.set(UNUSED, request.getUnused()); // TODO list
+        jsonObject.set(USB, request.getUsb()); // TODO list
+        jsonObject.set(V_CPUS, request.getVCpus());
+        jsonObject.set(VGA, request.getVga());
+        jsonObject.set(VIRTIO, request.getVirtio()); // TODO list
+        jsonObject.set(VM_GEN_ID, request.getVmGenId());
+        jsonObject.set(VM_STATE_STORAGE, request.getVmStateStorage());
+        jsonObject.set(WATCH_DOG, request.getWatchDog());
+        return jsonObject;
     }
 }

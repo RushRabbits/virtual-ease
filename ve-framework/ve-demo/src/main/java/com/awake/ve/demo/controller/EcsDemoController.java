@@ -348,5 +348,15 @@ public class EcsDemoController {
         return R.ok(response);
     }
 
+    @GetMapping("/deleteNetworkConfig")
+    public R<BaseApiResponse> deleteNetworkConfig() {
+        PVENodeDeleteNetworkApiRequest request = PVENodeDeleteNetworkApiRequest.builder()
+                .node("pve")
+                .iface("vlan3")
+                .build();
+        BaseApiResponse response = PVEApi.DELETE_NETWORK_CONFIG.handle(request);
+        return R.ok(response);
+    }
+
 
 }

@@ -265,6 +265,16 @@ public enum PVEApi {
             PVENodePutNetworkConfigApiHandler.newInstance(),
             "修改网络配置"
     ),
+    /**
+     * 删除网络配置
+     */
+    DELETE_NETWORK_CONFIG(
+            "http://{host}:{port}/api2/json/nodes/{node}/network/{iface}",
+            "pvesh delete /nodes/{node}/network/{iface}",
+            HttpMethod.DELETE,
+            PVENodeDeleteNetworkApiHandler.newInstance(),
+            "删除网络配置"
+    ),
 
     ;
 

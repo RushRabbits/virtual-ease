@@ -8,6 +8,8 @@ import com.awake.ve.common.ecs.handler.impl.vm.config.PVEPostVmConfigApiHandler;
 import com.awake.ve.common.ecs.handler.impl.vm.config.PVEPutVmConfigApiHandler;
 import com.awake.ve.common.ecs.handler.impl.vm.network.PVENodeCreateNetworkApiHandler;
 import com.awake.ve.common.ecs.handler.impl.vm.network.PVENodeNetworkListApiHandler;
+import com.awake.ve.common.ecs.handler.impl.vm.network.PVENodeReloadNetworkConfigApiHandler;
+import com.awake.ve.common.ecs.handler.impl.vm.network.PVENodeRevertNetworkConfigApiHandler;
 import com.awake.ve.common.ecs.handler.impl.vm.status.*;
 import lombok.Getter;
 import org.springframework.http.HttpMethod;
@@ -224,7 +226,26 @@ public enum PVEApi {
             PVENodeCreateNetworkApiHandler.newInstance(),
             "创建网络"
     ),
-    ;
+    /**
+     * 重新加载节点下的网络配置
+     */
+    NODE_RELOAD_NETWORK_CONFIG(
+            "http://{host}:{port}/api2/json/nodes/{node}/network",
+            "pvesh set /nodes/{node}/network",
+            HttpMethod.PUT,
+            PVENodeReloadNetworkConfigApiHandler.newInstance(),
+            "重新加载节点下的网络配置"
+    ),
+    /**
+     * 恢复节点下的网络配置至上一个版本
+     */
+    NODE_REVERT_NETWORK_CONFIG(
+            "http://{host}:{port}/api2/json/nodes/{node}/network",
+            "pvesh delete /nodes/{node}/network",
+            HttpMethod.DELETE,
+            PVENodeRevertNetworkConfigApiHandler.newInstance(),
+            "恢复节点下的网络配置"
+    );
 
     private final String api;
     private final String cli;

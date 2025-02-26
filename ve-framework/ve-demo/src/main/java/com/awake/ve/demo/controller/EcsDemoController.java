@@ -5,6 +5,7 @@ import cn.hutool.core.text.StrFormatter;
 import com.awake.ve.common.core.domain.R;
 import com.awake.ve.common.ecs.api.network.PVENodeCreateNetworkApiRequest;
 import com.awake.ve.common.ecs.api.network.PVENodeNetWorkListApiRequest;
+import com.awake.ve.common.ecs.api.network.PVENodeReloadNetworkConfigApiRequest;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
 import com.awake.ve.common.ecs.api.template.request.PVECreateTemplateApiRequest;
 import com.awake.ve.common.ecs.api.template.request.PVETemplateCreateVmApiRequest;
@@ -299,12 +300,21 @@ public class EcsDemoController {
                 .type("vlan")
                 .vlanId(1)
                 .vlanRawDevice("ens33")
-                .iface("testCreateVlan01")
+                .iface("vlan05")
                 .autoStart(true)
                 .comments("test-create-vlan-01")
                 .mtu(1500)
                 .build();
         BaseApiResponse response = PVEApi.NODE_CREATE_NETWORK.handle(request);
+        return R.ok(response);
+    }
+
+    @GetMapping("/nodeReloadNetwork")
+    public R<BaseApiResponse> nodeReloadNetwork() {
+        PVENodeReloadNetworkConfigApiRequest request = PVENodeReloadNetworkConfigApiRequest.builder()
+                .node("pve")
+                .build();
+        BaseApiResponse response = PVEApi.NODE_RELOAD_NETWORK_CONFIG.handle(request);
         return R.ok(response);
     }
 

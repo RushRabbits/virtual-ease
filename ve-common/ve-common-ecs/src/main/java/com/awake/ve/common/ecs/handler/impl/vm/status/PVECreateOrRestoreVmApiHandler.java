@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.awake.ve.common.ecs.constants.ApiParamConstants.*;
-import static com.awake.ve.common.ecs.constants.JsonPathConstants.PVE_BASE_RESP;
+import static com.awake.ve.common.ecs.constants.PVEJsonPathConstants.PVE_BASE_RESP;
 
 /**
  * pve api 创建/恢复虚拟机的处理器

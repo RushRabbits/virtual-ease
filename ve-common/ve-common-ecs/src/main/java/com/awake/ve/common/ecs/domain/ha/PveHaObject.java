@@ -1,4 +1,4 @@
-package com.awake.ve.common.ecs.domain;
+package com.awake.ve.common.ecs.domain.ha;
 
 import lombok.Data;
 

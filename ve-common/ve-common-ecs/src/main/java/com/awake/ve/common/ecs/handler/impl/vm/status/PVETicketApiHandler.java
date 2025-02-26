@@ -23,8 +23,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.awake.ve.common.ecs.constants.ApiParamConstants.*;
-import static com.awake.ve.common.ecs.constants.JsonPathConstants.PVE_CSRF_PREVENTION_TOKEN;
-import static com.awake.ve.common.ecs.constants.JsonPathConstants.PVE_TICKET;
+import static com.awake.ve.common.ecs.constants.PVEJsonPathConstants.PVE_CSRF_PREVENTION_TOKEN;
+import static com.awake.ve.common.ecs.constants.PVEJsonPathConstants.PVE_TICKET;
 
 /**
  * PVE api GET /api2/json/access/ticket 的返回值类

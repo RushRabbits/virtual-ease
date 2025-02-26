@@ -4,7 +4,9 @@ import cn.hutool.json.JSON;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.awake.ve.common.core.exception.ServiceException;
 import com.awake.ve.common.core.utils.StringUtils;
+import com.awake.ve.common.ecs.api.network.PVENetworkListApiResponse;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
 import com.awake.ve.common.ecs.api.vm.config.PVEGetVmConfigApiResponse;
 import com.awake.ve.common.ecs.api.vm.config.PVEPostVmConfigApiRequest;
@@ -12,15 +14,21 @@ import com.awake.ve.common.ecs.api.vm.config.PVEPutVmConfigApiRequest;
 import com.awake.ve.common.ecs.api.vm.status.PVECreateOrRestoreVmApiRequest;
 import com.awake.ve.common.ecs.api.vm.status.PVENodeVmListApiResponse;
 import com.awake.ve.common.ecs.api.vm.status.PVEVmStatusApiResponse;
-import com.awake.ve.common.ecs.domain.PveHaObject;
-import com.awake.ve.common.ecs.domain.PveVmInfo;
+import com.awake.ve.common.ecs.domain.ha.PveHaObject;
+import com.awake.ve.common.ecs.domain.network.Network;
+import com.awake.ve.common.ecs.domain.network.children.BridgeNetwork;
+import com.awake.ve.common.ecs.domain.network.children.EthNetwork;
+import com.awake.ve.common.ecs.domain.network.children.VlanNetwork;
+import com.awake.ve.common.ecs.domain.vm.PveVmInfo;
+import com.awake.ve.common.ecs.enums.NetworkType;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static com.awake.ve.common.ecs.constants.ApiParamConstants.*;
-import static com.awake.ve.common.ecs.constants.JsonPathConstants.*;
+import static com.awake.ve.common.ecs.constants.PVEJsonPathConstants.*;
 
 /**
  * ecs 模块转换器
@@ -666,5 +674,93 @@ public class EcsConverter {
         apiResponse.setNet(net);
         apiResponse.setScsi(scsi);
         return apiResponse;
+    }
+
+    /**
+     * 构建虚拟机网络列表信息回显
+     *
+     * @author wangjiaxing
+     * @date 2025/2/26 15:31
+     */
+    public static BaseApiResponse buildPVENetworkListApiResponse(JSON json) {
+        PVENetworkListApiResponse response = new PVENetworkListApiResponse();
+        List<Network> networks = new ArrayList<>();
+
+        String data = json.getByPath(PVE_BASE_RESP, String.class);
+
+        JSONArray array = JSONUtil.parseArray(data);
+
+        for (Object o : array) {
+            JSONObject jsonObject = JSONUtil.parseObj(o);
+            String type = jsonObject.getByPath(NETWORK_LIST_TYPE, String.class);
+
+            NetworkType networkType = NetworkType.fromType(type);
+            switch (Objects.requireNonNull(networkType)) {
+                case BRIDGE -> {
+                    BridgeNetwork network = new BridgeNetwork();
+                    packageNetworkCommonInfo(network, jsonObject);
+                    network.setGateway(jsonObject.getByPath(NETWORK_LIST_BRIDGE_GATEWAY, String.class));
+                    network.setAddress(jsonObject.getByPath(NETWORK_LIST_BRIDGE_ADDRESS, String.class));
+                    network.setNetmask(jsonObject.getByPath(NETWORK_LIST_BRIDGE_NETMASK, String.class));
+                    network.setCidr(jsonObject.getByPath(NETWORK_LIST_BRIDGE_CIDR, String.class));
+                    network.setBridgeFd(jsonObject.getByPath(NETWORK_LIST_BRIDGE_FD, String.class));
+                    network.setBridgePorts(jsonObject.getByPath(NETWORK_LIST_BRIDGE_PORTS, String.class));
+                    network.setBridgeStp(jsonObject.getByPath(NETWORK_LIST_BRIDGE_STP, String.class));
+                    networks.add(network);
+                }
+                case VLAN -> {
+                    VlanNetwork network = new VlanNetwork();
+                    packageNetworkCommonInfo(network, jsonObject);
+                    network.setVlanRawDevice(jsonObject.getByPath(NETWORK_LIST_VLAN_RAW_DEVICE, String.class));
+                    networks.add(network);
+                }
+                case ETH -> {
+                    EthNetwork network = new EthNetwork();
+                    packageNetworkCommonInfo(network, jsonObject);
+                    networks.add(network);
+                }
+                case BOND -> {
+                }
+                case ALIAS -> {
+                }
+                case OVS_BOND -> {
+                }
+                case OVS_PORT -> {
+                }
+                case ANY_BRIDGE -> {
+                }
+                case OVS_BRIDGE -> {
+                }
+                case OVS_INT_PORT -> {
+                }
+                case ANY_LOCAL_BRIDGE -> {
+                }
+                default -> throw new ServiceException("不支持的网络类型");
+            }
+        }
+        response.setNetworks(networks);
+        return response;
+    }
+
+    /**
+     * 封装网络公共信息
+     *
+     * @author wangjiaxing
+     * @date 2025/2/26 16:15
+     */
+    private static void packageNetworkCommonInfo(Network network, JSONObject jsonObject) {
+        network.setType(jsonObject.getByPath(NETWORK_LIST_TYPE, String.class));
+        network.setIface(jsonObject.getByPath(NETWORK_LIST_IFACE, String.class));
+        network.setExists(Objects.equals(jsonObject.getByPath(NETWORK_LIST_EXISTS, Integer.class), 1));
+        network.setMethod(jsonObject.getByPath(NETWORK_LIST_METHOD, String.class));
+        network.setMethod6(jsonObject.getByPath(NETWORK_LIST_METHOD6, String.class));
+        network.setAutostart(Objects.equals(jsonObject.getByPath(NETWORK_LIST_AUTOSTART, Integer.class), 1));
+        network.setActive(Objects.equals(jsonObject.getByPath(NETWORK_LIST_ACTIVE, Integer.class), 1));
+        network.setPriority(jsonObject.getByPath(NETWORK_LIST_PRIORITY, Integer.class));
+
+        String families = jsonObject.getByPath(NETWORK_LIST_FAMILIES, String.class);
+        JSONArray array = JSONUtil.parseArray(families);
+        List<String> familyList = array.stream().map(Object::toString).toList();
+        network.setFamilies(familyList);
     }
 }

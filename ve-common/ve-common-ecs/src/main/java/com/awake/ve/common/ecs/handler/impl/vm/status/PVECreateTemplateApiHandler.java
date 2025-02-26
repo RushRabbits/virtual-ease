@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.awake.ve.common.ecs.constants.ApiParamConstants.*;
-import static com.awake.ve.common.ecs.constants.JsonPathConstants.PVE_BASE_RESP;
+import static com.awake.ve.common.ecs.constants.PVEJsonPathConstants.PVE_BASE_RESP;
 
 /**
  * PVE api POST /api2/json/nodes/{node}/qemu/{vmid}/template

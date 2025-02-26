@@ -6,6 +6,7 @@ import com.awake.ve.common.ecs.handler.ApiHandler;
 import com.awake.ve.common.ecs.handler.impl.vm.config.PVEGetVmConfigApiHandler;
 import com.awake.ve.common.ecs.handler.impl.vm.config.PVEPostVmConfigApiHandler;
 import com.awake.ve.common.ecs.handler.impl.vm.config.PVEPutVmConfigApiHandler;
+import com.awake.ve.common.ecs.handler.impl.vm.network.PVENetworkListApiHandler;
 import com.awake.ve.common.ecs.handler.impl.vm.status.*;
 import lombok.Getter;
 import org.springframework.http.HttpMethod;
@@ -201,7 +202,18 @@ public enum PVEApi {
             HttpMethod.PUT,
             PVEPutVmConfigApiHandler.newInstance(),
             "修改虚拟机配置;同步修改"
-    );
+    ),
+    /**
+     * 获取网络列表
+     */
+    NODE_NETWORK_LIST(
+            "http://{host}:{port}/api2/json/nodes/{node}/network",
+            "pvesh get /nodes/{node}/network",
+            HttpMethod.GET,
+            PVENetworkListApiHandler.newInstance(),
+            "获取网络列表"
+    ),
+    ;
 
     private final String api;
     private final String cli;

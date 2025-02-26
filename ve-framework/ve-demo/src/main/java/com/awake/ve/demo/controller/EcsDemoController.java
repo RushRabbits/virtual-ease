@@ -3,6 +3,7 @@ package com.awake.ve.demo.controller;
 import cn.dev33.satoken.annotation.SaIgnore;
 import cn.hutool.core.text.StrFormatter;
 import com.awake.ve.common.core.domain.R;
+import com.awake.ve.common.ecs.api.network.PVENetWorkListApiRequest;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
 import com.awake.ve.common.ecs.api.template.request.PVECreateTemplateApiRequest;
 import com.awake.ve.common.ecs.api.template.request.PVETemplateCreateVmApiRequest;
@@ -268,6 +269,17 @@ public class EcsDemoController {
                 .ciUpgrade(true)
                 .build();
         BaseApiResponse response = PVEApi.PUT_VM_CONFIG.handle(request);
+        return R.ok(response);
+    }
+
+    @GetMapping("/nodeNetworkList")
+    public R<BaseApiResponse> nodeNetworkList() {
+
+        PVENetWorkListApiRequest request = PVENetWorkListApiRequest.builder()
+                .node("pve")
+                .type("")
+                .build();
+        BaseApiResponse response = PVEApi.NODE_NETWORK_LIST.handle(request);
         return R.ok(response);
     }
 

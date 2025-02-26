@@ -7,6 +7,7 @@ import cn.hutool.json.JSONUtil;
 import com.awake.ve.common.core.exception.ServiceException;
 import com.awake.ve.common.core.utils.StringUtils;
 import com.awake.ve.common.ecs.api.network.PVENodeCreateNetworkApiRequest;
+import com.awake.ve.common.ecs.api.network.PVENodeGetNetworkConfigApiResponse;
 import com.awake.ve.common.ecs.api.network.PVENodeNetworkListApiResponse;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
 import com.awake.ve.common.ecs.api.vm.config.PVEGetVmConfigApiResponse;
@@ -808,5 +809,67 @@ public class EcsConverter {
         jsonObject.set(BOND_XMIT_HASH_POLICY, request.getBondXmitHashPolicy());
         jsonObject.set(SLAVES, request.getSlaves());
         return jsonObject;
+    }
+
+    /**
+     * 构建json
+     *
+     * @param json {@link JSON}
+     * @return {@link BaseApiResponse}
+     * @author wangjiaxing
+     * @date 2025/2/26 19:24
+     */
+    public static BaseApiResponse buildPVEGetNetworkConfigApiResponse(JSON json) {
+        String data = json.getByPath(PVE_BASE_RESP, String.class);
+        JSONObject jsonObject = JSONUtil.parseObj(data);
+
+        PVENodeGetNetworkConfigApiResponse response = new PVENodeGetNetworkConfigApiResponse();
+
+        String type = jsonObject.getByPath(NETWORK_CONFIG_TYPE, String.class);
+
+        NetworkType networkType = NetworkType.fromType(type);
+        switch (Objects.requireNonNull(networkType)) {
+            case BRIDGE -> {
+                BridgeNetwork network = new BridgeNetwork();
+                packageNetworkCommonInfo(network, jsonObject);
+                network.setGateway(jsonObject.getByPath(NETWORK_CONFIG_BRIDGE_GATEWAY, String.class));
+                network.setAddress(jsonObject.getByPath(NETWORK_CONFIG_BRIDGE_ADDRESS, String.class));
+                network.setNetmask(jsonObject.getByPath(NETWORK_CONFIG_BRIDGE_NETMASK, String.class));
+                network.setCidr(jsonObject.getByPath(NETWORK_CONFIG_BRIDGE_CIDR, String.class));
+                network.setBridgeFd(jsonObject.getByPath(NETWORK_CONFIG_BRIDGE_FD, String.class));
+                network.setBridgePorts(jsonObject.getByPath(NETWORK_CONFIG_BRIDGE_PORTS, String.class));
+                network.setBridgeStp(jsonObject.getByPath(NETWORK_CONFIG_BRIDGE_STP, String.class));
+                response.setNetwork(network);
+            }
+            case VLAN -> {
+                VlanNetwork network = new VlanNetwork();
+                packageNetworkCommonInfo(network, jsonObject);
+                network.setVlanRawDevice(jsonObject.getByPath(NETWORK_LIST_VLAN_RAW_DEVICE, String.class));
+                response.setNetwork(network);
+            }
+            case ETH -> {
+                EthNetwork network = new EthNetwork();
+                packageNetworkCommonInfo(network, jsonObject);
+                response.setNetwork(network);
+            }
+            case ANY_LOCAL_BRIDGE -> {
+            }
+            case OVS_INT_PORT -> {
+            }
+            case OVS_BRIDGE -> {
+            }
+            case ANY_BRIDGE -> {
+            }
+            case OVS_PORT -> {
+            }
+            case OVS_BOND -> {
+            }
+            case ALIAS -> {
+            }
+            case BOND -> {
+            }
+            default -> throw new ServiceException("不支持的网络类型");
+        }
+        return response;
     }
 }

@@ -268,4 +268,73 @@ public interface PVEJsonPathConstants {
      */
     String NETWORK_LIST_VLAN_RAW_DEVICE = "$.vlan_raw_device";
 
+    /**
+     * 网络名
+     */
+    String NETWORK_CONFIG_IFACE = "$.iface";
+    /**
+     * 网络类型
+     */
+    String NETWORK_CONFIG_TYPE = "$.type";
+    /**
+     * 网络是否存在
+     */
+    String NETWORK_CONFIG_EXISTS = "$.exists";
+    /**
+     * ip分配方法
+     */
+    String NETWORK_CONFIG_METHOD = "$.method";
+    /**
+     * ip6分配方法
+     */
+    String NETWORK_CONFIG_METHOD6 = "$.method6";
+    /**
+     * 网络是否自动启动
+     */
+    String NETWORK_CONFIG_AUTOSTART = "$.autostart";
+    /**
+     * 网络是否处于活跃状态
+     */
+    String NETWORK_CONFIG_ACTIVE = "$.active";
+    /**
+     * 网络优先级
+     */
+    String NETWORK_CONFIG_PRIORITY = "$.priority";
+    /**
+     * 支持的地址族
+     */
+    String NETWORK_CONFIG_FAMILIES = "$.families";
+    /**
+     * 桥接网络网关
+     */
+    String NETWORK_CONFIG_BRIDGE_GATEWAY = "$.gateway";
+    /**
+     * 桥接网络地址
+     */
+    String NETWORK_CONFIG_BRIDGE_ADDRESS = "$.address";
+    /**
+     * 桥接网络子网掩码
+     */
+    String NETWORK_CONFIG_BRIDGE_NETMASK = "$.netmask";
+    /**
+     * 桥接网络CIDR
+     */
+    String NETWORK_CONFIG_BRIDGE_CIDR = "$.cidr";
+    /**
+     * 桥接网络FD
+     */
+    String NETWORK_CONFIG_BRIDGE_FD = "$.bridge_fd";
+    /**
+     * 桥接网络端口
+     */
+    String NETWORK_CONFIG_BRIDGE_PORTS = "$.bridge_ports";
+    /**
+     * 桥接网络STP
+     */
+    String NETWORK_CONFIG_BRIDGE_STP = "$.bridge_stp";
+    /**
+     * VLAN网络所在物理网卡
+     */
+    String NETWORK_CONFIG_VLAN_RAW_DEVICE = "$.vlan_raw_device";
+
 }

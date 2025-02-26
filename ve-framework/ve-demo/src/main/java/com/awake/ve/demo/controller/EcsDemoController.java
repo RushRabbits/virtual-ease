@@ -325,5 +325,15 @@ public class EcsDemoController {
         return R.ok(response);
     }
 
+    @GetMapping("/nodeNetworkConfig")
+    public R<BaseApiResponse> nodeNetworkConfig() {
+        PVENodeGetNetworkConfigApiRequest request = PVENodeGetNetworkConfigApiRequest.builder()
+                .node("pve")
+                .iface("vmbr0")
+                .build();
+        BaseApiResponse response = PVEApi.GET_NETWORK_CONFIG.handle(request);
+        return R.ok(response);
+    }
+
 
 }

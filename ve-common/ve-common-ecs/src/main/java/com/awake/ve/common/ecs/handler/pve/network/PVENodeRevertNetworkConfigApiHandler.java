@@ -1,17 +1,17 @@
-package com.awake.ve.common.ecs.handler.impl.vm.status;
+package com.awake.ve.common.ecs.handler.pve.network;
 
 import cn.hutool.core.text.StrFormatter;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSON;
-import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.awake.ve.common.core.exception.ServiceException;
 import com.awake.ve.common.core.utils.SpringUtils;
+import com.awake.ve.common.ecs.api.network.PVENodeRevertNetworkConfigApiRequest;
+import com.awake.ve.common.ecs.api.network.PVENodeRevertNetworkConfigApiResponse;
 import com.awake.ve.common.ecs.api.request.BaseApiRequest;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
 import com.awake.ve.common.ecs.api.ticket.PVETicketApiResponse;
-import com.awake.ve.common.ecs.api.vm.status.PVEResetVmApiRequest;
-import com.awake.ve.common.ecs.api.vm.status.PVEResetVmApiResponse;
 import com.awake.ve.common.ecs.config.propterties.EcsProperties;
 import com.awake.ve.common.ecs.enums.api.PVEApi;
 import com.awake.ve.common.ecs.handler.ApiHandler;
@@ -24,17 +24,23 @@ import java.util.Map;
 import static com.awake.ve.common.ecs.constants.ApiParamConstants.*;
 import static com.awake.ve.common.ecs.constants.PVEJsonPathConstants.PVE_BASE_RESP;
 
+/**
+ * pve api 节点下网络配置退回到上一版本处理器
+ *
+ * @author wangjiaxing
+ * @date 2025/2/26 18:31
+ */
 @Slf4j
-public class PVEResetVmApiHandler implements ApiHandler {
+public class PVENodeRevertNetworkConfigApiHandler implements ApiHandler {
 
     private static final EcsProperties ECS_PROPERTIES = SpringUtils.getBean(EcsProperties.class);
 
+    private PVENodeRevertNetworkConfigApiHandler() {
 
-    private PVEResetVmApiHandler() {
     }
 
-    public static PVEResetVmApiHandler newInstance() {
-        return new PVEResetVmApiHandler();
+    public static PVENodeRevertNetworkConfigApiHandler newInstance() {
+        return new PVENodeRevertNetworkConfigApiHandler();
     }
 
     @Override
@@ -44,33 +50,28 @@ public class PVEResetVmApiHandler implements ApiHandler {
 
     @Override
     public BaseApiResponse handle(BaseApiRequest baseApiRequest) {
-        if (!(baseApiRequest instanceof PVEResetVmApiRequest request)) {
-            log.info("[PVEResetVmApiHandler][handle] api请求参数异常 期待:{} , 实际:{}", PVEResetVmApiRequest.class.getName(), baseApiRequest.getClass().getName());
-            throw new RuntimeException("api请求参数类型异常");
+        if (!(baseApiRequest instanceof PVENodeRevertNetworkConfigApiRequest request)) {
+            log.info("[PVENodeRevertNetworkConfigApiHandler][handle] api请求参数异常 期待:{} , 实际:{}", PVENodeRevertNetworkConfigApiRequest.class.getName(), baseApiRequest.getClass().getName());
+            throw new ServiceException("api请求参数类型异常");
         }
 
         PVETicketApiResponse ticket = EcsUtils.checkTicket();
-
-        String api = PVEApi.RESET_VM.getApi();
+        String api = PVEApi.NODE_REVERT_NETWORK_CONFIG.getApi();
         Map<String, Object> params = new HashMap<>();
         params.put(HOST, ECS_PROPERTIES.getHost());
         params.put(PORT, ECS_PROPERTIES.getPort());
         params.put(NODE, request.getNode());
-        params.put(VM_ID, request.getVmId());
         String url = StrFormatter.format(api, params, true);
 
-        JSONObject jsonObject = JSONUtil.createObj();
-        jsonObject.set(SKIP_LOCK, request.getSkipLock());
-        String body = jsonObject.toString();
-
-        HttpResponse response = HttpRequest.post(url)
-                .body(body, APPLICATION_JSON)
+        HttpResponse response = HttpRequest.delete(url)
                 .header(CSRF_PREVENTION_TOKEN, ticket.getCSRFPreventionToken(), false)
                 .header(COOKIE, PVE_AUTH_COOKIE + ticket.getTicket(), false)
                 .setFollowRedirects(true)
                 .execute();
+
         String string = response.body();
+        log.info("[PVENodeRevertNetworkConfigApiHandler][handle] 请求url:{} , 响应:{}", url, string);
         JSON json = JSONUtil.parse(string);
-        return new PVEResetVmApiResponse(json.getByPath(PVE_BASE_RESP, String.class));
+        return new PVENodeRevertNetworkConfigApiResponse(json.getByPath(PVE_BASE_RESP, String.class));
     }
 }

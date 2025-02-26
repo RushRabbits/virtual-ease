@@ -3,9 +3,7 @@ package com.awake.ve.demo.controller;
 import cn.dev33.satoken.annotation.SaIgnore;
 import cn.hutool.core.text.StrFormatter;
 import com.awake.ve.common.core.domain.R;
-import com.awake.ve.common.ecs.api.network.PVENodeCreateNetworkApiRequest;
-import com.awake.ve.common.ecs.api.network.PVENodeNetWorkListApiRequest;
-import com.awake.ve.common.ecs.api.network.PVENodeReloadNetworkConfigApiRequest;
+import com.awake.ve.common.ecs.api.network.*;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
 import com.awake.ve.common.ecs.api.template.request.PVECreateTemplateApiRequest;
 import com.awake.ve.common.ecs.api.template.request.PVETemplateCreateVmApiRequest;
@@ -315,6 +313,15 @@ public class EcsDemoController {
                 .node("pve")
                 .build();
         BaseApiResponse response = PVEApi.NODE_RELOAD_NETWORK_CONFIG.handle(request);
+        return R.ok(response);
+    }
+
+    @GetMapping("/nodeRevertNetwork")
+    public R<BaseApiResponse> nodeRevertNetwork() {
+        PVENodeRevertNetworkConfigApiRequest request = PVENodeRevertNetworkConfigApiRequest.builder()
+                .node("pve")
+                .build();
+        BaseApiResponse response = PVEApi.NODE_REVERT_NETWORK_CONFIG.handle(request);
         return R.ok(response);
     }
 

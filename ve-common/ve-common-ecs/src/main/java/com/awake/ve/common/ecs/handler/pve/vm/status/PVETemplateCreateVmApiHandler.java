@@ -1,8 +1,9 @@
-package com.awake.ve.common.ecs.handler.impl.vm.status;
+package com.awake.ve.common.ecs.handler.pve.vm.status;
 
 import cn.hutool.core.text.StrFormatter;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
+import cn.hutool.json.JSON;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.awake.ve.common.core.constant.HttpStatus;
@@ -10,9 +11,9 @@ import com.awake.ve.common.core.exception.ServiceException;
 import com.awake.ve.common.core.utils.SpringUtils;
 import com.awake.ve.common.ecs.api.request.BaseApiRequest;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
+import com.awake.ve.common.ecs.api.template.request.PVETemplateCreateVmApiRequest;
+import com.awake.ve.common.ecs.api.template.response.PVETemplateCreateVmApiResponse;
 import com.awake.ve.common.ecs.api.ticket.PVETicketApiResponse;
-import com.awake.ve.common.ecs.api.vm.status.PVEStopVmApiRequest;
-import com.awake.ve.common.ecs.api.vm.status.PVEStopVmApiResponse;
 import com.awake.ve.common.ecs.config.propterties.EcsProperties;
 import com.awake.ve.common.ecs.enums.api.PVEApi;
 import com.awake.ve.common.ecs.handler.ApiHandler;
@@ -26,16 +27,12 @@ import static com.awake.ve.common.ecs.constants.ApiParamConstants.*;
 import static com.awake.ve.common.ecs.constants.PVEJsonPathConstants.PVE_BASE_RESP;
 
 @Slf4j
-public class PVEStopVmApiHandler implements ApiHandler {
+public class PVETemplateCreateVmApiHandler implements ApiHandler {
 
-    private final static EcsProperties ECS_PROPERTIES = SpringUtils.getBean(EcsProperties.class);
+    private static final EcsProperties ECS_PROPERTIES = SpringUtils.getBean(EcsProperties.class);
 
-    private PVEStopVmApiHandler() {
-
-    }
-
-    public static PVEStopVmApiHandler newInstance() {
-        return new PVEStopVmApiHandler();
+    public static ApiHandler newInstance() {
+        return new PVETemplateCreateVmApiHandler();
     }
 
     @Override
@@ -45,30 +42,36 @@ public class PVEStopVmApiHandler implements ApiHandler {
 
     @Override
     public BaseApiResponse handle(BaseApiRequest baseApiRequest) {
-        if (!(baseApiRequest instanceof PVEStopVmApiRequest request)) {
-            log.info("[PVEStopVmApiHandler][handle] api请求参数异常 期待:{} , 实际:{}", PVEStopVmApiRequest.class.getName(), baseApiRequest.getClass().getName());
+        if (!(baseApiRequest instanceof PVETemplateCreateVmApiRequest request)) {
+            log.info("[PVETemplateCreateVmApiHandler][handle] api请求参数异常 期待:{} , 实际:{}", PVETemplateCreateVmApiRequest.class.getName(), baseApiRequest.getClass().getName());
             throw new ServiceException("api请求参数类型异常", HttpStatus.WARN);
         }
 
         PVETicketApiResponse ticket = EcsUtils.checkTicket();
 
-        String api = PVEApi.STOP_VM.getApi();
+        String api = PVEApi.TEMPLATE_CLONE_VM.getApi();
         Map<String, Object> params = new HashMap<>();
         params.put(HOST, ECS_PROPERTIES.getHost());
         params.put(PORT, ECS_PROPERTIES.getPort());
         params.put(NODE, request.getNode());
         params.put(VM_ID, request.getVmId());
-        String url = StrFormatter.format(api, params, true);
 
-        JSONObject jsonObject = JSONUtil.createObj();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.set(NEW_ID, request.getNewId());
         jsonObject.set(NODE, request.getNode());
         jsonObject.set(VM_ID, request.getVmId());
-        jsonObject.set(KEEP_ALIVE, request.getKeepAlive());
-        jsonObject.set(MIGRATED_FROM, request.getMigratedFrom());
-        jsonObject.set(SKIP_LOCK, request.getSkipLock());
-        jsonObject.set(TIMEOUT, request.getTimeout());
-        jsonObject.set(OVERRULE_SHUTDOWN, request.getOverruleShutdown());
+        jsonObject.set(BW_LIMIT, request.getBwlimit());
+        jsonObject.set(DESCRIPTION, request.getDescription());
+        jsonObject.set(FORMAT, request.getFormat());
+        jsonObject.set(FULL, request.getFull());
+        jsonObject.set(NAME, request.getName());
+        jsonObject.set(POOL, request.getPool());
+        jsonObject.set(SNAPNAME, request.getSnapname());
+        jsonObject.set(STORAGE, request.getStorage());
+        jsonObject.set(TARGET, request.getTarget());
         String body = jsonObject.toString();
+
+        String url = StrFormatter.format(api, params, true);
 
         HttpResponse response = HttpRequest.post(url)
                 .body(body, APPLICATION_JSON)
@@ -76,9 +79,7 @@ public class PVEStopVmApiHandler implements ApiHandler {
                 .header(COOKIE, PVE_AUTH_COOKIE + ticket.getTicket(), false)
                 .setFollowRedirects(true)
                 .execute();
-
-        String string = response.body();
-        JSONObject json = JSONUtil.parseObj(string);
-        return new PVEStopVmApiResponse(json.getByPath(PVE_BASE_RESP, String.class));
+        JSON json = JSONUtil.parse(response.body());
+        return new PVETemplateCreateVmApiResponse(json.getByPath(PVE_BASE_RESP, String.class));
     }
 }

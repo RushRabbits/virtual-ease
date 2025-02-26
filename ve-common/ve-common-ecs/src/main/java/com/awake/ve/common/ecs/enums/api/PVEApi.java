@@ -3,14 +3,14 @@ package com.awake.ve.common.ecs.enums.api;
 import com.awake.ve.common.ecs.api.request.BaseApiRequest;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
 import com.awake.ve.common.ecs.handler.ApiHandler;
-import com.awake.ve.common.ecs.handler.impl.vm.config.PVEGetVmConfigApiHandler;
-import com.awake.ve.common.ecs.handler.impl.vm.config.PVEPostVmConfigApiHandler;
-import com.awake.ve.common.ecs.handler.impl.vm.config.PVEPutVmConfigApiHandler;
-import com.awake.ve.common.ecs.handler.impl.vm.network.PVENodeCreateNetworkApiHandler;
-import com.awake.ve.common.ecs.handler.impl.vm.network.PVENodeNetworkListApiHandler;
-import com.awake.ve.common.ecs.handler.impl.vm.network.PVENodeReloadNetworkConfigApiHandler;
-import com.awake.ve.common.ecs.handler.impl.vm.network.PVENodeRevertNetworkConfigApiHandler;
-import com.awake.ve.common.ecs.handler.impl.vm.status.*;
+import com.awake.ve.common.ecs.handler.pve.vm.config.PVEGetVmConfigApiHandler;
+import com.awake.ve.common.ecs.handler.pve.vm.config.PVEPostVmConfigApiHandler;
+import com.awake.ve.common.ecs.handler.pve.vm.config.PVEPutVmConfigApiHandler;
+import com.awake.ve.common.ecs.handler.pve.network.PVENodeCreateNetworkApiHandler;
+import com.awake.ve.common.ecs.handler.pve.network.PVENodeNetworkListApiHandler;
+import com.awake.ve.common.ecs.handler.pve.network.PVENodeReloadNetworkConfigApiHandler;
+import com.awake.ve.common.ecs.handler.pve.network.PVENodeRevertNetworkConfigApiHandler;
+import com.awake.ve.common.ecs.handler.pve.vm.status.*;
 import lombok.Getter;
 import org.springframework.http.HttpMethod;
 
@@ -228,6 +228,7 @@ public enum PVEApi {
     ),
     /**
      * 重新加载节点下的网络配置
+     * 相当于页面上的页面配置
      */
     NODE_RELOAD_NETWORK_CONFIG(
             "http://{host}:{port}/api2/json/nodes/{node}/network",
@@ -238,6 +239,7 @@ public enum PVEApi {
     ),
     /**
      * 恢复节点下的网络配置至上一个版本
+     * 如果已经执行过reload network config,执行此api无效
      */
     NODE_REVERT_NETWORK_CONFIG(
             "http://{host}:{port}/api2/json/nodes/{node}/network",

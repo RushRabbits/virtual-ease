@@ -1,6 +1,6 @@
 package com.awake.ve.common.ecs.wrapper;
 
-import com.awake.ve.common.ecs.handler.impl.vm.status.PVETicketApiHandler;
+import com.awake.ve.common.ecs.handler.pve.vm.status.PVETicketApiHandler;
 import com.awake.ve.common.ecs.handler.ApiHandler;
 import com.awake.ve.common.ecs.wrapper.base.ApiWrapper;
 import lombok.Data;

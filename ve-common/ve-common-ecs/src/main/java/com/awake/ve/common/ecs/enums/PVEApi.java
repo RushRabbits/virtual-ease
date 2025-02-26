@@ -4,6 +4,8 @@ import com.awake.ve.common.ecs.api.request.BaseApiRequest;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
 import com.awake.ve.common.ecs.handler.ApiHandler;
 import com.awake.ve.common.ecs.handler.impl.vm.config.PVEGetVmConfigApiHandler;
+import com.awake.ve.common.ecs.handler.impl.vm.config.PVEPostVmConfigApiHandler;
+import com.awake.ve.common.ecs.handler.impl.vm.config.PVEPutVmConfigApiHandler;
 import com.awake.ve.common.ecs.handler.impl.vm.status.*;
 import lombok.Getter;
 import org.springframework.http.HttpMethod;
@@ -179,6 +181,26 @@ public enum PVEApi {
             HttpMethod.GET,
             PVEGetVmConfigApiHandler.newInstance(),
             "获取虚拟机配置"
+    ),
+    /**
+     * 修改虚拟机配置(异步执行)
+     */
+    POST_VM_CONFIG(
+            "http://{host}:{port}/api2/json/nodes/{node}/qemu/{vmid}/config",
+            "pvesh create /nodes/{node}/qemu/{vmid}/config",
+            HttpMethod.POST,
+            PVEPostVmConfigApiHandler.newInstance(),
+            "修改虚拟机配置;异步修改,可根据api返回的任务id去查询任务进度"
+    ),
+    /**
+     * 修改虚拟机配置(同步执行)
+     */
+    PUT_VM_CONFIG(
+            "http://{host}:{port}/api2/json/nodes/{node}/qemu/{vmid}/config",
+            "pvesh set /nodes/{node}/qemu/{vmid}/config",
+            HttpMethod.PUT,
+            PVEPutVmConfigApiHandler.newInstance(),
+            "修改虚拟机配置;同步修改"
     );
 
     private final String api;

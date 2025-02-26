@@ -8,13 +8,13 @@ import cn.hutool.json.JSONUtil;
 import com.awake.ve.common.core.exception.ServiceException;
 import com.awake.ve.common.core.utils.SpringUtils;
 import com.awake.ve.common.core.utils.StringUtils;
-import com.awake.ve.common.ecs.api.network.PVENetWorkListApiRequest;
+import com.awake.ve.common.ecs.api.network.PVENodeNetWorkListApiRequest;
 import com.awake.ve.common.ecs.api.request.BaseApiRequest;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
 import com.awake.ve.common.ecs.api.ticket.PVETicketApiResponse;
 import com.awake.ve.common.ecs.config.propterties.EcsProperties;
 import com.awake.ve.common.ecs.converter.EcsConverter;
-import com.awake.ve.common.ecs.enums.PVEApi;
+import com.awake.ve.common.ecs.enums.api.PVEApi;
 import com.awake.ve.common.ecs.handler.ApiHandler;
 import com.awake.ve.common.ecs.utils.EcsUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -31,16 +31,16 @@ import static com.awake.ve.common.ecs.constants.ApiParamConstants.*;
  * @date 2025/2/26 14:36
  */
 @Slf4j
-public class PVENetworkListApiHandler implements ApiHandler {
+public class PVENodeNetworkListApiHandler implements ApiHandler {
 
     private static final EcsProperties ECS_PROPERTIES = SpringUtils.getBean(EcsProperties.class);
 
-    private PVENetworkListApiHandler() {
+    private PVENodeNetworkListApiHandler() {
 
     }
 
-    public static PVENetworkListApiHandler newInstance() {
-        return new PVENetworkListApiHandler();
+    public static PVENodeNetworkListApiHandler newInstance() {
+        return new PVENodeNetworkListApiHandler();
     }
 
     @Override
@@ -50,8 +50,8 @@ public class PVENetworkListApiHandler implements ApiHandler {
 
     @Override
     public BaseApiResponse handle(BaseApiRequest baseApiRequest) {
-        if (!(baseApiRequest instanceof PVENetWorkListApiRequest request)) {
-            log.info("[PVENetworkListApiHandler][handle] api请求参数异常 期待:{} , 实际:{}", PVENetWorkListApiRequest.class.getName(), baseApiRequest.getClass().getName());
+        if (!(baseApiRequest instanceof PVENodeNetWorkListApiRequest request)) {
+            log.info("[PVENodeNetworkListApiHandler][handle] api请求参数异常 期待:{} , 实际:{}", PVENodeNetWorkListApiRequest.class.getName(), baseApiRequest.getClass().getName());
             throw new ServiceException("api请求参数类型异常");
         }
 
@@ -76,7 +76,7 @@ public class PVENetworkListApiHandler implements ApiHandler {
                 .execute();
 
         String string = response.body();
-        log.info("[PVENetworkListApiHandler][handle] 请求url:{} , 响应:{}", url, string);
+        log.info("[PVENodeNetworkListApiHandler][handle] 请求url:{} , 响应:{}", url, string);
         JSON json = JSONUtil.parse(string);
         return EcsConverter.buildPVENetworkListApiResponse(json);
     }

@@ -2,7 +2,7 @@ package com.awake.ve.common.ecs.api.vm.status;
 
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
 import com.awake.ve.common.ecs.domain.ha.PveHaObject;
-import com.awake.ve.common.ecs.enums.VmStatus;
+import com.awake.ve.common.ecs.enums.vm.VmStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

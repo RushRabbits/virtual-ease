@@ -3,7 +3,8 @@ package com.awake.ve.demo.controller;
 import cn.dev33.satoken.annotation.SaIgnore;
 import cn.hutool.core.text.StrFormatter;
 import com.awake.ve.common.core.domain.R;
-import com.awake.ve.common.ecs.api.network.PVENetWorkListApiRequest;
+import com.awake.ve.common.ecs.api.network.PVENodeCreateNetworkApiRequest;
+import com.awake.ve.common.ecs.api.network.PVENodeNetWorkListApiRequest;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
 import com.awake.ve.common.ecs.api.template.request.PVECreateTemplateApiRequest;
 import com.awake.ve.common.ecs.api.template.request.PVETemplateCreateVmApiRequest;
@@ -11,7 +12,14 @@ import com.awake.ve.common.ecs.api.vm.config.PVEGetVmConfigApiRequest;
 import com.awake.ve.common.ecs.api.vm.config.PVEPostVmConfigApiRequest;
 import com.awake.ve.common.ecs.api.vm.config.PVEPutVmConfigApiRequest;
 import com.awake.ve.common.ecs.api.vm.status.*;
-import com.awake.ve.common.ecs.enums.*;
+import com.awake.ve.common.ecs.enums.api.PVEApi;
+import com.awake.ve.common.ecs.enums.api.PVEApiParam;
+import com.awake.ve.common.ecs.enums.cpu.ArchType;
+import com.awake.ve.common.ecs.enums.network.NetworkCardModel;
+import com.awake.ve.common.ecs.enums.vm.BiosType;
+import com.awake.ve.common.ecs.enums.vm.OSType;
+import com.awake.ve.common.ecs.enums.vm.ScsiHwType;
+import com.awake.ve.common.ecs.enums.vm.VgaType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -275,11 +283,28 @@ public class EcsDemoController {
     @GetMapping("/nodeNetworkList")
     public R<BaseApiResponse> nodeNetworkList() {
 
-        PVENetWorkListApiRequest request = PVENetWorkListApiRequest.builder()
+        PVENodeNetWorkListApiRequest request = PVENodeNetWorkListApiRequest.builder()
                 .node("pve")
                 .type("")
                 .build();
         BaseApiResponse response = PVEApi.NODE_NETWORK_LIST.handle(request);
+        return R.ok(response);
+    }
+
+    @GetMapping("/nodeCreateNetwork")
+    public R<BaseApiResponse> nodeCreateNetwork() {
+
+        PVENodeCreateNetworkApiRequest request = PVENodeCreateNetworkApiRequest.builder()
+                .node("pve")
+                .type("vlan")
+                .vlanId(1)
+                .vlanRawDevice("ens33")
+                .iface("testCreateVlan01")
+                .autoStart(true)
+                .comments("test-create-vlan-01")
+                .mtu(1500)
+                .build();
+        BaseApiResponse response = PVEApi.NODE_CREATE_NETWORK.handle(request);
         return R.ok(response);
     }
 

@@ -1,4 +1,4 @@
-package com.awake.ve.common.ecs.enums;
+package com.awake.ve.common.ecs.enums.api;
 
 import com.awake.ve.common.ecs.api.request.BaseApiRequest;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
@@ -6,7 +6,8 @@ import com.awake.ve.common.ecs.handler.ApiHandler;
 import com.awake.ve.common.ecs.handler.impl.vm.config.PVEGetVmConfigApiHandler;
 import com.awake.ve.common.ecs.handler.impl.vm.config.PVEPostVmConfigApiHandler;
 import com.awake.ve.common.ecs.handler.impl.vm.config.PVEPutVmConfigApiHandler;
-import com.awake.ve.common.ecs.handler.impl.vm.network.PVENetworkListApiHandler;
+import com.awake.ve.common.ecs.handler.impl.vm.network.PVENodeCreateNetworkApiHandler;
+import com.awake.ve.common.ecs.handler.impl.vm.network.PVENodeNetworkListApiHandler;
 import com.awake.ve.common.ecs.handler.impl.vm.status.*;
 import lombok.Getter;
 import org.springframework.http.HttpMethod;
@@ -210,8 +211,18 @@ public enum PVEApi {
             "http://{host}:{port}/api2/json/nodes/{node}/network",
             "pvesh get /nodes/{node}/network",
             HttpMethod.GET,
-            PVENetworkListApiHandler.newInstance(),
+            PVENodeNetworkListApiHandler.newInstance(),
             "获取网络列表"
+    ),
+    /**
+     * 节点下创建网络
+     */
+    NODE_CREATE_NETWORK(
+            "http://{host}:{port}/api2/json/nodes/{node}/network",
+            "pvesh create /nodes/{node}/network",
+            HttpMethod.POST,
+            PVENodeCreateNetworkApiHandler.newInstance(),
+            "创建网络"
     ),
     ;
 

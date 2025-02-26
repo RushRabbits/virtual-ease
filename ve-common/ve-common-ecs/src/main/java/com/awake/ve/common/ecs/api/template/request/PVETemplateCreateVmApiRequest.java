@@ -1,7 +1,7 @@
 package com.awake.ve.common.ecs.api.template.request;
 
 import com.awake.ve.common.ecs.api.request.PVEBaseApiRequest;
-import com.awake.ve.common.ecs.enums.PVEVmFormat;
+import com.awake.ve.common.ecs.enums.vm.PVEVmFormat;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

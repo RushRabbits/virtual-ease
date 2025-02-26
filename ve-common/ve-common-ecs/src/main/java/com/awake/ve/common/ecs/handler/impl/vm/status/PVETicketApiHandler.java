@@ -13,7 +13,7 @@ import com.awake.ve.common.ecs.api.ticket.PVETicketApiRequest;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
 import com.awake.ve.common.ecs.api.ticket.PVETicketApiResponse;
 import com.awake.ve.common.ecs.config.propterties.EcsProperties;
-import com.awake.ve.common.ecs.enums.PVEApi;
+import com.awake.ve.common.ecs.enums.api.PVEApi;
 import com.awake.ve.common.ecs.handler.ApiHandler;
 import com.awake.ve.common.translation.utils.RedisUtils;
 import lombok.Data;

@@ -15,7 +15,7 @@ import com.awake.ve.common.ecs.api.vm.config.PVEPostVmConfigApiRequest;
 import com.awake.ve.common.ecs.api.vm.config.PVEPostVmConfigApiResponse;
 import com.awake.ve.common.ecs.config.propterties.EcsProperties;
 import com.awake.ve.common.ecs.converter.EcsConverter;
-import com.awake.ve.common.ecs.enums.PVEApi;
+import com.awake.ve.common.ecs.enums.api.PVEApi;
 import com.awake.ve.common.ecs.handler.ApiHandler;
 import com.awake.ve.common.ecs.utils.EcsUtils;
 import lombok.extern.slf4j.Slf4j;

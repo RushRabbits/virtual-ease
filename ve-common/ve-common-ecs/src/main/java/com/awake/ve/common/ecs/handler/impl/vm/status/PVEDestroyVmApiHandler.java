@@ -12,7 +12,7 @@ import com.awake.ve.common.ecs.api.ticket.PVETicketApiResponse;
 import com.awake.ve.common.ecs.api.vm.status.PVEDestroyVmApiRequest;
 import com.awake.ve.common.ecs.api.vm.status.PVEDestroyVmApiResponse;
 import com.awake.ve.common.ecs.config.propterties.EcsProperties;
-import com.awake.ve.common.ecs.enums.PVEApi;
+import com.awake.ve.common.ecs.enums.api.PVEApi;
 import com.awake.ve.common.ecs.handler.ApiHandler;
 import com.awake.ve.common.ecs.utils.EcsUtils;
 import lombok.extern.slf4j.Slf4j;

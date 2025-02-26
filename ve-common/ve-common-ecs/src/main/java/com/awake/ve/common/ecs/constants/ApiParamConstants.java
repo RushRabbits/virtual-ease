@@ -627,4 +627,134 @@ public interface ApiParamConstants {
      */
     String DIGEST = "digest";
 
+    /**
+     * 网络名
+     */
+    String IFACE = "iface";
+
+    /**
+     * 地址
+     */
+    String ADDRESS = "address";
+
+    /**
+     * ip6地址
+     */
+    String ADDRESS6 = "address6";
+
+    /**
+     * cidr
+     */
+    String CIDR = "cidr";
+
+    /**
+     * cidr6
+     */
+    String CIDR6 = "cidr6";
+
+    /**
+     * 注释
+     */
+    String COMMENTS = "comments";
+
+    /**
+     * ip6网络接口注释
+     */
+    String COMMENTS6 = "comments6";
+
+    /**
+     * ipv4网络掩码
+     */
+    String NETMASK = "netmask";
+
+    /**
+     * ipv6网络掩码
+     */
+    String NETMASK6 = "netmask6";
+
+    /**
+     * 最大存储单元
+     */
+    String MTU = "mtu";
+
+    /**
+     * 桥接端口
+     */
+    String BRIDGE_PORTS = "bridge_ports";
+
+    /**
+     * 允许的VLAN ID列表（如"2 4 100-200"）
+     */
+    String BRIDGE_VIDS = "bridge_vids";
+
+    /**
+     * 启用VLAN感知网桥
+     */
+    String BRIDGE_VLAN_AWARE = "bridge_vlan_aware";
+
+    /**
+     * VLAN ID
+     */
+    String VLAN_ID = "vlan-id";
+
+    /**
+     * VLAN所在的原始接口
+     */
+    String VLAN_RAW_DEVICE = "vlan-raw-device";
+
+    /**
+     * OVS绑定使用的接口
+     */
+    String OVS_BONDS = "ovs_bonds";
+
+    /**
+     * OVS端口关联的OVS网桥
+     */
+    String OVS_BRIDGE = "ovs_bridge";
+
+    /**
+     * OVS接口选项
+     */
+    String OVS_OPTIONS = "ovs_options";
+
+    /**
+     * OVS端口关联的OVS网桥
+     */
+    String OVS_PORTS = "ovs_ports";
+
+    /**
+     * VLAN标签
+     */
+    String OVS_TAGS = "ovs_tags";
+
+    /**
+     * 主接口（用于active-backup模式）
+     */
+    String BOND_PRIMARY = "bond_primary";
+
+    /**
+     * 绑定模式
+     */
+    String BOND_MODE = "bond_mode";
+
+    /**
+     * 传输散列策略
+     */
+    String BOND_XMIT_HASH_POLICY = "bond_xmit_hash_policy";
+
+    /**
+     * 从属接口
+     */
+    String SLAVES = "slaves";
+
+    /**
+     * 网关
+     */
+    String GATEWAY = "gateway";
+
+    /**
+     * ipv6网关
+     */
+    String GATEWAY6 = "gateway6";
+
 }

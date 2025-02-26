@@ -1,4 +1,4 @@
-package com.awake.ve.common.ecs.enums;
+package com.awake.ve.common.ecs.enums.command;
 
 import lombok.Getter;
 

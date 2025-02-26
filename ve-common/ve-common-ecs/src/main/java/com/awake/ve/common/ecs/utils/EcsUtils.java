@@ -1,17 +1,15 @@
 package com.awake.ve.common.ecs.utils;
 
-import cn.hutool.core.text.StrFormatter;
 import com.awake.ve.common.core.constant.CacheConstants;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
 import com.awake.ve.common.ecs.api.ticket.PVETicketApiResponse;
-import com.awake.ve.common.ecs.enums.LinuxCommand;
-import com.awake.ve.common.ecs.enums.PVEApi;
-import com.awake.ve.common.ecs.enums.QemuCommand;
+import com.awake.ve.common.ecs.enums.command.LinuxCommand;
+import com.awake.ve.common.ecs.enums.api.PVEApi;
+import com.awake.ve.common.ecs.enums.command.QemuCommand;
 import com.awake.ve.common.ssh.domain.dto.SSHCommandDTO;
 import com.awake.ve.common.ssh.enums.ChannelType;
 import com.awake.ve.common.ssh.utils.SSHUtils;
 import com.awake.ve.common.translation.utils.RedisUtils;
-import reactor.util.concurrent.Queues;
 
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingDeque;

@@ -1,5 +1,7 @@
 package com.awake.ve.common.ecs.domain.network;
 
+import com.awake.ve.common.ecs.enums.network.NetworkConfigMethod;
+import com.awake.ve.common.ecs.enums.network.NetworkType;
 import lombok.Data;
 
 import java.util.List;
@@ -19,7 +21,7 @@ public abstract class Network {
     protected String iface;
     /**
      * 网络类型
-     * {@link com.awake.ve.common.ecs.enums.NetworkType}
+     * {@link NetworkType}
      */
     protected String type;
     /**
@@ -28,12 +30,12 @@ public abstract class Network {
     protected Boolean exists;
     /**
      * IP地址分配方法
-     * {@link com.awake.ve.common.ecs.enums.NetworkConfigMethod}
+     * {@link NetworkConfigMethod}
      */
     protected String method;
     /**
      * IPv6地址分配方法
-     * {@link com.awake.ve.common.ecs.enums.NetworkConfigMethod}
+     * {@link NetworkConfigMethod}
      */
     private String method6;
     /**

@@ -1,19 +1,14 @@
 package com.awake.ve.common.ecs.api.network;
 
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
-import com.awake.ve.common.ecs.domain.network.Network;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PVENetworkListApiResponse implements BaseApiResponse {
-    /**
-     * 网络列表
-     */
-    private List<Network> networks;
+public class PVENodeCreateNetworkApiResponse implements BaseApiResponse {
+
+    private String data;
 }

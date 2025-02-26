@@ -1,7 +1,7 @@
 package com.awake.ve.common.ecs.api.vm.status;
 
 import com.awake.ve.common.ecs.api.request.PVEBaseApiRequest;
-import com.awake.ve.common.ecs.enums.MigrateType;
+import com.awake.ve.common.ecs.enums.vm.MigrateType;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

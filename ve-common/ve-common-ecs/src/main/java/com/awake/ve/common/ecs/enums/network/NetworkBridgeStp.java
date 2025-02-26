@@ -1,4 +1,4 @@
-package com.awake.ve.common.ecs.enums;
+package com.awake.ve.common.ecs.enums.network;
 
 import lombok.Getter;
 
@@ -9,14 +9,14 @@ import lombok.Getter;
  * @date 2025/2/26 15:12
  */
 @Getter
-public enum BridgeStp {
+public enum NetworkBridgeStp {
     ON("on", "启用生成树协议，用于检测和防止网络环路"),
     OFF("off", "禁用生成树协议");
 
     private final String value;
     private final String description;
 
-    BridgeStp(String value, String description) {
+    NetworkBridgeStp(String value, String description) {
         this.value = value;
         this.description = description;
     }
@@ -27,12 +27,12 @@ public enum BridgeStp {
      * @param value STP配置的字符串值
      * @return 对应的BridgeStp枚举值，如果不匹配则返回null
      */
-    public static BridgeStp fromValue(String value) {
+    public static NetworkBridgeStp fromValue(String value) {
         if (value == null) {
             return null;
         }
 
-        for (BridgeStp stp : values()) {
+        for (NetworkBridgeStp stp : values()) {
             if (stp.getValue().equalsIgnoreCase(value)) {
                 return stp;
             }
@@ -43,7 +43,7 @@ public enum BridgeStp {
     /**
      * 将布尔值转换为对应的BridgeStp枚举
      */
-    public static BridgeStp fromBoolean(boolean enabled) {
+    public static NetworkBridgeStp fromBoolean(boolean enabled) {
         return enabled ? ON : OFF;
     }
 

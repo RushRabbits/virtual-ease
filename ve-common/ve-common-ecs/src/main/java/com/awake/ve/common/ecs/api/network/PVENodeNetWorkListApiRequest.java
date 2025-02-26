@@ -8,7 +8,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PVENetWorkListApiRequest extends PVEBaseApiRequest {
+public class PVENodeNetWorkListApiRequest extends PVEBaseApiRequest {
 
     /**
      * 必填

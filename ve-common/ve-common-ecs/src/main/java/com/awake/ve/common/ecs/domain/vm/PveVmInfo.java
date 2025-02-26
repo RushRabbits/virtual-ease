@@ -1,6 +1,6 @@
 package com.awake.ve.common.ecs.domain.vm;
 
-import com.awake.ve.common.ecs.enums.VmStatus;
+import com.awake.ve.common.ecs.enums.vm.VmStatus;
 import lombok.Builder;
 import lombok.Data;
 

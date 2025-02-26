@@ -6,6 +6,7 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.awake.ve.common.core.utils.StringUtils;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
+import com.awake.ve.common.ecs.api.vm.config.PVEGetVmConfigApiResponse;
 import com.awake.ve.common.ecs.api.vm.status.PVECreateOrRestoreVmApiRequest;
 import com.awake.ve.common.ecs.api.vm.status.PVENodeVmListApiResponse;
 import com.awake.ve.common.ecs.api.vm.status.PVEVmStatusApiResponse;
@@ -300,5 +301,62 @@ public class EcsConverter {
             }
         }
         return jsonObject;
+    }
+
+    /**
+     * 构建虚拟机配置信息回显
+     *
+     * @author wangjiaxing
+     * @date 2025/2/26 10:27
+     */
+    public static BaseApiResponse buildPVEGetVmConfigApiResponse(JSON data) {
+        PVEGetVmConfigApiResponse apiResponse = new PVEGetVmConfigApiResponse();
+        apiResponse.setName(data.getByPath(NAME, String.class));
+        apiResponse.setVmGenId(data.getByPath(VM_GEN_ID, String.class));
+        apiResponse.setOsType(data.getByPath(OS_TYPE, String.class));
+        apiResponse.setCpu(data.getByPath(CPU, String.class));
+        apiResponse.setMemory(data.getByPath(MEMORY, Double.class));
+        apiResponse.setAgent(data.getByPath(AGENT, Boolean.class));
+        apiResponse.setScsiHw(data.getByPath(SCSI_HW, String.class));
+        apiResponse.setBoot(data.getByPath(BOOT, String.class));
+        apiResponse.setSmBios1(data.getByPath(SM_BIOS1, String.class));
+        apiResponse.setSockets(data.getByPath(SOCKETS, Integer.class));
+        apiResponse.setCores(data.getByPath(CORES, Integer.class));
+        apiResponse.setMeta(data.getByPath(META, String.class));
+        apiResponse.setVga(data.getByPath(VGA, String.class));
+        apiResponse.setDigest(data.getByPath(DIGEST, String.class));
+        apiResponse.setNuma(data.getByPath(NUMA, Integer.class));
+        apiResponse.setCiUser(data.getByPath(CI_USER, String.class));
+        apiResponse.setCiPassword(data.getByPath(CI_PASSWORD, String.class));
+        List<String> ide = new ArrayList<>();
+        List<String> ip = new ArrayList<>();
+        List<String> net = new ArrayList<>();
+        List<String> scsi = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            String ideI = data.getByPath(IDE + i, String.class);
+            if (StringUtils.isNotBlank(ideI)) {
+                ide.add(IDE + i + EQUAL_MARK + ideI);
+            }
+
+            String ipI = data.getByPath(IP_CONFIG + i, String.class);
+            if (StringUtils.isNotBlank(ipI)) {
+                ip.add(IP + i + EQUAL_MARK + ipI);
+            }
+
+            String netI = data.getByPath(NET + i, String.class);
+            if (StringUtils.isNotBlank(netI)) {
+                net.add(NET + i + EQUAL_MARK + netI);
+            }
+
+            String scsiI = data.getByPath(SCSI + i, String.class);
+            if (StringUtils.isNotBlank(scsiI)) {
+                scsi.add(SCSI + i + EQUAL_MARK + scsiI);
+            }
+        }
+        apiResponse.setIde(ide);
+        apiResponse.setIpConfig(ip);
+        apiResponse.setNet(net);
+        apiResponse.setScsi(scsi);
+        return apiResponse;
     }
 }

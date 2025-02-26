@@ -617,4 +617,14 @@ public interface ApiParamConstants {
      */
     String TYPE = "type";
 
+    /**
+     * meta
+     */
+    String META = "meta";
+
+    /**
+     * digest
+     */
+    String DIGEST = "digest";
+
 }

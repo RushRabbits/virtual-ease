@@ -3,7 +3,8 @@ package com.awake.ve.common.ecs.enums;
 import com.awake.ve.common.ecs.api.request.BaseApiRequest;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
 import com.awake.ve.common.ecs.handler.ApiHandler;
-import com.awake.ve.common.ecs.handler.impl.vm.*;
+import com.awake.ve.common.ecs.handler.impl.vm.config.PVEGetVmConfigApiHandler;
+import com.awake.ve.common.ecs.handler.impl.vm.status.*;
 import lombok.Getter;
 import org.springframework.http.HttpMethod;
 
@@ -169,7 +170,16 @@ public enum PVEApi {
             PVECreateOrRestoreVmApiHandler.newInstance(),
             "创建或者恢复虚拟机"
     ),
-    ;
+    /**
+     * 获取虚拟机配置信息
+     */
+    GET_VM_CONFIG(
+            "http://{host}:{port}/api2/json/nodes/{node}/qemu/{vmid}/config",
+            "pvesh get /nodes/{node}/qemu/{vmid}/config",
+            HttpMethod.GET,
+            PVEGetVmConfigApiHandler.newInstance(),
+            "获取虚拟机配置"
+    );
 
     private final String api;
     private final String cli;

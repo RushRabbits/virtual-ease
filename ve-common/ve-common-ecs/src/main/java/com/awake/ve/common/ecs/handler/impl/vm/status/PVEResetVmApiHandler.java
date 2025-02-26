@@ -1,4 +1,4 @@
-package com.awake.ve.common.ecs.handler.impl.vm;
+package com.awake.ve.common.ecs.handler.impl.vm.status;
 
 import cn.hutool.core.text.StrFormatter;
 import cn.hutool.http.HttpRequest;
@@ -6,13 +6,12 @@ import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSON;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.awake.ve.common.core.exception.ServiceException;
 import com.awake.ve.common.core.utils.SpringUtils;
 import com.awake.ve.common.ecs.api.request.BaseApiRequest;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
 import com.awake.ve.common.ecs.api.ticket.PVETicketApiResponse;
-import com.awake.ve.common.ecs.api.vm.status.PVEResumeVmApiRequest;
-import com.awake.ve.common.ecs.api.vm.status.PVEResumeVmApiResponse;
+import com.awake.ve.common.ecs.api.vm.status.PVEResetVmApiRequest;
+import com.awake.ve.common.ecs.api.vm.status.PVEResetVmApiResponse;
 import com.awake.ve.common.ecs.config.propterties.EcsProperties;
 import com.awake.ve.common.ecs.enums.PVEApi;
 import com.awake.ve.common.ecs.handler.ApiHandler;
@@ -25,22 +24,17 @@ import java.util.Map;
 import static com.awake.ve.common.ecs.constants.ApiParamConstants.*;
 import static com.awake.ve.common.ecs.constants.JsonPathConstants.PVE_BASE_RESP;
 
-/**
- * pve api 恢复虚拟机 处理器
- *
- * @author wangjiaxing
- * @date 2025/2/24 9:38
- */
 @Slf4j
-public class PVEResumeVmApiHandler implements ApiHandler {
+public class PVEResetVmApiHandler implements ApiHandler {
 
     private static final EcsProperties ECS_PROPERTIES = SpringUtils.getBean(EcsProperties.class);
 
-    private PVEResumeVmApiHandler() {
+
+    private PVEResetVmApiHandler() {
     }
 
-    public static PVEResumeVmApiHandler newInstance() {
-        return new PVEResumeVmApiHandler();
+    public static PVEResetVmApiHandler newInstance() {
+        return new PVEResetVmApiHandler();
     }
 
     @Override
@@ -50,14 +44,14 @@ public class PVEResumeVmApiHandler implements ApiHandler {
 
     @Override
     public BaseApiResponse handle(BaseApiRequest baseApiRequest) {
-        if (!(baseApiRequest instanceof PVEResumeVmApiRequest request)) {
-            log.info("[PVEResumeVmApiHandler][handle] api请求参数异常 期待:{} , 实际:{}", PVEResumeVmApiRequest.class.getName(), baseApiRequest.getClass().getName());
-            throw new ServiceException("api请求参数类型异常");
+        if (!(baseApiRequest instanceof PVEResetVmApiRequest request)) {
+            log.info("[PVEResetVmApiHandler][handle] api请求参数异常 期待:{} , 实际:{}", PVEResetVmApiRequest.class.getName(), baseApiRequest.getClass().getName());
+            throw new RuntimeException("api请求参数类型异常");
         }
 
         PVETicketApiResponse ticket = EcsUtils.checkTicket();
 
-        String api = PVEApi.RESUME_VM.getApi();
+        String api = PVEApi.RESET_VM.getApi();
         Map<String, Object> params = new HashMap<>();
         params.put(HOST, ECS_PROPERTIES.getHost());
         params.put(PORT, ECS_PROPERTIES.getPort());
@@ -66,7 +60,6 @@ public class PVEResumeVmApiHandler implements ApiHandler {
         String url = StrFormatter.format(api, params, true);
 
         JSONObject jsonObject = JSONUtil.createObj();
-        jsonObject.set(NO_CHECK, request.getNoCheck());
         jsonObject.set(SKIP_LOCK, request.getSkipLock());
         String body = jsonObject.toString();
 
@@ -76,9 +69,8 @@ public class PVEResumeVmApiHandler implements ApiHandler {
                 .header(COOKIE, PVE_AUTH_COOKIE + ticket.getTicket(), false)
                 .setFollowRedirects(true)
                 .execute();
-
         String string = response.body();
         JSON json = JSONUtil.parse(string);
-        return new PVEResumeVmApiResponse(json.getByPath(PVE_BASE_RESP, String.class));
+        return new PVEResetVmApiResponse(json.getByPath(PVE_BASE_RESP, String.class));
     }
 }

@@ -6,6 +6,7 @@ import com.awake.ve.common.core.domain.R;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
 import com.awake.ve.common.ecs.api.template.request.PVECreateTemplateApiRequest;
 import com.awake.ve.common.ecs.api.template.request.PVETemplateCreateVmApiRequest;
+import com.awake.ve.common.ecs.api.vm.config.PVEGetVmConfigApiRequest;
 import com.awake.ve.common.ecs.api.vm.status.*;
 import com.awake.ve.common.ecs.enums.*;
 import lombok.extern.slf4j.Slf4j;
@@ -224,6 +225,17 @@ public class EcsDemoController {
                 // .lock("migrate")
                 .build();
         BaseApiResponse response = PVEApi.CREATE_OR_RESTORE_VM.handle(request);
+        return R.ok(response);
+    }
+
+    @GetMapping("/getVmConfig")
+    public R<BaseApiResponse> getVmConfig() {
+        PVEGetVmConfigApiRequest request = PVEGetVmConfigApiRequest.builder()
+                .node("pve")
+                .vmId(117L)
+                .current(true)
+                .build();
+        BaseApiResponse response = PVEApi.GET_VM_CONFIG.handle(request);
         return R.ok(response);
     }
 

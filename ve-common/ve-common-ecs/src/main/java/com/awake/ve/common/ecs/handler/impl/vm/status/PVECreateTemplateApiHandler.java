@@ -1,4 +1,4 @@
-package com.awake.ve.common.ecs.handler.impl.vm;
+package com.awake.ve.common.ecs.handler.impl.vm.status;
 
 import cn.hutool.core.text.StrFormatter;
 import cn.hutool.http.HttpRequest;

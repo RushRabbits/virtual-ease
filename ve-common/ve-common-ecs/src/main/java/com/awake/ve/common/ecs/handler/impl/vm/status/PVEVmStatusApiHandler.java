@@ -1,4 +1,4 @@
-package com.awake.ve.common.ecs.handler.impl.vm;
+package com.awake.ve.common.ecs.handler.impl.vm.status;
 
 import cn.hutool.core.text.StrFormatter;
 import cn.hutool.http.HttpRequest;
@@ -10,7 +10,7 @@ import com.awake.ve.common.core.utils.SpringUtils;
 import com.awake.ve.common.ecs.api.request.BaseApiRequest;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
 import com.awake.ve.common.ecs.api.ticket.PVETicketApiResponse;
-import com.awake.ve.common.ecs.api.vm.status.PVENodeVmListApiRequest;
+import com.awake.ve.common.ecs.api.vm.status.PVEVmStatusApiRequest;
 import com.awake.ve.common.ecs.config.propterties.EcsProperties;
 import com.awake.ve.common.ecs.converter.EcsConverter;
 import com.awake.ve.common.ecs.enums.PVEApi;
@@ -24,16 +24,16 @@ import java.util.Map;
 import static com.awake.ve.common.ecs.constants.ApiParamConstants.*;
 
 @Slf4j
-public class PVENodeVmListApiHandler implements ApiHandler {
+public class PVEVmStatusApiHandler implements ApiHandler {
 
     private static final EcsProperties ECS_PROPERTIES = SpringUtils.getBean(EcsProperties.class);
 
-    private PVENodeVmListApiHandler() {
+    private PVEVmStatusApiHandler() {
 
     }
 
-    public static PVENodeVmListApiHandler newInstance() {
-        return new PVENodeVmListApiHandler();
+    public static PVEVmStatusApiHandler newInstance() {
+        return new PVEVmStatusApiHandler();
     }
 
     @Override
@@ -43,24 +43,20 @@ public class PVENodeVmListApiHandler implements ApiHandler {
 
     @Override
     public BaseApiResponse handle(BaseApiRequest baseApiRequest) {
-        if (!(baseApiRequest instanceof PVENodeVmListApiRequest request)) {
-            log.info("[PVENodeVmListApiHandler][handle] api请求参数异常 期待:{} , 实际:{}", PVENodeVmListApiRequest.class.getName(), baseApiRequest.getClass().getName());
+        if (!(baseApiRequest instanceof PVEVmStatusApiRequest request)) {
+            log.info("[PVEVmStatusApiHandler][handle] api请求参数异常 期待:{} , 实际:{}", PVEVmStatusApiRequest.class.getName(), baseApiRequest.getClass().getName());
             throw new ServiceException("api请求参数类型异常");
         }
 
         PVETicketApiResponse ticket = EcsUtils.checkTicket();
 
-        String api = PVEApi.NODE_VM_LIST.getApi();
-
+        String api = PVEApi.VM_STATUS.getApi();
         Map<String, Object> params = new HashMap<>();
         params.put(HOST, ECS_PROPERTIES.getHost());
         params.put(PORT, ECS_PROPERTIES.getPort());
         params.put(NODE, request.getNode());
+        params.put(VM_ID, request.getVmId());
         String url = StrFormatter.format(api, params, true);
-
-        if (request.getFull() != null && request.getFull() == 1) {
-            url = url + QUESTION_MARK + FULL + EQUAL_MARK + request.getFull();
-        }
 
         HttpResponse response = HttpRequest.get(url)
                 .header(CSRF_PREVENTION_TOKEN, ticket.getCSRFPreventionToken(), false)
@@ -68,9 +64,9 @@ public class PVENodeVmListApiHandler implements ApiHandler {
                 .setFollowRedirects(true)
                 .execute();
         String string = response.body();
-        log.info("[PVENodeVmListApiHandler][handle] 请求url:{} , 响应:{}", url, string);
+        log.info("[PVEVmStatusApiHandler][handle] 请求:{} , 响应:{}", url, string);
         JSON json = JSONUtil.parse(string);
 
-        return EcsConverter.buildPVENodeVmListApiResponse(json);
+        return EcsConverter.buildPVEVmStatusApiResponse(json);
     }
 }

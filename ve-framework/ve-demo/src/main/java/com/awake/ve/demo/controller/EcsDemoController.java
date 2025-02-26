@@ -335,5 +335,18 @@ public class EcsDemoController {
         return R.ok(response);
     }
 
+    @GetMapping("/putNetworkConfig")
+    public R<BaseApiResponse> putNetworkConfig() {
+        PVENodePutNetworkConfigApiRequest request = PVENodePutNetworkConfigApiRequest.builder()
+                .node("pve")
+                .iface("vlan2")
+                .type("vlan")
+                .cidr("192.168.1.139/25")
+                .mtu(1280)
+                .build();
+        BaseApiResponse response = PVEApi.PUT_NETWORK_CONFIG.handle(request);
+        return R.ok(response);
+    }
+
 
 }

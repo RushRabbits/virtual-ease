@@ -255,6 +255,16 @@ public enum PVEApi {
             PVENodeNetworkConfigApiHandler.newInstance(),
             "获取网络配置"
     ),
+    /**
+     * 修改网络配置
+     */
+    PUT_NETWORK_CONFIG(
+            "http://{host}:{port}/api2/json/nodes/{node}/network/{iface}",
+            "pvesh set /nodes/{node}/network/{iface}",
+            HttpMethod.PUT,
+            PVENodePutNetworkConfigApiHandler.newInstance(),
+            "修改网络配置"
+    ),
 
     ;
 

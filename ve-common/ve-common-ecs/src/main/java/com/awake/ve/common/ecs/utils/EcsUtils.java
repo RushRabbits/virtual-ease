@@ -1,6 +1,8 @@
 package com.awake.ve.common.ecs.utils;
 
 import com.awake.ve.common.core.constant.CacheConstants;
+import com.awake.ve.common.core.constant.HttpStatus;
+import com.awake.ve.common.core.exception.ServiceException;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
 import com.awake.ve.common.ecs.api.ticket.PVETicketApiResponse;
 import com.awake.ve.common.ecs.enums.command.LinuxCommand;
@@ -32,7 +34,7 @@ public class EcsUtils {
         if (baseApiResponse instanceof PVETicketApiResponse ticketApiResponse) {
             return ticketApiResponse;
         }
-        return null;
+        throw new ServiceException("获取ticket失败", HttpStatus.WARN);
     }
 
     /**

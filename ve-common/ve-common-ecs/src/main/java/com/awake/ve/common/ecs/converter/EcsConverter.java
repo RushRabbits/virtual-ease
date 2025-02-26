@@ -6,9 +6,7 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.awake.ve.common.core.exception.ServiceException;
 import com.awake.ve.common.core.utils.StringUtils;
-import com.awake.ve.common.ecs.api.network.PVENodeCreateNetworkApiRequest;
-import com.awake.ve.common.ecs.api.network.PVENodeGetNetworkConfigApiResponse;
-import com.awake.ve.common.ecs.api.network.PVENodeNetworkListApiResponse;
+import com.awake.ve.common.ecs.api.network.*;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
 import com.awake.ve.common.ecs.api.vm.config.PVEGetVmConfigApiResponse;
 import com.awake.ve.common.ecs.api.vm.config.PVEPostVmConfigApiRequest;
@@ -784,7 +782,7 @@ public class EcsConverter {
         jsonObject.set(TYPE, request.getType());
         jsonObject.set(ADDRESS, request.getAddress());
         jsonObject.set(ADDRESS6, request.getAddress6());
-        jsonObject.set(AUTO_START, request.getAutoStart() != null && request.getAutoStart() ? 1 : 0);
+        jsonObject.set(AUTO_START, request.getAutoStart() != null && request.getAutoStart() ? 1 : null);
         jsonObject.set(CIDR, request.getCidr());
         jsonObject.set(CIDR6, request.getCidr6());
         jsonObject.set(COMMENTS, request.getComments());
@@ -796,7 +794,52 @@ public class EcsConverter {
         jsonObject.set(MTU, request.getMtu());
         jsonObject.set(BRIDGE_PORTS, request.getBridgePorts());
         jsonObject.set(BRIDGE_VIDS, request.getBridgeVids());
-        jsonObject.set(BRIDGE_VLAN_AWARE, request.getBridgeVlanAware() != null && request.getBridgeVlanAware() ? 1 : 0);
+        jsonObject.set(BRIDGE_VLAN_AWARE, request.getBridgeVlanAware() != null && request.getBridgeVlanAware() ? 1 : null);
+        jsonObject.set(VLAN_ID, request.getVlanId());
+        jsonObject.set(VLAN_RAW_DEVICE, request.getVlanRawDevice());
+        jsonObject.set(OVS_BONDS, request.getOvsBonds());
+        jsonObject.set(OVS_BRIDGE, request.getOvsBridge());
+        jsonObject.set(OVS_OPTIONS, request.getOvsOptions());
+        jsonObject.set(OVS_PORTS, request.getOvsPorts());
+        jsonObject.set(OVS_TAGS, request.getOvsTags());
+        jsonObject.set(BOND_PRIMARY, request.getBondPrimary());
+        jsonObject.set(BOND_MODE, request.getBondMode());
+        jsonObject.set(BOND_XMIT_HASH_POLICY, request.getBondXmitHashPolicy());
+        jsonObject.set(SLAVES, request.getSlaves());
+        return jsonObject;
+    }
+
+    /**
+     * 构建json
+     *
+     * @param request {@link PVENodePutNetworkConfigApiRequest}
+     * @return {@link JSONObject}
+     * @author wangjiaxing
+     * @date 2025/2/25 11:55
+     */
+    public static JSONObject buildJSONObject(PVENodePutNetworkConfigApiRequest request) {
+        /**
+         * 注意 以下api的参数,如果没填的话,一定传null
+         * 例如boolean的值,false时传了false,就会导致最后的jsonBody中的结构包含很多多余的键值对,这就会导致PVE认为你有缺失的参数
+         */
+        JSONObject jsonObject = JSONUtil.createObj();
+        jsonObject.set(IFACE, request.getIface());
+        jsonObject.set(TYPE, request.getType());
+        jsonObject.set(ADDRESS, request.getAddress());
+        jsonObject.set(ADDRESS6, request.getAddress6());
+        jsonObject.set(AUTO_START, request.getAutoStart() != null && request.getAutoStart() ? 1 : null);
+        jsonObject.set(CIDR, request.getCidr());
+        jsonObject.set(CIDR6, request.getCidr6());
+        jsonObject.set(COMMENTS, request.getComments());
+        jsonObject.set(COMMENTS6, request.getComments6());
+        jsonObject.set(GATEWAY, request.getGateway());
+        jsonObject.set(GATEWAY6, request.getGateway6());
+        jsonObject.set(NETMASK, request.getNetmask());
+        jsonObject.set(NETMASK6, request.getNetmask6());
+        jsonObject.set(MTU, request.getMtu());
+        jsonObject.set(BRIDGE_PORTS, request.getBridgePorts());
+        jsonObject.set(BRIDGE_VIDS, request.getBridgeVids());
+        jsonObject.set(BRIDGE_VLAN_AWARE, request.getBridgeVlanAware() != null && request.getBridgeVlanAware() ? 1 : null);
         jsonObject.set(VLAN_ID, request.getVlanId());
         jsonObject.set(VLAN_RAW_DEVICE, request.getVlanRawDevice());
         jsonObject.set(OVS_BONDS, request.getOvsBonds());

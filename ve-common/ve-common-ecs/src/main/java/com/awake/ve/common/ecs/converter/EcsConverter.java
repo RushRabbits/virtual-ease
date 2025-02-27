@@ -14,6 +14,7 @@ import com.awake.ve.common.ecs.api.vm.config.PVEPutVmConfigApiRequest;
 import com.awake.ve.common.ecs.api.vm.status.PVECreateOrRestoreVmApiRequest;
 import com.awake.ve.common.ecs.api.vm.status.PVENodeVmListApiResponse;
 import com.awake.ve.common.ecs.api.vm.status.PVEVmStatusApiResponse;
+import com.awake.ve.common.ecs.api.vnc.PVEVncProxyApiResponse;
 import com.awake.ve.common.ecs.domain.ha.PveHaObject;
 import com.awake.ve.common.ecs.domain.network.Network;
 import com.awake.ve.common.ecs.domain.network.children.BridgeNetwork;
@@ -913,6 +914,26 @@ public class EcsConverter {
             }
             default -> throw new ServiceException("不支持的网络类型");
         }
+        return response;
+    }
+
+    /**
+     * 构建PVEVncProxyApiResponse
+     *
+     * @param json {@link JSON}
+     * @author wangjiaxing
+     * @date 2025/2/27 12:22
+     */
+    public static BaseApiResponse buildPVEVncProxyApiResponse(JSON json) {
+        PVEVncProxyApiResponse response = new PVEVncProxyApiResponse();
+        String data = json.getByPath(PVE_BASE_RESP, String.class);
+        JSONObject jsonObject = JSONUtil.parseObj(data);
+        response.setPort(jsonObject.getByPath(PVE_VNC_PROXY_PORT, Integer.class));
+        response.setUPid(jsonObject.getByPath(PVE_VNC_PROXY_UPID, String.class));
+        response.setUser(jsonObject.getByPath(PVE_VNC_PROXY_USER, String.class));
+        response.setPassword(jsonObject.getByPath(PVE_VNC_PROXY_PASSWORD, String.class));
+        response.setVncTicket(jsonObject.getByPath(PVE_VNC_PROXY_TICKET, String.class));
+        response.setCert(jsonObject.getByPath(PVE_VNC_PROXY_CERT, String.class));
         return response;
     }
 }

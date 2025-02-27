@@ -337,4 +337,29 @@ public interface PVEJsonPathConstants {
      */
     String NETWORK_CONFIG_VLAN_RAW_DEVICE = "$.vlan_raw_device";
 
+    /**
+     * pve vnc proxy port
+     */
+    String PVE_VNC_PROXY_PORT = "$.port";
+    /**
+     * pve 任务id
+     */
+    String PVE_VNC_PROXY_UPID = "$.upid";
+    /**
+     * 用户名
+     */
+    String PVE_VNC_PROXY_USER = "$.user";
+    /**
+     * 密码
+     */
+    String PVE_VNC_PROXY_PASSWORD = "$.password";
+    /**
+     * vncticket
+     */
+    String PVE_VNC_PROXY_TICKET = "$.ticket";
+    /**
+     * cert
+     */
+    String PVE_VNC_PROXY_CERT = "$.cert";
+
 }

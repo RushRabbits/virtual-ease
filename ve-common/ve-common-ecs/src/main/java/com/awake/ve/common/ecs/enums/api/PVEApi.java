@@ -8,6 +8,7 @@ import com.awake.ve.common.ecs.handler.pve.vm.config.PVEGetVmConfigApiHandler;
 import com.awake.ve.common.ecs.handler.pve.vm.config.PVEPostVmConfigApiHandler;
 import com.awake.ve.common.ecs.handler.pve.vm.config.PVEPutVmConfigApiHandler;
 import com.awake.ve.common.ecs.handler.pve.vm.status.*;
+import com.awake.ve.common.ecs.handler.pve.vnc.PVEVncProxyApiHandler;
 import lombok.Getter;
 import org.springframework.http.HttpMethod;
 
@@ -275,8 +276,16 @@ public enum PVEApi {
             PVENodeDeleteNetworkApiHandler.newInstance(),
             "删除网络配置"
     ),
-
-    ;
+    /**
+     * 创建TCP VNC代理连接
+     */
+    GET_VNC_PROXY(
+            "http://{host}:{port}/api2/json/nodes/{node}/qemu/{vmid}/vncproxy",
+            "pvesh create /nodes/{node}/qemu/{vmid}/vncproxy",
+            HttpMethod.POST,
+            PVEVncProxyApiHandler.newInstance(),
+            "创建TCP VNC代理连接"
+    );
 
     private final String api;
     private final String cli;

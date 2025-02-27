@@ -757,4 +757,14 @@ public interface ApiParamConstants {
      */
     String GATEWAY6 = "gateway6";
 
+    /**
+     * 是否自动生成密码
+     */
+    String GENERATE_PASSWORD = "generate-password";
+
+    /**
+     * websocket
+     */
+    String WEBSOCKET = "websocket";
+
 }

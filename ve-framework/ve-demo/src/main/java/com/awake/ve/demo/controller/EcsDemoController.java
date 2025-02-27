@@ -11,6 +11,7 @@ import com.awake.ve.common.ecs.api.vm.config.PVEGetVmConfigApiRequest;
 import com.awake.ve.common.ecs.api.vm.config.PVEPostVmConfigApiRequest;
 import com.awake.ve.common.ecs.api.vm.config.PVEPutVmConfigApiRequest;
 import com.awake.ve.common.ecs.api.vm.status.*;
+import com.awake.ve.common.ecs.api.vnc.PVEVncProxyApiRequest;
 import com.awake.ve.common.ecs.enums.api.PVEApi;
 import com.awake.ve.common.ecs.enums.api.PVEApiParam;
 import com.awake.ve.common.ecs.enums.cpu.ArchType;
@@ -214,7 +215,7 @@ public class EcsDemoController {
 
         PVECreateOrRestoreVmApiRequest request = PVECreateOrRestoreVmApiRequest.builder()
                 .node("pve")
-                .vmId(125L)
+                .vmId(126L)
                 .ipConfig(ipconfigList)
                 .memory(2048D)
                 .boot(StrFormatter.format(bootParam, bootParamMap, true))
@@ -355,6 +356,18 @@ public class EcsDemoController {
                 .iface("vlan3")
                 .build();
         BaseApiResponse response = PVEApi.DELETE_NETWORK_CONFIG.handle(request);
+        return R.ok(response);
+    }
+
+    @GetMapping("/vmVncProxy")
+    public R<BaseApiResponse> vmVncProxy() {
+        PVEVncProxyApiRequest request = PVEVncProxyApiRequest.builder()
+                .node("pve")
+                .vmId(117L)
+                .generatePassword(true)
+                .websocket(true)
+                .build();
+        BaseApiResponse response = PVEApi.GET_VNC_PROXY.handle(request);
         return R.ok(response);
     }
 

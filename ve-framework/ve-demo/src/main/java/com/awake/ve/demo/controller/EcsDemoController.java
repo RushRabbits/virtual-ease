@@ -5,6 +5,7 @@ import cn.hutool.core.text.StrFormatter;
 import com.awake.ve.common.core.domain.R;
 import com.awake.ve.common.ecs.api.network.*;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
+import com.awake.ve.common.ecs.api.spice.PVECreateVmSpiceProxyApiRequest;
 import com.awake.ve.common.ecs.api.template.request.PVECreateTemplateApiRequest;
 import com.awake.ve.common.ecs.api.template.request.PVETemplateCreateVmApiRequest;
 import com.awake.ve.common.ecs.api.vm.config.PVEGetVmConfigApiRequest;
@@ -371,7 +372,7 @@ public class EcsDemoController {
                 .generatePassword(true)
                 .websocket(true)
                 .build();
-        BaseApiResponse response = PVEApi.GET_VNC_PROXY.handle(request);
+        BaseApiResponse response = PVEApi.GET_VM_VNC_PROXY.handle(request);
         return R.ok(response);
     }
 
@@ -383,7 +384,7 @@ public class EcsDemoController {
                 .generatePassword(true)
                 .websocket(true)
                 .build();
-        PVEVncProxyApiResponse proxy = (PVEVncProxyApiResponse) PVEApi.GET_VNC_PROXY.handle(request);
+        PVEVncProxyApiResponse proxy = (PVEVncProxyApiResponse) PVEApi.GET_VM_VNC_PROXY.handle(request);
 
         PVEVncWebsocketApiRequest websocketApiRequest = PVEVncWebsocketApiRequest.builder()
                 .node("pve")
@@ -391,7 +392,18 @@ public class EcsDemoController {
                 .port(proxy.getPort())
                 .vncTicket(URLEncoder.encode(proxy.getVncTicket(), StandardCharsets.UTF_8))
                 .build();
-        BaseApiResponse response = PVEApi.GET_VNC_WEBSOCKET.handle(websocketApiRequest);
+        BaseApiResponse response = PVEApi.GET_VM_VNC_WEBSOCKET.handle(websocketApiRequest);
+        return R.ok(response);
+    }
+
+    @GetMapping("/vmSpice")
+    public R<BaseApiResponse> vmSpice() {
+        PVECreateVmSpiceProxyApiRequest request = PVECreateVmSpiceProxyApiRequest.builder()
+                .node("pve")
+                .vmId(117L)
+                .build();
+        BaseApiResponse response = PVEApi.CREATE_VM_SPICE_PROXY.handle(request);
+
         return R.ok(response);
     }
 

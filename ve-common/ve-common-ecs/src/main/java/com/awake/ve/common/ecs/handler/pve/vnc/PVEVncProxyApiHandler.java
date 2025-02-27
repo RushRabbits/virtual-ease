@@ -50,7 +50,7 @@ public class PVEVncProxyApiHandler implements ApiHandler {
 
         PVETicketApiResponse ticket = EcsUtils.checkTicket();
 
-        String api = PVEApi.GET_VNC_PROXY.getApi();
+        String api = PVEApi.GET_VM_VNC_PROXY.getApi();
         Map<String, Object> params = new HashMap<>();
         params.put(HOST, ECS_PROPERTIES.getHost());
         params.put(PORT, ECS_PROPERTIES.getPort());

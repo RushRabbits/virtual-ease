@@ -367,4 +367,55 @@ public interface PVEJsonPathConstants {
      */
     String PVE_WEBSOCKET_PROXY_PORT = "$.port";
 
+    /**
+     * pve spice websocket secure attention
+     */
+    String PVE_VM_SPICE_SECURE_ATTENTION = "$.secure-attention";
+
+    /**
+     * pve spice websocket host
+     */
+    String PVE_VM_SPICE_HOST = "$.host";
+
+    /**
+     * pve spice websocket title
+     */
+    String PVE_VM_SPICE_TITLE = "$.title";
+    /**
+     * pve spice websocket host subject
+     */
+    String PVE_VM_SPICE_HOST_SUBJECT = "$.host-subject";
+    /**
+     * pve spice websocket toggle full screen
+     */
+    String PVE_VM_SPICE_TOGGLE_FULL_SCREEN = "$.toggle-fullscreen";
+    /**
+     * pve spice websocket proxy
+     */
+    String PVE_VM_SPICE_PROXY = "$.proxy";
+    /**
+     * pve spice websocket tls port
+     */
+    String PVE_VM_SPICE_TLS_PORT = "$.tls-port";
+    /**
+     * pve spice websocket ca
+     */
+    String PVE_VM_SPICE_CA = "$.ca";
+    /**
+     * pve spice websocket type
+     */
+    String PVE_VM_SPICE_TYPE = "$.type";
+    /**
+     * pve spice websocket delete this file
+     */
+    String PVE_VM_SPICE_DELETE_THIS_FILE = "$.delete-this-file";
+    /**
+     * pve spice websocket release cursor
+     */
+    String PVE_VM_SPICE_RELEASE_CURSOR = "$.release-cursor";
+    /**
+     * pve spice websocket password
+     */
+    String PVE_VM_SPICE_PASSWORD = "$.password";
+
 }

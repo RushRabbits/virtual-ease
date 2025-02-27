@@ -4,6 +4,7 @@ import com.awake.ve.common.ecs.api.request.BaseApiRequest;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
 import com.awake.ve.common.ecs.handler.ApiHandler;
 import com.awake.ve.common.ecs.handler.pve.network.*;
+import com.awake.ve.common.ecs.handler.pve.spice.PVECreateVmSpiceProxyApiHandler;
 import com.awake.ve.common.ecs.handler.pve.vm.config.PVEGetVmConfigApiHandler;
 import com.awake.ve.common.ecs.handler.pve.vm.config.PVEPostVmConfigApiHandler;
 import com.awake.ve.common.ecs.handler.pve.vm.config.PVEPutVmConfigApiHandler;
@@ -280,7 +281,7 @@ public enum PVEApi {
     /**
      * 创建TCP VNC代理连接
      */
-    GET_VNC_PROXY(
+    GET_VM_VNC_PROXY(
             "http://{host}:{port}/api2/json/nodes/{node}/qemu/{vmid}/vncproxy",
             "pvesh create /nodes/{node}/qemu/{vmid}/vncproxy",
             HttpMethod.POST,
@@ -288,14 +289,24 @@ public enum PVEApi {
             "创建TCP VNC代理连接"
     ),
     /**
-     * 打开一个用于VNC的WebSocket连接
+     * 打开一个用于虚拟机VNC的WebSocket连接
      */
-    GET_VNC_WEBSOCKET(
+    GET_VM_VNC_WEBSOCKET(
             "http://{host}:{port}/api2/json/nodes/{node}/qemu/{vmid}/vncwebsocket?",
             "pvesh get /nodes/{node}/qemu/{vmid}/vncwebsocket",
             HttpMethod.GET,
             PVEVncWebsocketApiHandler.newInstance(),
             "创建websocket VNC代理连接"
+    ),
+    /**
+     * 创建虚拟机的spice proxy
+     */
+    CREATE_VM_SPICE_PROXY(
+            "http://{host}:{port}/api2/json/nodes/{node}/qemu/{vmid}/spiceproxy",
+            "pvesh create /nodes/{node}/qemu/{vmid}/spiceproxy",
+            HttpMethod.POST,
+            PVECreateVmSpiceProxyApiHandler.newInstance(),
+            "创建SPICE代理连接"
     );
 
     private final String api;

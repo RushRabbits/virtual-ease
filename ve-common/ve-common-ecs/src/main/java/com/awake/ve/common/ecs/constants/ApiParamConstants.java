@@ -776,4 +776,9 @@ public interface ApiParamConstants {
      */
     String VNC_TICKET = "vncticket";
 
+    /**
+     * proxy
+     */
+    String PROXY = "proxy";
+
 }

@@ -8,6 +8,7 @@ import com.awake.ve.common.core.exception.ServiceException;
 import com.awake.ve.common.core.utils.StringUtils;
 import com.awake.ve.common.ecs.api.network.*;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
+import com.awake.ve.common.ecs.api.spice.PVECreateVmSpiceProxyApiResponse;
 import com.awake.ve.common.ecs.api.vm.config.PVEGetVmConfigApiResponse;
 import com.awake.ve.common.ecs.api.vm.config.PVEPostVmConfigApiRequest;
 import com.awake.ve.common.ecs.api.vm.config.PVEPutVmConfigApiRequest;
@@ -934,6 +935,32 @@ public class EcsConverter {
         response.setPassword(jsonObject.getByPath(PVE_VNC_PROXY_PASSWORD, String.class));
         response.setVncTicket(jsonObject.getByPath(PVE_VNC_PROXY_TICKET, String.class));
         response.setCert(jsonObject.getByPath(PVE_VNC_PROXY_CERT, String.class));
+        return response;
+    }
+
+    /**
+     * 构建PVECreateVmSpiceProxyApiResponse
+     *
+     * @author wangjiaxing
+     * @date 2025/2/27 15:29
+     */
+    public static BaseApiResponse buildPVECreateVmSpiceProxyApiResponse(JSON json) {
+        String data = json.getByPath(PVE_BASE_RESP, String.class);
+        JSONObject jsonObject = JSONUtil.parseObj(data);
+
+        PVECreateVmSpiceProxyApiResponse response = new PVECreateVmSpiceProxyApiResponse();
+        response.setHost(jsonObject.getByPath(PVE_VM_SPICE_HOST, String.class));
+        response.setTitle(jsonObject.getByPath(PVE_VM_SPICE_TITLE, String.class));
+        response.setHostSubject(jsonObject.getByPath(PVE_VM_SPICE_HOST_SUBJECT, String.class));
+        response.setToggleFullScreen(jsonObject.getByPath(PVE_VM_SPICE_TOGGLE_FULL_SCREEN, String.class));
+        response.setCa(jsonObject.getByPath(PVE_VM_SPICE_CA, String.class));
+        response.setPassword(jsonObject.getByPath(PVE_VM_SPICE_PASSWORD, String.class));
+        response.setProxy(jsonObject.getByPath(PVE_VM_SPICE_PROXY, String.class));
+        response.setTlsPort(jsonObject.getByPath(PVE_VM_SPICE_TLS_PORT, Integer.class));
+        response.setType(jsonObject.getByPath(PVE_VM_SPICE_TYPE, String.class));
+        response.setSecureAttention(jsonObject.getByPath(PVE_VM_SPICE_SECURE_ATTENTION, String.class));
+        response.setDeleteThisFile(jsonObject.getByPath(PVE_VM_SPICE_DELETE_THIS_FILE, Integer.class));
+        response.setReleaseCursor(jsonObject.getByPath(PVE_VM_SPICE_RELEASE_CURSOR, String.class));
         return response;
     }
 }

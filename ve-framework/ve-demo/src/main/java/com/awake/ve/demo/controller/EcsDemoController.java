@@ -2,8 +2,6 @@ package com.awake.ve.demo.controller;
 
 import cn.dev33.satoken.annotation.SaIgnore;
 import cn.hutool.core.text.StrFormatter;
-import cn.hutool.json.JSONObject;
-import cn.hutool.json.JSONUtil;
 import com.awake.ve.common.core.domain.R;
 import com.awake.ve.common.ecs.api.network.*;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
@@ -25,12 +23,12 @@ import com.awake.ve.common.ecs.enums.vm.BiosType;
 import com.awake.ve.common.ecs.enums.vm.OSType;
 import com.awake.ve.common.ecs.enums.vm.ScsiHwType;
 import com.awake.ve.common.ecs.enums.vm.VgaType;
+import com.awake.ve.common.ecs.utils.VVFileUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.FileWriter;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -38,7 +36,6 @@ import java.util.List;
 import java.util.Map;
 
 import static com.awake.ve.common.ecs.constants.ApiParamConstants.*;
-import static com.awake.ve.common.ecs.constants.VVFileConstants.*;
 
 
 @Slf4j
@@ -407,48 +404,7 @@ public class EcsDemoController {
                 .vmId(117L)
                 .build();
         BaseApiResponse response = PVEApi.CREATE_VM_SPICE_PROXY.handle(request);
-
-        JSONObject jsonObject = JSONUtil.parseObj(response);
-        StringBuilder vvConfig = new StringBuilder();
-        vvConfig.append(VV_FILE_HEADER);
-        for (String key : jsonObject.keySet()) {
-            Object value = jsonObject.get(key);
-            if (key.contains(CA)) {
-                value = value.toString();
-            }
-            if (key.contains(PROXY)) {
-                value = "http://192.168.1.139:3128";
-            }
-            if (key.contains("hostSubject")) {
-                key = HOST_SUBJECT;
-            }
-            if (key.contains("secureAttention")) {
-                key = SECURE_ATTENTION;
-            }
-            if (key.contains("toggleFullScreen")) {
-                key = TOGGLE_FULLSCREEN;
-            }
-            if (key.contains("tlsPort")) {
-                key = TLS_PORT;
-            }
-            if (key.contains("deleteThisFile")) {
-                key = DELETE_THIS_FILE;
-            }
-            if (key.contains("releaseCursor")) {
-                key = RELEASE_CURSOR;
-            }
-            vvConfig.append(key).append(EQUAL_MARK).append(value).append("\n");
-        }
-
-        String filename = "/home/" + jsonObject.getStr("title") + System.currentTimeMillis() + ".vv";
-
-        String body = vvConfig.toString();
-        System.out.println(body);
-        try (FileWriter fileWriter = new FileWriter(filename)) {
-            fileWriter.write(body);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        VVFileUtils.createVVFile(response);
         return R.ok(response);
     }
 

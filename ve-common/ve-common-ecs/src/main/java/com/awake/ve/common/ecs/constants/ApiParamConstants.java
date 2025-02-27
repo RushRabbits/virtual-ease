@@ -15,6 +15,10 @@ public interface ApiParamConstants {
      */
     String EQUAL_MARK = "=";
     /**
+     * and
+     */
+    String AND = "&";
+    /**
      * 节点
      */
     String NODE = "node";
@@ -766,5 +770,10 @@ public interface ApiParamConstants {
      * websocket
      */
     String WEBSOCKET = "websocket";
+
+    /**
+     * vncticket
+     */
+    String VNC_TICKET = "vncticket";
 
 }

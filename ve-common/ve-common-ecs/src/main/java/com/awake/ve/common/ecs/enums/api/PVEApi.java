@@ -9,6 +9,7 @@ import com.awake.ve.common.ecs.handler.pve.vm.config.PVEPostVmConfigApiHandler;
 import com.awake.ve.common.ecs.handler.pve.vm.config.PVEPutVmConfigApiHandler;
 import com.awake.ve.common.ecs.handler.pve.vm.status.*;
 import com.awake.ve.common.ecs.handler.pve.vnc.PVEVncProxyApiHandler;
+import com.awake.ve.common.ecs.handler.pve.vnc.PVEVncWebsocketApiHandler;
 import lombok.Getter;
 import org.springframework.http.HttpMethod;
 
@@ -285,6 +286,16 @@ public enum PVEApi {
             HttpMethod.POST,
             PVEVncProxyApiHandler.newInstance(),
             "创建TCP VNC代理连接"
+    ),
+    /**
+     * 打开一个用于VNC的WebSocket连接
+     */
+    GET_VNC_WEBSOCKET(
+            "http://{host}:{port}/api2/json/nodes/{node}/qemu/{vmid}/vncwebsocket?",
+            "pvesh get /nodes/{node}/qemu/{vmid}/vncwebsocket",
+            HttpMethod.GET,
+            PVEVncWebsocketApiHandler.newInstance(),
+            "创建websocket VNC代理连接"
     );
 
     private final String api;

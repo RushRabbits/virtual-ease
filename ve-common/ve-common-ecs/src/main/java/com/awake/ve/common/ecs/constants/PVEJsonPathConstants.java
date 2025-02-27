@@ -362,4 +362,9 @@ public interface PVEJsonPathConstants {
      */
     String PVE_VNC_PROXY_CERT = "$.cert";
 
+    /**
+     * pve vnc websocket port
+     */
+    String PVE_WEBSOCKET_PROXY_PORT = "$.port";
+
 }

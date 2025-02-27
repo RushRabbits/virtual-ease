@@ -12,6 +12,8 @@ import com.awake.ve.common.ecs.api.vm.config.PVEPostVmConfigApiRequest;
 import com.awake.ve.common.ecs.api.vm.config.PVEPutVmConfigApiRequest;
 import com.awake.ve.common.ecs.api.vm.status.*;
 import com.awake.ve.common.ecs.api.vnc.PVEVncProxyApiRequest;
+import com.awake.ve.common.ecs.api.vnc.PVEVncProxyApiResponse;
+import com.awake.ve.common.ecs.api.vnc.PVEVncWebsocketApiRequest;
 import com.awake.ve.common.ecs.enums.api.PVEApi;
 import com.awake.ve.common.ecs.enums.api.PVEApiParam;
 import com.awake.ve.common.ecs.enums.cpu.ArchType;
@@ -25,6 +27,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -368,6 +372,26 @@ public class EcsDemoController {
                 .websocket(true)
                 .build();
         BaseApiResponse response = PVEApi.GET_VNC_PROXY.handle(request);
+        return R.ok(response);
+    }
+
+    @GetMapping("/vmVncWebsocket")
+    public R<BaseApiResponse> vmVncWebsocket() {
+        PVEVncProxyApiRequest request = PVEVncProxyApiRequest.builder()
+                .node("pve")
+                .vmId(117L)
+                .generatePassword(true)
+                .websocket(true)
+                .build();
+        PVEVncProxyApiResponse proxy = (PVEVncProxyApiResponse) PVEApi.GET_VNC_PROXY.handle(request);
+
+        PVEVncWebsocketApiRequest websocketApiRequest = PVEVncWebsocketApiRequest.builder()
+                .node("pve")
+                .vmId(117L)
+                .port(proxy.getPort())
+                .vncTicket(URLEncoder.encode(proxy.getVncTicket(), StandardCharsets.UTF_8))
+                .build();
+        BaseApiResponse response = PVEApi.GET_VNC_WEBSOCKET.handle(websocketApiRequest);
         return R.ok(response);
     }
 

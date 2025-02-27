@@ -61,16 +61,20 @@ public class PVENodeCreateNetworkApiHandler implements ApiHandler {
 
         JSONObject jsonObject = EcsConverter.buildJSONObject(request);
         String body = jsonObject.toString();
-        HttpResponse response = HttpRequest.post(url)
+
+        HttpRequest httpRequest = HttpRequest.post(url)
                 .body(body, APPLICATION_JSON)
                 .header(CSRF_PREVENTION_TOKEN, ticket.getCSRFPreventionToken(), false)
                 .header(COOKIE, PVE_AUTH_COOKIE + ticket.getTicket(), false)
-                .setFollowRedirects(true)
-                .execute();
-
-        String string = response.body();
-        log.info("[PVENodeCreateNetworkApiHandler][handle] 请求url:{} , 响应:{}", url, string);
-        JSON json = JSONUtil.parse(string);
-        return new PVENodeCreateNetworkApiResponse(json.getByPath(PVE_BASE_RESP, String.class));
+                .setFollowRedirects(true);
+        try (HttpResponse response = httpRequest.execute()) {
+            String string = response.body();
+            log.info("[PVENodeCreateNetworkApiHandler][handle] 请求url:{} , 响应:{}", url, string);
+            JSON json = JSONUtil.parse(string);
+            return new PVENodeCreateNetworkApiResponse(json.getByPath(PVE_BASE_RESP, String.class));
+        } catch (Exception e) {
+            log.error("[PVENodeCreateNetworkApiHandler][handle] 请求异常", e);
+            throw new RuntimeException(e);
+        }
     }
 }

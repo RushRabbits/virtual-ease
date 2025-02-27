@@ -16,6 +16,7 @@ import com.awake.ve.common.ecs.config.propterties.EcsProperties;
 import com.awake.ve.common.ecs.enums.api.PVEApi;
 import com.awake.ve.common.ecs.handler.ApiHandler;
 import com.awake.ve.common.ecs.utils.EcsUtils;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,6 +31,7 @@ import static com.awake.ve.common.ecs.constants.PVEJsonPathConstants.PVE_BASE_RE
  * @author wangjiaxing
  * @date 2025/2/22 14:51
  */
+@Slf4j
 public class PVECreateTemplateApiHandler implements ApiHandler {
 
     private static final EcsProperties ECS_PROPERTIES = SpringUtils.getBean(EcsProperties.class);
@@ -39,8 +41,7 @@ public class PVECreateTemplateApiHandler implements ApiHandler {
     }
 
     public static PVECreateTemplateApiHandler newInstance() {
-        PVECreateTemplateApiHandler handler = new PVECreateTemplateApiHandler();
-        return handler;
+        return new PVECreateTemplateApiHandler();
     }
 
     @Override
@@ -79,9 +80,12 @@ public class PVECreateTemplateApiHandler implements ApiHandler {
                 .header(COOKIE, PVE_AUTH_COOKIE + ticket.getTicket(), false);
         // 设置重定向
         requests.setFollowRedirects(true);
-        HttpResponse response = requests.execute();
-
-        JSON json = JSONUtil.parse(response.body());
-        return new PVECreateTemplateApiResponse(json.getByPath(PVE_BASE_RESP, String.class));
+        try (HttpResponse response = requests.execute()) {
+            JSON json = JSONUtil.parse(response.body());
+            return new PVECreateTemplateApiResponse(json.getByPath(PVE_BASE_RESP, String.class));
+        } catch (Exception e) {
+            log.error("[PVECreateTemplateApiHandler][handle] 创建模板请求异常", e);
+            throw new RuntimeException(e);
+        }
     }
 }

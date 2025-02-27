@@ -17,6 +17,7 @@ import com.awake.ve.common.ecs.enums.api.PVEApi;
 import com.awake.ve.common.ecs.handler.ApiHandler;
 import com.awake.ve.common.translation.utils.RedisUtils;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -33,6 +34,7 @@ import static com.awake.ve.common.ecs.constants.PVEJsonPathConstants.PVE_TICKET;
  * @date 2025/2/21 19:05
  */
 @Data
+@Slf4j
 public class PVETicketApiHandler implements ApiHandler {
 
     private static final EcsProperties ECS_PROPERTIES = SpringUtils.getBean(EcsProperties.class);
@@ -69,16 +71,20 @@ public class PVETicketApiHandler implements ApiHandler {
         map.put(API_PASSWORD, ECS_PROPERTIES.getApiPassword());
         String url = StrFormatter.format(api, map, true);
 
-        HttpResponse response = HttpRequest.post(url).setFollowRedirects(true).execute();
-
-        String body = response.body();
-
-        JSON json = JSONUtil.parse(body);
-        String ticket = json.getByPath(PVE_TICKET, String.class);
-        String CSRFPreventionToken = json.getByPath(PVE_CSRF_PREVENTION_TOKEN, String.class);
-        PVETicketApiResponse ticketApiResponse = new PVETicketApiResponse(ticket, CSRFPreventionToken);
-        RedisUtils.setCacheObject(CacheConstants.PVE_API_TICKET + CacheNames.PVE_API_TICKET, ticketApiResponse, Duration.ofMinutes(30));
-        return ticketApiResponse;
+        HttpRequest httpRequest = HttpRequest.post(url).setFollowRedirects(true);
+        try (HttpResponse response = httpRequest.execute()) {
+            String body = response.body();
+            log.info("[PVETicketApiHandler][handle] 请求url:{} , 响应:{}", url, body);
+            JSON json = JSONUtil.parse(body);
+            String ticket = json.getByPath(PVE_TICKET, String.class);
+            String CSRFPreventionToken = json.getByPath(PVE_CSRF_PREVENTION_TOKEN, String.class);
+            PVETicketApiResponse ticketApiResponse = new PVETicketApiResponse(ticket, CSRFPreventionToken);
+            RedisUtils.setCacheObject(CacheConstants.PVE_API_TICKET + CacheNames.PVE_API_TICKET, ticketApiResponse, Duration.ofMinutes(30));
+            return ticketApiResponse;
+        } catch (Exception e) {
+            log.error("[PVETicketApiHandler][handle] 创建ticket请求异常", e);
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

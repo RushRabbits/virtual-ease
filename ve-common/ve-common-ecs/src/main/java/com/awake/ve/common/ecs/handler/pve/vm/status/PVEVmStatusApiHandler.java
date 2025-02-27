@@ -1,6 +1,7 @@
 package com.awake.ve.common.ecs.handler.pve.vm.status;
 
 import cn.hutool.core.text.StrFormatter;
+import cn.hutool.http.HttpException;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSON;
@@ -58,15 +59,18 @@ public class PVEVmStatusApiHandler implements ApiHandler {
         params.put(VM_ID, request.getVmId());
         String url = StrFormatter.format(api, params, true);
 
-        HttpResponse response = HttpRequest.get(url)
+        HttpRequest httpRequest = HttpRequest.get(url)
                 .header(CSRF_PREVENTION_TOKEN, ticket.getCSRFPreventionToken(), false)
                 .header(COOKIE, PVE_AUTH_COOKIE + ticket.getTicket(), false)
-                .setFollowRedirects(true)
-                .execute();
-        String string = response.body();
-        log.info("[PVEVmStatusApiHandler][handle] 请求:{} , 响应:{}", url, string);
-        JSON json = JSONUtil.parse(string);
-
-        return EcsConverter.buildPVEVmStatusApiResponse(json);
+                .setFollowRedirects(true);
+        try (HttpResponse response = httpRequest.execute()) {
+            String string = response.body();
+            log.info("[PVEVmStatusApiHandler][handle] 请求:{} , 响应:{}", url, string);
+            JSON json = JSONUtil.parse(string);
+            return EcsConverter.buildPVEVmStatusApiResponse(json);
+        } catch (HttpException e) {
+            log.error("[PVEVmStatusApiHandler][handle] 获取虚拟机状态请求异常", e);
+            throw new RuntimeException(e);
+        }
     }
 }

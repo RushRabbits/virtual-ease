@@ -70,16 +70,19 @@ public class PVEPostVmConfigApiHandler implements ApiHandler {
         JSONObject jsonBody = EcsConverter.buildJSONObject(request);
         String body = jsonBody.toString();
 
-        HttpResponse response = HttpRequest.post(url)
+        HttpRequest httpRequest = HttpRequest.post(url)
                 .body(body)
                 .header(CSRF_PREVENTION_TOKEN, ticket.getCSRFPreventionToken(), false)
                 .header(COOKIE, PVE_AUTH_COOKIE + ticket.getTicket(), false)
-                .setFollowRedirects(true)
-                .execute();
-
-        String string = response.body();
-        log.info("[PVEPostVmConfigApiHandler][handle] 请求url:{} , 响应:{}", url, string);
-        JSON json = JSONUtil.parse(string);
-        return new PVEPostVmConfigApiResponse(json.getByPath(PVE_BASE_RESP, String.class));
+                .setFollowRedirects(true);
+        try (HttpResponse response = httpRequest.execute()) {
+            String string = response.body();
+            log.info("[PVEPostVmConfigApiHandler][handle] 请求url:{} , 响应:{}", url, string);
+            JSON json = JSONUtil.parse(string);
+            return new PVEPostVmConfigApiResponse(json.getByPath(PVE_BASE_RESP, String.class));
+        } catch (Exception e) {
+            log.error("[PVEPostVmConfigApiHandler][handle] 异步修改虚拟机配置请求异常", e);
+            throw new RuntimeException(e);
+        }
     }
 }

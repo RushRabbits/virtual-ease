@@ -62,15 +62,18 @@ public class PVENodeVmListApiHandler implements ApiHandler {
             url = url + QUESTION_MARK + FULL + EQUAL_MARK + request.getFull();
         }
 
-        HttpResponse response = HttpRequest.get(url)
+        HttpRequest httpRequest = HttpRequest.get(url)
                 .header(CSRF_PREVENTION_TOKEN, ticket.getCSRFPreventionToken(), false)
                 .header(COOKIE, PVE_AUTH_COOKIE + ticket.getTicket(), false)
-                .setFollowRedirects(true)
-                .execute();
-        String string = response.body();
-        log.info("[PVENodeVmListApiHandler][handle] 请求url:{} , 响应:{}", url, string);
-        JSON json = JSONUtil.parse(string);
-
-        return EcsConverter.buildPVENodeVmListApiResponse(json);
+                .setFollowRedirects(true);
+        try (HttpResponse response = httpRequest.execute()) {
+            String string = response.body();
+            log.info("[PVENodeVmListApiHandler][handle] 请求url:{} , 响应:{}", url, string);
+            JSON json = JSONUtil.parse(string);
+            return EcsConverter.buildPVENodeVmListApiResponse(json);
+        } catch (Exception e) {
+            log.error("[PVENodeVmListApiHandler][handle] 获取虚拟机列表请求异常", e);
+            throw new RuntimeException(e);
+        }
     }
 }

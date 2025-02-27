@@ -43,7 +43,7 @@ public class PVEShutdownVmApiHandler implements ApiHandler {
 
     @Override
     public BaseApiResponse handle(BaseApiRequest baseApiRequest) {
-        if(!(baseApiRequest instanceof PVEShutdownVmApiRequest request)){
+        if (!(baseApiRequest instanceof PVEShutdownVmApiRequest request)) {
             log.info("[PVEShutdownVmApiHandler][handle] api请求参数异常 期待:{} , 实际:{}", PVEShutdownVmApiRequest.class.getName(), baseApiRequest.getClass().getName());
             throw new RuntimeException("api请求参数类型异常");
         }
@@ -51,7 +51,7 @@ public class PVEShutdownVmApiHandler implements ApiHandler {
         PVETicketApiResponse ticket = EcsUtils.checkTicket();
 
         String api = PVEApi.SHUTDOWN_VM.getApi();
-        Map<String , Object> params = new HashMap<>();
+        Map<String, Object> params = new HashMap<>();
         params.put(HOST, ECS_PROPERTIES.getHost());
         params.put(PORT, ECS_PROPERTIES.getPort());
         params.put(NODE, request.getNode());
@@ -62,20 +62,23 @@ public class PVEShutdownVmApiHandler implements ApiHandler {
         jsonObject.set(VM_ID, request.getVmId());
         jsonObject.set(FORCE_STOP, request.getForceStop()); // 如果不设置强制关闭,那么假如超过timeout还没关闭成功,就会关闭失败
         jsonObject.set(KEEP_ALIVE, request.getKeepAlive());
-        jsonObject.set(SKIP_LOCK , request.getSkipLock());
+        jsonObject.set(SKIP_LOCK, request.getSkipLock());
         jsonObject.set(TIMEOUT, request.getTimeout());
         String body = jsonObject.toString();
 
         String url = StrFormatter.format(api, params, true);
-        HttpResponse response = HttpRequest.post(url)
+        HttpRequest httpRequest = HttpRequest.post(url)
                 .body(body, APPLICATION_JSON)
                 .header(CSRF_PREVENTION_TOKEN, ticket.getCSRFPreventionToken(), false)
                 .header(COOKIE, PVE_AUTH_COOKIE + ticket.getTicket(), false)
-                .setFollowRedirects(true)
-                .execute();
-        EcsUtils.rmLockConf(request.getVmId());
-
-        JSON json = JSONUtil.parse(response.body());
-        return new PVEShutdownVmApiResponse(json.getByPath(PVE_BASE_RESP, String.class));
+                .setFollowRedirects(true);
+        try (HttpResponse response = httpRequest.execute()) {
+            EcsUtils.rmLockConf(request.getVmId());
+            JSON json = JSONUtil.parse(response.body());
+            return new PVEShutdownVmApiResponse(json.getByPath(PVE_BASE_RESP, String.class));
+        } catch (Exception e) {
+            log.error("[PVEShutdownVmApiHandler][handle] 关闭虚拟机请求异常", e);
+            throw new RuntimeException(e);
+        }
     }
 }

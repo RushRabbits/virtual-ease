@@ -73,13 +73,17 @@ public class PVETemplateCreateVmApiHandler implements ApiHandler {
 
         String url = StrFormatter.format(api, params, true);
 
-        HttpResponse response = HttpRequest.post(url)
+        HttpRequest httpRequest = HttpRequest.post(url)
                 .body(body, APPLICATION_JSON)
                 .header(CSRF_PREVENTION_TOKEN, ticket.getCSRFPreventionToken(), false)
                 .header(COOKIE, PVE_AUTH_COOKIE + ticket.getTicket(), false)
-                .setFollowRedirects(true)
-                .execute();
-        JSON json = JSONUtil.parse(response.body());
-        return new PVETemplateCreateVmApiResponse(json.getByPath(PVE_BASE_RESP, String.class));
+                .setFollowRedirects(true);
+        try (HttpResponse response = httpRequest.execute()) {
+            JSON json = JSONUtil.parse(response.body());
+            return new PVETemplateCreateVmApiResponse(json.getByPath(PVE_BASE_RESP, String.class));
+        } catch (Exception e) {
+            log.error("[PVETemplateCreateVmApiHandler][handle] 模板创建虚拟机请求异常", e);
+            throw new RuntimeException(e);
+        }
     }
 }

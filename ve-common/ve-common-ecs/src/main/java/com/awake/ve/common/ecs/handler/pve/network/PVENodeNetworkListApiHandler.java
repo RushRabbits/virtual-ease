@@ -69,15 +69,18 @@ public class PVENodeNetworkListApiHandler implements ApiHandler {
             url += "?type=" + request.getType();
         }
 
-        HttpResponse response = HttpRequest.get(url)
+        HttpRequest httpRequest = HttpRequest.get(url)
                 .header(CSRF_PREVENTION_TOKEN, ticket.getCSRFPreventionToken(), false)
                 .header(COOKIE, PVE_AUTH_COOKIE + ticket.getTicket(), false)
-                .setFollowRedirects(true)
-                .execute();
-
-        String string = response.body();
-        log.info("[PVENodeNetworkListApiHandler][handle] 请求url:{} , 响应:{}", url, string);
-        JSON json = JSONUtil.parse(string);
-        return EcsConverter.buildPVENetworkListApiResponse(json);
+                .setFollowRedirects(true);
+        try (HttpResponse response = httpRequest.execute()) {
+            String string = response.body();
+            log.info("[PVENodeNetworkListApiHandler][handle] 请求url:{} , 响应:{}", url, string);
+            JSON json = JSONUtil.parse(string);
+            return EcsConverter.buildPVENetworkListApiResponse(json);
+        } catch (Exception e) {
+            log.error("[PVENodeNetworkListApiHandler][handle] 获取网络列表请求异常", e);
+            throw new RuntimeException(e);
+        }
     }
 }

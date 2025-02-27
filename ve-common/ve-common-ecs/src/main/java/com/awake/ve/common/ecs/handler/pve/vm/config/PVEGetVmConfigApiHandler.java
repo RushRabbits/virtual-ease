@@ -71,15 +71,19 @@ public class PVEGetVmConfigApiHandler implements ApiHandler {
             url += "?current=1";
         }
 
-        HttpResponse response = HttpRequest.get(url)
+        HttpRequest httpRequest = HttpRequest.get(url)
                 .header(CSRF_PREVENTION_TOKEN, ticket.getCSRFPreventionToken(), false)
                 .header(COOKIE, PVE_AUTH_COOKIE + ticket.getTicket(), false)
-                .setFollowRedirects(true)
-                .execute();
-        String string = response.body();
-        log.info("[PVEGetVmConfigApiHandler][handle] 请求url:{} , 响应:{}", url, string);
-        JSON json = JSONUtil.parse(string);
-        JSON data = json.getByPath(PVE_BASE_RESP, JSON.class);
-        return EcsConverter.buildPVEGetVmConfigApiResponse(data);
+                .setFollowRedirects(true);
+        try (HttpResponse response = httpRequest.execute()) {
+            String string = response.body();
+            log.info("[PVEGetVmConfigApiHandler][handle] 请求url:{} , 响应:{}", url, string);
+            JSON json = JSONUtil.parse(string);
+            JSON data = json.getByPath(PVE_BASE_RESP, JSON.class);
+            return EcsConverter.buildPVEGetVmConfigApiResponse(data);
+        } catch (Exception e) {
+            log.error("[PVEGetVmConfigApiHandler][handle] 获取虚拟机配置请求异常", e);
+            throw new RuntimeException(e);
+        }
     }
 }

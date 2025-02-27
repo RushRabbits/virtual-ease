@@ -65,14 +65,19 @@ public class PVESuspendVmApiHandler implements ApiHandler {
         jsonObject.set(TO_DISK, request.getToDisk());
         String body = jsonObject.toString();
 
-        HttpResponse response = HttpRequest.post(url)
+        HttpRequest httpRequest = HttpRequest.post(url)
                 .body(body, APPLICATION_JSON)
                 .header(CSRF_PREVENTION_TOKEN, ticket.getCSRFPreventionToken(), false)
                 .header(COOKIE, PVE_AUTH_COOKIE + ticket.getTicket(), false)
-                .setFollowRedirects(true)
-                .execute();
-        String string = response.body();
-        JSON json = JSONUtil.parse(string);
-        return new PVESuspendVmApiResponse(json.getByPath(PVE_BASE_RESP, String.class));
+                .setFollowRedirects(true);
+        try (HttpResponse response = httpRequest.execute()) {
+            String string = response.body();
+            log.info("[PVESuspendVmApiHandler][handle] 挂起虚拟机请求响应:{}", string);
+            JSON json = JSONUtil.parse(string);
+            return new PVESuspendVmApiResponse(json.getByPath(PVE_BASE_RESP, String.class));
+        } catch (Exception e) {
+            log.error("[PVESuspendVmApiHandler][handle] 挂起虚拟机请求异常", e);
+            throw new RuntimeException(e);
+        }
     }
 }

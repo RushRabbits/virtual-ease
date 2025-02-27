@@ -63,14 +63,18 @@ public class PVENodeNetworkConfigApiHandler implements ApiHandler {
         params.put(IFACE, request.getIface());
         String url = StrFormatter.format(api, params, true);
 
-        HttpResponse response = HttpRequest.get(url)
+        HttpRequest httpRequest = HttpRequest.get(url)
                 .header(CSRF_PREVENTION_TOKEN, ticket.getCSRFPreventionToken(), false)
                 .header(COOKIE, PVE_AUTH_COOKIE + ticket.getTicket(), false)
-                .setFollowRedirects(true)
-                .execute();
-        String string = response.body();
-        log.info("[PVENodeNetworkConfigApiHandler][handle] 请求url:{} , 响应:{}", url, string);
-        JSON json = JSONUtil.parse(string);
-        return EcsConverter.buildPVEGetNetworkConfigApiResponse(json);
+                .setFollowRedirects(true);
+        try (HttpResponse response = httpRequest.execute()) {
+            String string = response.body();
+            log.info("[PVENodeNetworkConfigApiHandler][handle] 请求url:{} , 响应:{}", url, string);
+            JSON json = JSONUtil.parse(string);
+            return EcsConverter.buildPVEGetNetworkConfigApiResponse(json);
+        } catch (Exception e) {
+            log.error("[PVENodeNetworkConfigApiHandler][handle] 获取网络配置请求异常", e);
+            throw new RuntimeException(e);
+        }
     }
 }

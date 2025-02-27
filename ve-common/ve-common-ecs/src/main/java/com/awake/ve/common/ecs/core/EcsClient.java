@@ -1,6 +1,8 @@
 package com.awake.ve.common.ecs.core;
 
-import java.util.Collection;
+import com.awake.ve.common.ecs.api.request.BaseApiRequest;
+import com.awake.ve.common.ecs.api.response.BaseApiResponse;
+
 
 /**
  * ECS服务的核心Client
@@ -10,82 +12,236 @@ import java.util.Collection;
  */
 public interface EcsClient {
 
-    // TODO 接口返回值设置成布尔类型并不是好的方法,先暂定这么写,到具体写实现时再去更改
+    /**
+     * 虚拟化系统提供方认证
+     *
+     * @return {@link BaseApiResponse}
+     */
+    BaseApiResponse auth();
+
 
     /**
-     * 根据模板创建虚拟机
+     * 创建模板
      *
-     * @param templateId 模板id
-     * @return 虚拟机id
-     * @author wangjiaxing
-     * @date 2024/12/16 10:34
+     * @param request {@link BaseApiRequest}
+     * @return {@link BaseApiResponse}
      */
-    Integer createVirtualMachine(Long templateId);
+    BaseApiResponse createTemplate(BaseApiRequest request);
 
     /**
-     * 根据虚拟机id删除虚拟机
+     * 根据模板克隆虚拟机
      *
-     * @param vmId 虚拟机id
-     * @return 删除结果
-     * @author wangjiaxing
-     * @date 2024/12/16 10:34
+     * @param request {@link BaseApiRequest}
+     * @return {@link BaseApiResponse}
      */
-    Boolean deleteVirtualMachine(Long vmId);
+    BaseApiResponse templateCloneVm(BaseApiRequest request);
+
 
     /**
-     * 启动虚拟机
+     * 创建虚拟机
      *
-     * @param vmId 虚拟机id
-     * @return 是否启动成功
-     * @author wangjiaxing
-     * @date 2024/12/16 10:36
+     * @param request {@link BaseApiRequest}
+     * @return {@link BaseApiResponse}
      */
-    Boolean startVirtualMachine(Long vmId);
+    BaseApiResponse createVm(BaseApiRequest request);
 
     /**
-     * 停止虚拟机
+     * restoreVm
      *
-     * @param vmId 虚拟机id
-     * @return 是否停止成功
-     * @author wangjiaxing
-     * @date 2024/12/16 10:36
+     * @param request {@link BaseApiRequest}
+     * @return {@link BaseApiResponse}
      */
-    Boolean stopVirtualMachine(Long vmId);
+    BaseApiResponse restoreVm(BaseApiRequest request);
+
+    /**
+     * 获取虚拟机配置
+     *
+     * @param request {@link BaseApiRequest}
+     * @return {@link BaseApiResponse}
+     */
+    BaseApiResponse getVmConfig(BaseApiRequest request);
+
+    /**
+     * 异步修改虚拟机配置
+     *
+     * @param request {@link BaseApiRequest}
+     * @return {@link BaseApiResponse}
+     */
+    BaseApiResponse editVmConfigAsync(BaseApiRequest request);
+
+    /**
+     * 同步修改虚拟机配置
+     *
+     * @param request {@link BaseApiRequest}
+     * @return {@link BaseApiResponse}
+     */
+    BaseApiResponse editVmConfigSync(BaseApiRequest request);
+
+    /**
+     * 开启虚拟机
+     *
+     * @param request {@link BaseApiRequest}
+     * @return {@link BaseApiResponse}
+     */
+    BaseApiResponse startVm(BaseApiRequest request);
+
+    /**
+     * 关闭虚拟机(正常关闭-按下关机键)
+     *
+     * @param request {@link BaseApiRequest}
+     * @return {@link BaseApiResponse}
+     */
+    BaseApiResponse shutdownVm(BaseApiRequest request);
+
+    /**
+     * 强制关闭虚拟机(拔掉电源)
+     *
+     * @param request {@link BaseApiRequest}
+     * @return {@link BaseApiResponse}
+     */
+    BaseApiResponse stopVm(BaseApiRequest request);
+
+    /**
+     * 重启虚拟机(正常重启)
+     *
+     * @param request {@link BaseApiRequest}
+     * @return {@link BaseApiResponse}
+     */
+    BaseApiResponse rebootVm(BaseApiRequest request);
+
+    /**
+     * 重置虚拟机(暴力重启)
+     *
+     * @param request {@link BaseApiRequest}
+     * @return {@link BaseApiResponse}
+     */
+    BaseApiResponse resetVm(BaseApiRequest request);
+
+    /**
+     * 销毁虚拟机
+     *
+     * @param request {@link BaseApiRequest}
+     * @return {@link BaseApiResponse}
+     */
+    BaseApiResponse destroyVm(BaseApiRequest request);
+
+    /**
+     * 暂停虚拟机
+     *
+     * @param request {@link BaseApiRequest}
+     * @return {@link BaseApiResponse}
+     */
+    BaseApiResponse suspendVm(BaseApiRequest request);
+
+    /**
+     * 恢复虚拟机
+     *
+     * @param request {@link BaseApiRequest}
+     * @return {@link BaseApiResponse}
+     */
+    BaseApiResponse resumeVm(BaseApiRequest request);
+
+    /**
+     * 恢复虚拟机
+     *
+     * @param request {@link BaseApiRequest}
+     * @return {@link BaseApiResponse}
+     */
+    BaseApiResponse vmStatus(BaseApiRequest request);
+
+    /**
+     * 节点下的虚拟机列表
+     *
+     * @param request {@link BaseApiRequest}
+     * @return {@link BaseApiResponse}
+     */
+    BaseApiResponse vmList(BaseApiRequest request);
+
+    /**
+     * 节点下的模板列表
+     *
+     * @param request {@link BaseApiRequest}
+     * @return {@link BaseApiResponse}
+     */
+    BaseApiResponse templateList(BaseApiRequest request);
+
+    /**
+     * 节点下的网络列表
+     *
+     * @param request {@link BaseApiRequest}
+     * @return {@link BaseApiResponse}
+     */
+    BaseApiResponse networkList(BaseApiRequest request);
 
     /**
      * 创建网络
      *
-     * @return
+     * @param request {@link BaseApiRequest}
+     * @return {@link BaseApiResponse}
      */
-    Boolean createNetwork();
+    BaseApiResponse createNetwork(BaseApiRequest request);
 
     /**
-     * 删除网络
+     * 重载网络(更改网络配置后的应用)
      *
-     * @param
-     * @return
-     * @author wangjiaxing
-     * @date 2024/12/16 10:40
+     * @param request {@link BaseApiRequest}
+     * @return {@link BaseApiResponse}
      */
-    Boolean deleteNetwork();
+    BaseApiResponse reloadNetwork(BaseApiRequest request);
 
     /**
-     * 编辑网络
+     * 回退网络配置(重载网络配置后,回退无效)
      *
-     * @param
-     * @return
-     * @author wangjiaxing
-     * @date 2024/12/16 10:41
+     * @param request {@link BaseApiRequest}
+     * @return {@link BaseApiResponse}
      */
-    Boolean editNetwork();
+    BaseApiResponse revertNetwork(BaseApiRequest request);
 
     /**
-     * 查询网络列表
+     * 获取网络配置
      *
-     * @param
-     * @return
-     * @author wangjiaxing
-     * @date 2024/12/16 10:41
+     * @param request {@link BaseApiRequest}
+     * @return {@link BaseApiResponse}
      */
-    Collection<Void> selectNetwork();
+    BaseApiResponse getNetworkConfig(BaseApiRequest request);
+
+    /**
+     * 修改网络配置
+     *
+     * @param request {@link BaseApiRequest}
+     * @return {@link BaseApiResponse}
+     */
+    BaseApiResponse editNetworkConfig(BaseApiRequest request);
+
+    /**
+     * 删除网络配置
+     *
+     * @param request {@link BaseApiRequest}
+     * @return {@link BaseApiResponse}
+     */
+    BaseApiResponse deleteNetworkConfig(BaseApiRequest request);
+
+    /**
+     * 创建 VNC代理连接
+     *
+     * @param request {@link BaseApiRequest}
+     * @return {@link BaseApiResponse}
+     */
+    BaseApiResponse createVmVncProxy(BaseApiRequest request);
+
+    /**
+     * 获取 VNC websocket
+     *
+     * @param request {@link BaseApiRequest}
+     * @return {@link BaseApiResponse}
+     */
+    BaseApiResponse getVmVncWebsocket(BaseApiRequest request);
+
+    /**
+     * 创建vm的spice代理
+     *
+     * @param request {@link BaseApiRequest}
+     * @return {@link BaseApiResponse}
+     */
+    BaseApiResponse createVmSpiceProxy(BaseApiRequest request);
 }

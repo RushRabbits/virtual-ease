@@ -15,6 +15,7 @@ import com.awake.ve.common.ecs.api.vm.status.*;
 import com.awake.ve.common.ecs.api.vnc.PVEVncProxyApiRequest;
 import com.awake.ve.common.ecs.api.vnc.PVEVncProxyApiResponse;
 import com.awake.ve.common.ecs.api.vnc.PVEVncWebsocketApiRequest;
+import com.awake.ve.common.ecs.core.EcsClient;
 import com.awake.ve.common.ecs.enums.api.PVEApi;
 import com.awake.ve.common.ecs.enums.api.PVEApiParam;
 import com.awake.ve.common.ecs.enums.cpu.ArchType;
@@ -24,6 +25,7 @@ import com.awake.ve.common.ecs.enums.vm.OSType;
 import com.awake.ve.common.ecs.enums.vm.ScsiHwType;
 import com.awake.ve.common.ecs.enums.vm.VgaType;
 import com.awake.ve.common.ecs.utils.VVFileUtils;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,10 +44,14 @@ import static com.awake.ve.common.ecs.constants.ApiParamConstants.*;
 @RestController
 @SaIgnore
 @RequestMapping("/demo/ecs")
+@RequiredArgsConstructor
 public class EcsDemoController {
+
+    private final EcsClient ecsClient;
+
     @GetMapping("/createTicket")
     public R<BaseApiResponse> createTicket() {
-        BaseApiResponse response = PVEApi.TICKET_CREATE.handle();
+        BaseApiResponse response = ecsClient.auth();
         return R.ok(response);
     }
 
@@ -373,7 +379,7 @@ public class EcsDemoController {
                 .generatePassword(true)
                 .websocket(true)
                 .build();
-        BaseApiResponse response = PVEApi.GET_VM_VNC_PROXY.handle(request);
+        BaseApiResponse response = PVEApi.CREATE_VM_VNC_PROXY.handle(request);
         return R.ok(response);
     }
 
@@ -385,7 +391,7 @@ public class EcsDemoController {
                 .generatePassword(true)
                 .websocket(true)
                 .build();
-        PVEVncProxyApiResponse proxy = (PVEVncProxyApiResponse) PVEApi.GET_VM_VNC_PROXY.handle(request);
+        PVEVncProxyApiResponse proxy = (PVEVncProxyApiResponse) PVEApi.CREATE_VM_VNC_PROXY.handle(request);
 
         PVEVncWebsocketApiRequest websocketApiRequest = PVEVncWebsocketApiRequest.builder()
                 .node("pve")

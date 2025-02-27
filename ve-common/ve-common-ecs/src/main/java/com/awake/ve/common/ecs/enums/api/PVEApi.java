@@ -281,7 +281,7 @@ public enum PVEApi {
     /**
      * 创建TCP VNC代理连接
      */
-    GET_VM_VNC_PROXY(
+    CREATE_VM_VNC_PROXY(
             "http://{host}:{port}/api2/json/nodes/{node}/qemu/{vmid}/vncproxy",
             "pvesh create /nodes/{node}/qemu/{vmid}/vncproxy",
             HttpMethod.POST,

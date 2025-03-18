@@ -1,16 +1,19 @@
-package com.awake.ve.common.ecs.domain.vm;
+package com.awake.ve.virtual.domain;
 
+import com.awake.ve.common.ecs.domain.vm.PveVmInfo;
 import com.awake.ve.common.ecs.enums.vm.VmStatus;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import io.github.linpeilie.annotations.AutoMapper;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
+/**
+ * 查询虚拟机列表的vo
+ *
+ * @author wangjiaxing
+ * @date 2025/3/18 11:14
+ */
+@AutoMapper(target = PveVmInfo.class)
 @Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class PveVmInfo {
+public class VeVmListVo {
     /**
      * 一定会返回
      * 虚拟机状态(只有stopped和running)

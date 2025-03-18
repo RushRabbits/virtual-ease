@@ -47,6 +47,11 @@
             <groupId>com.awake</groupId>
             <artifactId>ve-common-idempotent</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-ecs</artifactId>
+        </dependency>
     </dependencies>
 
 

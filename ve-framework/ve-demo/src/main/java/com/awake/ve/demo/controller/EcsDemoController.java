@@ -70,7 +70,7 @@ public class EcsDemoController {
         PVETemplateCreateVmApiRequest request = PVETemplateCreateVmApiRequest.builder()
                 .node("pve")
                 .vmId(115L)
-                .newId(116L)
+                .newId(146L)
                 .build();
         BaseApiResponse response = PVEApi.TEMPLATE_CLONE_VM.handle(request);
         return R.ok(response);
@@ -80,7 +80,7 @@ public class EcsDemoController {
     public R<BaseApiResponse> startVm() {
         PVEStartVmApiRequest request = PVEStartVmApiRequest.builder()
                 .node("pve")
-                .vmId(116L)
+                .vmId(117L)
                 .build();
         BaseApiResponse response = PVEApi.START_VM.handle(request);
         return R.ok(response);
@@ -90,7 +90,7 @@ public class EcsDemoController {
     public R<BaseApiResponse> shutdownVm() {
         PVEShutdownVmApiRequest request = PVEShutdownVmApiRequest.builder()
                 .node("pve")
-                .vmId(116L)
+                .vmId(117L)
                 .skipLock(true)
                 .timeout(10)
                 .forceStop(true) // 如果不设置强制关闭,那么假如超过timeout还没关闭成功,就会关闭失败
@@ -126,7 +126,7 @@ public class EcsDemoController {
     public R<BaseApiResponse> destroyVm() {
         PVEDestroyVmApiRequest request = PVEDestroyVmApiRequest.builder()
                 .node("pve")
-                .vmId(117L)
+                .vmId(136L)
                 .destroyUnreferencedDisks(true)
                 .purge(true)
                 .skipLock(true)
@@ -227,7 +227,7 @@ public class EcsDemoController {
 
         PVECreateOrRestoreVmApiRequest request = PVECreateOrRestoreVmApiRequest.builder()
                 .node("pve")
-                .vmId(126L)
+                .vmId(137L)
                 .ipConfig(ipconfigList)
                 .memory(2048D)
                 .boot(StrFormatter.format(bootParam, bootParamMap, true))
@@ -246,6 +246,7 @@ public class EcsDemoController {
                 .ide(ideList)
                 .bios(BiosType.SEA_BIOS.getType())
                 // .lock("migrate")
+                // .pool("local")
                 .build();
         BaseApiResponse response = PVEApi.CREATE_OR_RESTORE_VM.handle(request);
         return R.ok(response);

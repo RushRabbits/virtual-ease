@@ -28,6 +28,7 @@ import org.springframework.util.CollectionUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static com.awake.ve.common.ecs.constants.ApiParamConstants.*;
 import static com.awake.ve.common.ecs.constants.PVEJsonPathConstants.*;
@@ -158,7 +159,7 @@ public class EcsConverter {
                     .uptime(uptime)
                     .build();
 
-        }).toList();
+        }).collect(Collectors.toList());
         return new PVENodeVmListApiResponse(pveVmInfoList);
     }
 

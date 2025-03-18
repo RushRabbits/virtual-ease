@@ -130,7 +130,6 @@ public class PVECreateOrRestoreVmApiRequest extends PVEBaseApiRequest {
     private String cdrom;
 
     /**
-     * 让我按照之前的详细模板，解析这个cloud-init相关的参数：
      * <p>
      * ## cicustom 参数
      * <p>

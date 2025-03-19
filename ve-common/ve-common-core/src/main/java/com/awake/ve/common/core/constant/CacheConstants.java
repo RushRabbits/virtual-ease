@@ -36,4 +36,9 @@ public interface CacheConstants {
      * PVE api ticket key
      */
     String PVE_API_TICKET = "pve_api:";
+
+    /**
+     * 存在虚拟机或模板的id
+     */
+    String EXIST_VM_TEMPLATE_ID = "exist_vm_template_id:";
 }

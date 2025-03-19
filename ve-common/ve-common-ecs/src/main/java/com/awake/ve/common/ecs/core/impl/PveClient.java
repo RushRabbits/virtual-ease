@@ -1,10 +1,17 @@
 package com.awake.ve.common.ecs.core.impl;
 
+import com.awake.ve.common.core.service.EcsService;
 import com.awake.ve.common.ecs.api.request.BaseApiRequest;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
+import com.awake.ve.common.ecs.api.vm.status.PVENodeVmListApiRequest;
+import com.awake.ve.common.ecs.api.vm.status.PVENodeVmListApiResponse;
 import com.awake.ve.common.ecs.core.EcsClient;
+import com.awake.ve.common.ecs.domain.vm.PveVmInfo;
 import com.awake.ve.common.ecs.enums.api.PVEApi;
 import com.awake.ve.common.ecs.utils.EcsUtils;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * PVE虚拟化服务实现类
@@ -12,7 +19,8 @@ import com.awake.ve.common.ecs.utils.EcsUtils;
  * @author wangjiaxing
  * @date 2024/12/16 10:43
  */
-public class PveClient implements EcsClient {
+@Component
+public class PveClient implements EcsClient, EcsService {
 
     /**
      * 获取ticket
@@ -242,5 +250,19 @@ public class PveClient implements EcsClient {
     @Override
     public BaseApiResponse createVmSpiceProxy(BaseApiRequest request) {
         return PVEApi.CREATE_VM_SPICE_PROXY.handle(request);
+    }
+
+    /**
+     * 获取虚拟机系统所有现存的虚拟机和模板的id集合
+     *
+     * @author wangjiaxing
+     * @date 14:49
+     */
+    @Override
+    public List<Long> existVmAndTemplateIds() {
+        PVENodeVmListApiRequest request = PVENodeVmListApiRequest.builder().node("pve").full(0).build();
+        PVENodeVmListApiResponse response = (PVENodeVmListApiResponse) this.vmList(request);
+        List<PveVmInfo> vmList = response.getVmList();
+        return vmList.stream().map(PveVmInfo::getVmId).toList();
     }
 }

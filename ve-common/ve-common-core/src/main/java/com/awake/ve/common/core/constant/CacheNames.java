@@ -75,4 +75,6 @@ public interface CacheNames {
      */
     String PVE_API_TICKET = "ticket";
 
+    String PVE_EXIST_VM_TEMPLATE = "pve";
+
 }

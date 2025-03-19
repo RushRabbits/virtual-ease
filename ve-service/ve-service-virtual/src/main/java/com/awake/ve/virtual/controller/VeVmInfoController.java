@@ -208,4 +208,17 @@ public class VeVmInfoController extends BaseController {
     public R<Boolean> rebootVm(@PathVariable Long vmId) {
         return R.ok(veVmInfoService.rebootVm(vmId));
     }
+
+    /**
+     * 重启虚拟机(强制重启)
+     *
+     * @param vmId 虚拟机id
+     * @author wangjiaxing
+     * @date 2025/3/19 19:04
+     */
+    @SaCheckPermission("ve:vmInfo:reset")
+    @PostMapping("/reset/{vmId}")
+    public R<Boolean> resetVm(@PathVariable Long vmId) {
+        return R.ok(veVmInfoService.resetVm(vmId));
+    }
 }

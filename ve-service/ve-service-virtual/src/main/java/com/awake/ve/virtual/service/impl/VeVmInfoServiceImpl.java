@@ -328,4 +328,24 @@ public class VeVmInfoServiceImpl implements IVeVmInfoService {
 
         return StringUtils.isNotBlank(response.getData());
     }
+
+    /**
+     * 重启虚拟机(强制重启)
+     *
+     * @param vmId 虚拟机id
+     * @author wangjiaxing
+     * @date 2025/3/19 19:04
+     */
+    @Override
+    public Boolean resetVm(Long vmId) {
+        ApiHandler apiHandler = PVEApi.RESET_VM.getApiHandler();
+
+        // api参数
+        PVEResetVmApiRequest request = PVEResetVmApiRequest.builder().node(ecsProperties.getNode()).vmId(vmId).build();
+
+        // api响应
+        PVEResetVmApiResponse response = (PVEResetVmApiResponse) apiHandler.handle(request);
+
+        return StringUtils.isNotBlank(response.getData());
+    }
 }

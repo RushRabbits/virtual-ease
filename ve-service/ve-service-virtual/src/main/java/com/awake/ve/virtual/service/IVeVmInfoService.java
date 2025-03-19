@@ -7,6 +7,7 @@ import com.awake.ve.virtual.domain.vo.VeVmListVo;
 import com.awake.ve.virtual.domain.bo.VeVmInfoBo;
 import com.awake.ve.virtual.domain.vo.VeVmConfigVo;
 import com.awake.ve.virtual.domain.vo.VeVmInfoVo;
+import com.awake.ve.virtual.domain.vo.VeVmStatusVo;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.Collection;
@@ -105,4 +106,13 @@ public interface IVeVmInfoService {
      * @date 2025/3/19 18:06
      */
     Boolean startVm(Long vmId);
+
+    /**
+     * 获取虚拟机状态
+     *
+     * @param vmId 虚拟机id
+     * @author wangjiaxing
+     * @date 2025/3/19 18:28
+     */
+    VeVmStatusVo vmStatus(Long vmId);
 }

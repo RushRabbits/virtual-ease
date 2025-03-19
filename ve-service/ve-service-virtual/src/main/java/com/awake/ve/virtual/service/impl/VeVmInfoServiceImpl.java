@@ -3,6 +3,7 @@ package com.awake.ve.virtual.service.impl;
 import com.awake.ve.common.core.utils.MapstructUtils;
 import com.awake.ve.common.core.utils.SpringUtils;
 import com.awake.ve.common.core.utils.StringUtils;
+import com.awake.ve.common.ecs.api.response.BaseApiResponse;
 import com.awake.ve.common.ecs.api.vm.config.PVEGetVmConfigApiRequest;
 import com.awake.ve.common.ecs.api.vm.config.PVEGetVmConfigApiResponse;
 import com.awake.ve.common.ecs.api.vm.status.*;
@@ -17,6 +18,7 @@ import com.awake.ve.virtual.domain.vo.VeVmListVo;
 import com.awake.ve.virtual.domain.bo.VeVmInfoBo;
 import com.awake.ve.virtual.domain.vo.VeVmConfigVo;
 import com.awake.ve.virtual.domain.vo.VeVmInfoVo;
+import com.awake.ve.virtual.domain.vo.VeVmStatusVo;
 import com.awake.ve.virtual.mapper.VeVmInfoMapper;
 import com.awake.ve.virtual.service.IVeVmInfoService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -248,5 +250,24 @@ public class VeVmInfoServiceImpl implements IVeVmInfoService {
         PVEStartVmApiResponse response = (PVEStartVmApiResponse) apiHandler.handle(request);
 
         return StringUtils.isNotBlank(response.getData());
+    }
+
+    /**
+     * 获取虚拟机状态
+     *
+     * @param vmId 虚拟机id
+     * @author wangjiaxing
+     * @date 2025/3/19 18:28
+     */
+    @Override
+    public VeVmStatusVo vmStatus(Long vmId) {
+        ApiHandler apiHandler = PVEApi.VM_STATUS.getApiHandler();
+
+        // api参数
+        PVEVmStatusApiRequest request = PVEVmStatusApiRequest.builder().node(ecsProperties.getNode()).vmId(vmId).build();
+
+        // api响应
+        PVEVmStatusApiResponse response = (PVEVmStatusApiResponse) apiHandler.handle(request);
+        return MapstructUtils.convert(response, VeVmStatusVo.class);
     }
 }

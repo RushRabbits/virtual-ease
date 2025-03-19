@@ -16,6 +16,7 @@ import com.awake.ve.virtual.domain.vo.VeVmListVo;
 import com.awake.ve.virtual.domain.bo.VeVmInfoBo;
 import com.awake.ve.virtual.domain.vo.VeVmConfigVo;
 import com.awake.ve.virtual.domain.vo.VeVmInfoVo;
+import com.awake.ve.virtual.domain.vo.VeVmStatusVo;
 import com.awake.ve.virtual.service.IVeVmInfoService;
 import lombok.RequiredArgsConstructor;
 import jakarta.servlet.http.HttpServletResponse;
@@ -154,5 +155,18 @@ public class VeVmInfoController extends BaseController {
     @PostMapping("/startVm/{vmId}")
     public R<Boolean> startVm(@PathVariable Long vmId) {
         return R.ok(veVmInfoService.startVm(vmId));
+    }
+
+    /**
+     * 获取虚拟机状态
+     *
+     * @param vmId 虚拟机id
+     * @author wangjiaxing
+     * @date 2025/3/19 18:28
+     */
+    @SaCheckPermission("ve:vmInfo:status")
+    @GetMapping("/status/{vmId}")
+    public R<VeVmStatusVo> vmStatus(@PathVariable Long vmId) {
+        return R.ok(veVmInfoService.vmStatus(vmId));
     }
 }

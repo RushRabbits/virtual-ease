@@ -133,4 +133,13 @@ public interface IVeVmInfoService {
      * @date 2025/3/19 18:56
      */
     Boolean resumeVm(Long vmId);
+
+    /**
+     * 重启虚拟机(正常的重启)
+     *
+     * @param vmId 虚拟机id
+     * @author wangjiaxing
+     * @date 2025/3/19 19:04
+     */
+    Boolean rebootVm(Long vmId);
 }

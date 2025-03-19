@@ -124,4 +124,13 @@ public interface IVeVmInfoService {
      * @date 2025/3/19 18:48
      */
     Boolean suspendVm(Long vmId);
+
+    /**
+     * 恢复虚拟机
+     *
+     * @param vmId 虚拟机id
+     * @author wangjiaxing
+     * @date 2025/3/19 18:56
+     */
+    Boolean resumeVm(Long vmId);
 }

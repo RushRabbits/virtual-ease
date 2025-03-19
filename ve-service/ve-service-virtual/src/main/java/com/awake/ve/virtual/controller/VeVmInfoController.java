@@ -182,4 +182,17 @@ public class VeVmInfoController extends BaseController {
     public R<Boolean> suspendVm(@PathVariable Long vmId) {
         return R.ok(veVmInfoService.suspendVm(vmId));
     }
+
+    /**
+     * 恢复虚拟机
+     *
+     * @param vmId 虚拟机id
+     * @author wangjiaxing
+     * @date 2025/3/19 18:56
+     */
+    @SaCheckPermission("ve:vmInfo:resume")
+    @PostMapping("/resume/{vmId}")
+    public R<Boolean> resumeVm(@PathVariable Long vmId) {
+        return R.ok(veVmInfoService.resumeVm(vmId));
+    }
 }

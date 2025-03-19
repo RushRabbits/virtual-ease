@@ -3,7 +3,6 @@ package com.awake.ve.virtual.service.impl;
 import com.awake.ve.common.core.utils.MapstructUtils;
 import com.awake.ve.common.core.utils.SpringUtils;
 import com.awake.ve.common.core.utils.StringUtils;
-import com.awake.ve.common.ecs.api.response.BaseApiResponse;
 import com.awake.ve.common.ecs.api.vm.config.PVEGetVmConfigApiRequest;
 import com.awake.ve.common.ecs.api.vm.config.PVEGetVmConfigApiResponse;
 import com.awake.ve.common.ecs.api.vm.status.*;
@@ -269,5 +268,24 @@ public class VeVmInfoServiceImpl implements IVeVmInfoService {
         // api响应
         PVEVmStatusApiResponse response = (PVEVmStatusApiResponse) apiHandler.handle(request);
         return MapstructUtils.convert(response, VeVmStatusVo.class);
+    }
+
+    /**
+     * 挂起虚拟机
+     *
+     * @param vmId 挂起虚拟机
+     * @author wangjiaxing
+     * @date 2025/3/19 18:48
+     */
+    @Override
+    public Boolean suspendVm(Long vmId) {
+        ApiHandler apiHandler = PVEApi.SUSPEND_VM.getApiHandler();
+
+        // api参数
+        PVESuspendVmApiRequest request = PVESuspendVmApiRequest.builder().node(ecsProperties.getNode()).vmId(vmId).skipLock(true).toDisk(true).build();
+
+        // api响应
+        PVESuspendVmApiResponse response = (PVESuspendVmApiResponse) apiHandler.handle(request);
+        return StringUtils.isNotBlank(response.getData());
     }
 }

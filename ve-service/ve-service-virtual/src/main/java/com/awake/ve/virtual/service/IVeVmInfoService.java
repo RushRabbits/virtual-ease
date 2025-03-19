@@ -115,4 +115,13 @@ public interface IVeVmInfoService {
      * @date 2025/3/19 18:28
      */
     VeVmStatusVo vmStatus(Long vmId);
+
+    /**
+     * 挂起虚拟机
+     *
+     * @param vmId 挂起虚拟机
+     * @author wangjiaxing
+     * @date 2025/3/19 18:48
+     */
+    Boolean suspendVm(Long vmId);
 }

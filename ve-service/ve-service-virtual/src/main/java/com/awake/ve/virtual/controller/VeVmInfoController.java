@@ -169,4 +169,17 @@ public class VeVmInfoController extends BaseController {
     public R<VeVmStatusVo> vmStatus(@PathVariable Long vmId) {
         return R.ok(veVmInfoService.vmStatus(vmId));
     }
+
+    /**
+     * 挂起虚拟机
+     *
+     * @param vmId 挂起虚拟机
+     * @author wangjiaxing
+     * @date 2025/3/19 18:48
+     */
+    @SaCheckPermission("ve:vmInfo:suspend")
+    @PostMapping("/suspend/{vmId}")
+    public R<Boolean> suspendVm(@PathVariable Long vmId) {
+        return R.ok(veVmInfoService.suspendVm(vmId));
+    }
 }

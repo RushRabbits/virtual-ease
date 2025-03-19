@@ -130,4 +130,17 @@ public class VeVmInfoController extends BaseController {
     public R<VeVmConfigVo> getVmConfig(@NotNull(message = "虚拟机id不能为空") @PathVariable Long vmId) {
         return R.ok(veVmInfoService.getVmConfig(vmId));
     }
+
+    /**
+     * 销毁指定虚拟机
+     *
+     * @param vmId 虚拟机id
+     * @author wangjiaxing
+     * @date 2025/3/19 17:52
+     */
+    @SaCheckPermission("ve:vmInfo:destroyVm")
+    @DeleteMapping("/destroyVm/{vmId}")
+    public R<Boolean> destroyVm(@PathVariable Long vmId) {
+        return R.ok(veVmInfoService.destroyVm(vmId));
+    }
 }

@@ -5,10 +5,7 @@ import com.awake.ve.common.core.utils.SpringUtils;
 import com.awake.ve.common.core.utils.StringUtils;
 import com.awake.ve.common.ecs.api.vm.config.PVEGetVmConfigApiRequest;
 import com.awake.ve.common.ecs.api.vm.config.PVEGetVmConfigApiResponse;
-import com.awake.ve.common.ecs.api.vm.status.PVECreateOrRestoreVmApiRequest;
-import com.awake.ve.common.ecs.api.vm.status.PVECreateOrRestoreVmApiResponse;
-import com.awake.ve.common.ecs.api.vm.status.PVENodeVmListApiRequest;
-import com.awake.ve.common.ecs.api.vm.status.PVENodeVmListApiResponse;
+import com.awake.ve.common.ecs.api.vm.status.*;
 import com.awake.ve.common.ecs.config.propterties.EcsProperties;
 import com.awake.ve.common.ecs.domain.vm.PveVmInfo;
 import com.awake.ve.common.ecs.enums.api.PVEApi;
@@ -212,5 +209,24 @@ public class VeVmInfoServiceImpl implements IVeVmInfoService {
 
         PVEGetVmConfigApiResponse response = (PVEGetVmConfigApiResponse) apiHandler.handle(request);
         return MapstructUtils.convert(response, VeVmConfigVo.class);
+    }
+
+    /**
+     * 销毁指定虚拟机
+     *
+     * @param vmId 虚拟机id
+     * @author wangjiaxing
+     * @date 2025/3/19 17:52
+     */
+    @Override
+    public Boolean destroyVm(Long vmId) {
+        ApiHandler apiHandler = PVEApi.DESTROY_VM.getApiHandler();
+
+        // api参数
+        PVEDestroyVmApiRequest request = PVEDestroyVmApiRequest.builder().node(ecsProperties.getNode()).vmId(vmId).destroyUnreferencedDisks(true).skipLock(true).purge(true).build();
+
+        // api响应
+        PVEDestroyVmApiResponse response = (PVEDestroyVmApiResponse) apiHandler.handle(request);
+        return StringUtils.isNotBlank(response.getData());
     }
 }

@@ -87,4 +87,13 @@ public interface IVeVmInfoService {
      * @date 2025/3/18 14:08
      */
     VeVmConfigVo getVmConfig(@NotNull(message = "虚拟机id不能为空") Long vmId);
+
+    /**
+     * 销毁指定虚拟机
+     *
+     * @param vmId 虚拟机id
+     * @author wangjiaxing
+     * @date 2025/3/19 17:52
+     */
+    Boolean destroyVm(Long vmId);
 }

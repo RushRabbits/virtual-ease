@@ -96,4 +96,13 @@ public interface IVeVmInfoService {
      * @date 2025/3/19 17:52
      */
     Boolean destroyVm(Long vmId);
+
+    /**
+     * 启动虚拟机
+     *
+     * @param vmId 虚拟机id
+     * @author wangjiaxing
+     * @date 2025/3/19 18:06
+     */
+    Boolean startVm(Long vmId);
 }

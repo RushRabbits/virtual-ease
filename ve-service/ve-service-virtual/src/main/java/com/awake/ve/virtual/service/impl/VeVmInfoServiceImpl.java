@@ -229,4 +229,24 @@ public class VeVmInfoServiceImpl implements IVeVmInfoService {
         PVEDestroyVmApiResponse response = (PVEDestroyVmApiResponse) apiHandler.handle(request);
         return StringUtils.isNotBlank(response.getData());
     }
+
+    /**
+     * 启动虚拟机
+     *
+     * @param vmId 虚拟机id
+     * @author wangjiaxing
+     * @date 2025/3/19 18:06
+     */
+    @Override
+    public Boolean startVm(Long vmId) {
+        ApiHandler apiHandler = PVEApi.START_VM.getApiHandler();
+
+        // api参数
+        PVEStartVmApiRequest request = PVEStartVmApiRequest.builder().node(ecsProperties.getNode()).vmId(vmId).build();
+
+        // api响应
+        PVEStartVmApiResponse response = (PVEStartVmApiResponse) apiHandler.handle(request);
+
+        return StringUtils.isNotBlank(response.getData());
+    }
 }

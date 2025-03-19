@@ -143,4 +143,16 @@ public class VeVmInfoController extends BaseController {
     public R<Boolean> destroyVm(@PathVariable Long vmId) {
         return R.ok(veVmInfoService.destroyVm(vmId));
     }
+
+    /**
+     * 启动虚拟机
+     *
+     * @param vmId 虚拟机id
+     * @author wangjiaxing
+     * @date 2025/3/19 18:06
+     */
+    @PostMapping("/startVm/{vmId}")
+    public R<Boolean> startVm(@PathVariable Long vmId) {
+        return R.ok(veVmInfoService.startVm(vmId));
+    }
 }

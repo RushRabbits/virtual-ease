@@ -47,7 +47,7 @@ public enum PVEApi {
      * 模板克隆虚拟机
      */
     TEMPLATE_CLONE_VM(
-            "/api2/json/nodes/{node}/qemu/{vmid}/clone",
+            "http://{host}:{port}/api2/json/nodes/{node}/qemu/{vmid}/clone",
             "pvesh create /nodes/{node}/qemu/{vmid}/clone",
             HttpMethod.POST,
             PVETemplateCreateVmApiHandler.newInstance(),

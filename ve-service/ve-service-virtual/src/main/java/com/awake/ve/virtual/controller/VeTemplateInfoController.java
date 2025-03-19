@@ -2,15 +2,13 @@ package com.awake.ve.virtual.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.awake.ve.common.core.domain.R;
+import com.awake.ve.virtual.domain.bo.VeCloneVmByTemplateBo;
 import com.awake.ve.virtual.domain.vo.VeTemplateListVo;
 import com.awake.ve.virtual.service.IVeTemplateInfoService;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -45,5 +43,18 @@ public class VeTemplateInfoController {
     @GetMapping("/createTemplate/{vmId}")
     public R<Boolean> createTemplate(@NotNull(message = "虚拟机不能为空") @PathVariable Long vmId) {
         return R.ok(veTemplateInfoService.createTemplate(vmId));
+    }
+
+    /**
+     * 根据模板clone虚拟机
+     *
+     * @param bo {@link VeCloneVmByTemplateBo}
+     * @author wangjiaxing
+     * @date 2025/3/19 15:25
+     */
+    @SaCheckPermission("ve:template:cloneVmByTemplate")
+    @PostMapping("/cloneVmByTemplate")
+    public R<Boolean> cloneVmByTemplate(@Validated VeCloneVmByTemplateBo bo) {
+        return R.ok(veTemplateInfoService.cloneVmByTemplate(bo));
     }
 }

@@ -3,7 +3,7 @@ package com.awake.ve.virtual.service;
 
 import com.awake.ve.common.mybatis.core.page.PageQuery;
 import com.awake.ve.common.mybatis.core.page.TableDataInfo;
-import com.awake.ve.virtual.domain.VeVmListVo;
+import com.awake.ve.virtual.domain.vo.VeVmListVo;
 import com.awake.ve.virtual.domain.bo.VeVmInfoBo;
 import com.awake.ve.virtual.domain.vo.VeVmConfigVo;
 import com.awake.ve.virtual.domain.vo.VeVmInfoVo;

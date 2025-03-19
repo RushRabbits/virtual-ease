@@ -6,6 +6,7 @@ import com.awake.ve.common.core.constant.HttpStatus;
 import com.awake.ve.common.core.exception.ServiceException;
 import com.awake.ve.common.core.service.EcsService;
 import com.awake.ve.common.core.utils.MapstructUtils;
+import com.awake.ve.common.core.utils.SpringUtils;
 import com.awake.ve.common.core.utils.StringUtils;
 import com.awake.ve.common.ecs.api.template.request.PVECreateTemplateApiRequest;
 import com.awake.ve.common.ecs.api.template.request.PVETemplateCreateVmApiRequest;
@@ -13,6 +14,7 @@ import com.awake.ve.common.ecs.api.template.response.PVECreateTemplateApiRespons
 import com.awake.ve.common.ecs.api.template.response.PVETemplateCreateVmApiResponse;
 import com.awake.ve.common.ecs.api.vm.status.PVENodeVmListApiRequest;
 import com.awake.ve.common.ecs.api.vm.status.PVENodeVmListApiResponse;
+import com.awake.ve.common.ecs.config.propterties.EcsProperties;
 import com.awake.ve.common.ecs.domain.vm.PveVmInfo;
 import com.awake.ve.common.ecs.enums.api.PVEApi;
 import com.awake.ve.common.ecs.handler.ApiHandler;
@@ -34,6 +36,8 @@ public class VeTemplateInfoServiceImpl implements IVeTemplateInfoService {
 
     private final EcsService ecsService;
 
+    private final EcsProperties ecsProperties = SpringUtils.getBean(EcsProperties.class);
+
     /**
      * 获取模板列表
      *
@@ -47,7 +51,7 @@ public class VeTemplateInfoServiceImpl implements IVeTemplateInfoService {
 
         // api参数
         PVENodeVmListApiRequest request = new PVENodeVmListApiRequest();
-        request.setNode("pve");
+        request.setNode(ecsProperties.getNode());
         request.setFull(0);
 
         // api结果
@@ -70,7 +74,7 @@ public class VeTemplateInfoServiceImpl implements IVeTemplateInfoService {
         ApiHandler apiHandler = PVEApi.CREATE_TEMPLATE.getApiHandler();
 
         // api参数
-        PVECreateTemplateApiRequest request = PVECreateTemplateApiRequest.builder().node("pve").vmId(vmId).build();
+        PVECreateTemplateApiRequest request = PVECreateTemplateApiRequest.builder().node(ecsProperties.getNode()).vmId(vmId).build();
 
         // api响应
         PVECreateTemplateApiResponse response = (PVECreateTemplateApiResponse) apiHandler.handle(request);
@@ -97,7 +101,7 @@ public class VeTemplateInfoServiceImpl implements IVeTemplateInfoService {
         ApiHandler apiHandler = PVEApi.TEMPLATE_CLONE_VM.getApiHandler();
 
         // api参数
-        PVETemplateCreateVmApiRequest request = PVETemplateCreateVmApiRequest.builder().node("pve").vmId(bo.getTemplateId()).newId(bo.getNewId()).full(bo.getFull()).build();
+        PVETemplateCreateVmApiRequest request = PVETemplateCreateVmApiRequest.builder().node(ecsProperties.getNode()).vmId(bo.getTemplateId()).newId(bo.getNewId()).full(bo.getFull()).build();
 
         // api响应
         PVETemplateCreateVmApiResponse response = (PVETemplateCreateVmApiResponse) apiHandler.handle(request);

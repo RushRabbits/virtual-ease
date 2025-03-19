@@ -1,6 +1,7 @@
 package com.awake.ve.virtual.service.impl;
 
 import com.awake.ve.common.core.utils.MapstructUtils;
+import com.awake.ve.common.core.utils.SpringUtils;
 import com.awake.ve.common.core.utils.StringUtils;
 import com.awake.ve.common.ecs.api.vm.config.PVEGetVmConfigApiRequest;
 import com.awake.ve.common.ecs.api.vm.config.PVEGetVmConfigApiResponse;
@@ -8,6 +9,7 @@ import com.awake.ve.common.ecs.api.vm.status.PVECreateOrRestoreVmApiRequest;
 import com.awake.ve.common.ecs.api.vm.status.PVECreateOrRestoreVmApiResponse;
 import com.awake.ve.common.ecs.api.vm.status.PVENodeVmListApiRequest;
 import com.awake.ve.common.ecs.api.vm.status.PVENodeVmListApiResponse;
+import com.awake.ve.common.ecs.config.propterties.EcsProperties;
 import com.awake.ve.common.ecs.domain.vm.PveVmInfo;
 import com.awake.ve.common.ecs.enums.api.PVEApi;
 import com.awake.ve.common.ecs.handler.ApiHandler;
@@ -39,6 +41,8 @@ import java.util.*;
 public class VeVmInfoServiceImpl implements IVeVmInfoService {
 
     private final VeVmInfoMapper baseMapper;
+
+    private final EcsProperties ecsProperties = SpringUtils.getBean(EcsProperties.class);
 
     /**
      * 查询虚拟机信息
@@ -97,7 +101,7 @@ public class VeVmInfoServiceImpl implements IVeVmInfoService {
     @Override
     public Boolean insertByBo(VeVmInfoBo bo) {
         PVECreateOrRestoreVmApiRequest request = PVECreateOrRestoreVmApiRequest.builder()
-                .node("pve")
+                .node(ecsProperties.getNode())
                 .vmId(bo.getVmId())
                 .name(bo.getName())
                 .memory(Double.parseDouble(bo.getMemory().toString()))
@@ -178,7 +182,7 @@ public class VeVmInfoServiceImpl implements IVeVmInfoService {
 
         // api参数
         PVENodeVmListApiRequest request = new PVENodeVmListApiRequest();
-        request.setNode("pve");
+        request.setNode(ecsProperties.getNode());
         request.setFull(0);
 
         // api结果
@@ -202,8 +206,8 @@ public class VeVmInfoServiceImpl implements IVeVmInfoService {
         ApiHandler apiHandler = PVEApi.GET_VM_CONFIG.getApiHandler();
 
         PVEGetVmConfigApiRequest request = new PVEGetVmConfigApiRequest();
-        request.setNode("pve");
-        request.setVmId(117L);
+        request.setNode(ecsProperties.getNode());
+        request.setVmId(vmId);
         request.setCurrent(true);
 
         PVEGetVmConfigApiResponse response = (PVEGetVmConfigApiResponse) apiHandler.handle(request);

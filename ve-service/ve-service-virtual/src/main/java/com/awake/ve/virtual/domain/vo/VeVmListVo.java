@@ -1,4 +1,4 @@
-package com.awake.ve.virtual.domain;
+package com.awake.ve.virtual.domain.vo;
 
 import com.awake.ve.common.ecs.domain.vm.PveVmInfo;
 import com.awake.ve.common.ecs.enums.vm.VmStatus;

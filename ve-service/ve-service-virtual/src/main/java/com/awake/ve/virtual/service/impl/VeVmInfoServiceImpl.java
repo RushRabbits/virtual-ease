@@ -14,7 +14,7 @@ import com.awake.ve.common.ecs.handler.ApiHandler;
 import com.awake.ve.common.mybatis.core.page.PageQuery;
 import com.awake.ve.common.mybatis.core.page.TableDataInfo;
 import com.awake.ve.virtual.domain.VeVmInfo;
-import com.awake.ve.virtual.domain.VeVmListVo;
+import com.awake.ve.virtual.domain.vo.VeVmListVo;
 import com.awake.ve.virtual.domain.bo.VeVmInfoBo;
 import com.awake.ve.virtual.domain.vo.VeVmConfigVo;
 import com.awake.ve.virtual.domain.vo.VeVmInfoVo;
@@ -184,7 +184,7 @@ public class VeVmInfoServiceImpl implements IVeVmInfoService {
         // api结果
         PVENodeVmListApiResponse response = (PVENodeVmListApiResponse) apiHandler.handle(request);
         List<PveVmInfo> vmList = response.getVmList();
-        vmList.sort(Comparator.comparing(PveVmInfo::getVmId));
+        vmList = vmList.stream().filter(pveVmInfo -> !pveVmInfo.getTemplate()).sorted(Comparator.comparing(PveVmInfo::getVmId)).toList();
 
         return MapstructUtils.convert(vmList, VeVmListVo.class);
     }

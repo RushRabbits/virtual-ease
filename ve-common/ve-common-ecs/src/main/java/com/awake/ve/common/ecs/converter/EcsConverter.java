@@ -135,7 +135,7 @@ public class EcsConverter {
             String runningMachine = jsonObject.getByPath(VM_LIST_RUNNING_MACHINE, String.class);
             String runningQemu = jsonObject.getByPath(VM_LIST_RUNNING_QEMU, String.class);
             String tags = jsonObject.getByPath(VM_LIST_TAGS, String.class);
-            Boolean template = jsonObject.getByPath(VM_LIST_TEMPLATE, Boolean.class);
+            Boolean template = jsonObject.getByPath(VM_LIST_TEMPLATE, Boolean.class) != null && jsonObject.getByPath(VM_LIST_TEMPLATE, Boolean.class);
             Integer uptime = jsonObject.getByPath(VM_LIST_UPTIME, Integer.class);
 
             return PveVmInfo.builder()

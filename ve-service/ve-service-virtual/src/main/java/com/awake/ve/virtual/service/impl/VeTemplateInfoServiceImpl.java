@@ -15,9 +15,8 @@ import com.awake.ve.common.ecs.api.template.response.PVETemplateCreateVmApiRespo
 import com.awake.ve.common.ecs.api.vm.status.PVENodeVmListApiRequest;
 import com.awake.ve.common.ecs.api.vm.status.PVENodeVmListApiResponse;
 import com.awake.ve.common.ecs.config.propterties.EcsProperties;
+import com.awake.ve.common.ecs.core.EcsClient;
 import com.awake.ve.common.ecs.domain.vm.PveVmInfo;
-import com.awake.ve.common.ecs.enums.api.PVEApi;
-import com.awake.ve.common.ecs.handler.ApiHandler;
 import com.awake.ve.common.translation.utils.RedisUtils;
 import com.awake.ve.virtual.domain.bo.VeCloneVmByTemplateBo;
 import com.awake.ve.virtual.domain.vo.VeTemplateListVo;
@@ -36,6 +35,8 @@ public class VeTemplateInfoServiceImpl implements IVeTemplateInfoService {
 
     private final EcsService ecsService;
 
+    private final EcsClient ecsClient;
+
     private final EcsProperties ecsProperties = SpringUtils.getBean(EcsProperties.class);
 
     /**
@@ -46,16 +47,11 @@ public class VeTemplateInfoServiceImpl implements IVeTemplateInfoService {
      */
     @Override
     public List<VeTemplateListVo> templates() {
-
-        ApiHandler apiHandler = PVEApi.NODE_VM_LIST.getApiHandler();
-
         // api参数
-        PVENodeVmListApiRequest request = new PVENodeVmListApiRequest();
-        request.setNode(ecsProperties.getNode());
-        request.setFull(0);
+        PVENodeVmListApiRequest request = PVENodeVmListApiRequest.builder().node(ecsProperties.getNode()).full(0).build();
 
         // api结果
-        PVENodeVmListApiResponse response = (PVENodeVmListApiResponse) apiHandler.handle(request);
+        PVENodeVmListApiResponse response = (PVENodeVmListApiResponse) ecsClient.vmList(request);
         List<PveVmInfo> vmList = response.getVmList();
         vmList = vmList.stream().filter(PveVmInfo::getTemplate).sorted(Comparator.comparing(PveVmInfo::getVmId)).toList();
 
@@ -71,13 +67,11 @@ public class VeTemplateInfoServiceImpl implements IVeTemplateInfoService {
      */
     @Override
     public Boolean createTemplate(Long vmId) {
-        ApiHandler apiHandler = PVEApi.CREATE_TEMPLATE.getApiHandler();
-
         // api参数
         PVECreateTemplateApiRequest request = PVECreateTemplateApiRequest.builder().node(ecsProperties.getNode()).vmId(vmId).build();
 
         // api响应
-        PVECreateTemplateApiResponse response = (PVECreateTemplateApiResponse) apiHandler.handle(request);
+        PVECreateTemplateApiResponse response = (PVECreateTemplateApiResponse) ecsClient.createTemplate(request);
 
         return StringUtils.isNotBlank(response.getData());
     }
@@ -98,13 +92,11 @@ public class VeTemplateInfoServiceImpl implements IVeTemplateInfoService {
             throw new ServiceException("目标虚拟机id已存在", HttpStatus.WARN);
         }
 
-        ApiHandler apiHandler = PVEApi.TEMPLATE_CLONE_VM.getApiHandler();
-
         // api参数
         PVETemplateCreateVmApiRequest request = PVETemplateCreateVmApiRequest.builder().node(ecsProperties.getNode()).vmId(bo.getTemplateId()).newId(bo.getNewId()).full(bo.getFull()).build();
 
         // api响应
-        PVETemplateCreateVmApiResponse response = (PVETemplateCreateVmApiResponse) apiHandler.handle(request);
+        PVETemplateCreateVmApiResponse response = (PVETemplateCreateVmApiResponse) ecsClient.templateCloneVm(request);
 
         // 清除原有id缓存
         RedisUtils.deleteObject(CacheConstants.EXIST_VM_TEMPLATE_ID + CacheNames.PVE_EXIST_VM_TEMPLATE);

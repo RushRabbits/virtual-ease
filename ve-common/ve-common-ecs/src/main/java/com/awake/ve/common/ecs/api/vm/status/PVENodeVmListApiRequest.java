@@ -5,8 +5,6 @@ import lombok.*;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
 public class PVENodeVmListApiRequest extends PVEBaseApiRequest {
 

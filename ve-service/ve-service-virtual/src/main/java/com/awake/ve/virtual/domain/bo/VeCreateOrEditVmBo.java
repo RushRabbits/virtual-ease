@@ -12,7 +12,7 @@ import java.util.List;
  * @date 2025/3/20 9:39
  */
 @Data
-public class VeCreateVmBo {
+public class VeCreateOrEditVmBo {
 
     /**
      * 节点名

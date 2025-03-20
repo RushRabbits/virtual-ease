@@ -7,8 +7,7 @@ import com.awake.ve.common.core.exception.ServiceException;
 import com.awake.ve.common.core.utils.MapstructUtils;
 import com.awake.ve.common.core.utils.SpringUtils;
 import com.awake.ve.common.core.utils.StringUtils;
-import com.awake.ve.common.ecs.api.vm.config.PVEGetVmConfigApiRequest;
-import com.awake.ve.common.ecs.api.vm.config.PVEGetVmConfigApiResponse;
+import com.awake.ve.common.ecs.api.vm.config.*;
 import com.awake.ve.common.ecs.api.vm.status.*;
 import com.awake.ve.common.ecs.config.propterties.EcsProperties;
 import com.awake.ve.common.ecs.domain.vm.PveVmInfo;
@@ -19,7 +18,7 @@ import com.awake.ve.common.mybatis.core.page.PageQuery;
 import com.awake.ve.common.mybatis.core.page.TableDataInfo;
 import com.awake.ve.common.translation.utils.RedisUtils;
 import com.awake.ve.virtual.domain.VeVmInfo;
-import com.awake.ve.virtual.domain.bo.VeCreateVmBo;
+import com.awake.ve.virtual.domain.bo.VeCreateOrEditVmBo;
 import com.awake.ve.virtual.domain.vo.VeVmListVo;
 import com.awake.ve.virtual.domain.bo.VeVmInfoBo;
 import com.awake.ve.virtual.domain.vo.VeVmConfigVo;
@@ -361,12 +360,12 @@ public class VeVmInfoServiceImpl implements IVeVmInfoService {
     /**
      * 创建虚拟机
      *
-     * @param bo {@link VeCreateVmBo}
+     * @param bo {@link VeCreateOrEditVmBo}
      * @author wangjiaxing
      * @date 2025/3/20 9:46
      */
     @Override
-    public Boolean createVm(VeCreateVmBo bo) {
+    public Boolean createVm(VeCreateOrEditVmBo bo) {
         // 校验vmId是否存在
         List<Long> idCache = existsVmIds(bo);
         if (idCache.contains(bo.getVmId())) {
@@ -409,12 +408,106 @@ public class VeVmInfoServiceImpl implements IVeVmInfoService {
         return StringUtils.isNotBlank(response.getData());
     }
 
+    /**
+     * 异步修改虚拟机配置
+     *
+     * @param bo {@link VeCreateOrEditVmBo}
+     * @author wangjiaxing
+     * @date 2025/3/20 11:37
+     */
+    @Override
+    public Boolean editAsync(VeCreateOrEditVmBo bo) {
+        // 校验vmId是否存在
+        List<Long> idCache = existsVmIds(bo);
+        if (idCache.contains(bo.getVmId())) {
+            log.warn("[VeVmInfoServiceImpl][createVm] 目标虚拟机id已存在");
+            throw new ServiceException("目标虚拟机id已存在", HttpStatus.WARN);
+        }
+
+        ApiHandler apiHandler = PVEApi.POST_VM_CONFIG.getApiHandler();
+
+        // api参数
+        PVEPostVmConfigApiRequest request = PVEPostVmConfigApiRequest.builder()
+                .node(ecsProperties.getNode())
+                .vmId(bo.getVmId())
+                .ipConfig(EcsUtils.ipConfig2String(bo.getIpConfig()))
+                .memory(bo.getMemory())
+                .boot(bo.getBoot().getBoot())
+                .ciUser(bo.getCiUser())
+                .ciPassword(bo.getCiPassword())
+                .ciUpgrade(bo.getCiUpgrade())
+                .sockets(bo.getSockets())
+                .cores(bo.getCores())
+                .vga(bo.getVga())
+                .agent(EcsUtils.agent2String(bo.getAgent()))
+                .cpu(bo.getCpu())
+                .osType(bo.getOsType())
+                .scsiHw(bo.getScsiHw())
+                .net(EcsUtils.net2String(bo.getNet()))
+                .scsi(EcsUtils.scsi2String(bo.getScsi()))
+                .ide(EcsUtils.ide2String(bo.getIde()))
+                .bios(bo.getBios())
+                .build();
+
+        // api响应
+        PVEPostVmConfigApiResponse response = (PVEPostVmConfigApiResponse) apiHandler.handle(request);
+
+        return StringUtils.isNotBlank(response.getData());
+    }
+
+    /**
+     * 同步修改虚拟机配置
+     *
+     * @param bo {@link VeCreateOrEditVmBo}
+     * @author wangjiaxing
+     * @date 2025/3/20 11:37
+     */
+    @Override
+    public Boolean editSync(VeCreateOrEditVmBo bo) {
+        // 校验vmId是否存在
+        List<Long> idCache = existsVmIds(bo);
+        if (idCache.contains(bo.getVmId())) {
+            log.warn("[VeVmInfoServiceImpl][createVm] 目标虚拟机id已存在");
+            throw new ServiceException("目标虚拟机id已存在", HttpStatus.WARN);
+        }
+
+        ApiHandler apiHandler = PVEApi.PUT_VM_CONFIG.getApiHandler();
+
+        // api参数
+        PVEPutVmConfigApiRequest request = PVEPutVmConfigApiRequest.builder()
+                .node(ecsProperties.getNode())
+                .vmId(bo.getVmId())
+                .ipConfig(EcsUtils.ipConfig2String(bo.getIpConfig()))
+                .memory(bo.getMemory())
+                .boot(bo.getBoot().getBoot())
+                .ciUser(bo.getCiUser())
+                .ciPassword(bo.getCiPassword())
+                .ciUpgrade(bo.getCiUpgrade())
+                .sockets(bo.getSockets())
+                .cores(bo.getCores())
+                .vga(bo.getVga())
+                .agent(EcsUtils.agent2String(bo.getAgent()))
+                .cpu(bo.getCpu())
+                .osType(bo.getOsType())
+                .scsiHw(bo.getScsiHw())
+                .net(EcsUtils.net2String(bo.getNet()))
+                .scsi(EcsUtils.scsi2String(bo.getScsi()))
+                .ide(EcsUtils.ide2String(bo.getIde()))
+                .bios(bo.getBios())
+                .build();
+
+        // api响应
+        PVEPutVmConfigApiResponse response = (PVEPutVmConfigApiResponse) apiHandler.handle(request);
+
+        return StringUtils.isNotBlank(response.getData());
+    }
+
     private void refreshExistsVmIds(List<Long> idCache) {
         RedisUtils.deleteObject(existVmCacheKey());
         RedisUtils.setCacheList(existVmCacheKey(), idCache);
     }
 
-    private List<Long> existsVmIds(VeCreateVmBo bo) {
+    private List<Long> existsVmIds(VeCreateOrEditVmBo bo) {
         return RedisUtils.getCacheList(existVmCacheKey());
     }
 

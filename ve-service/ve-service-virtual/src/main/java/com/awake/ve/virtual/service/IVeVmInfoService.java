@@ -3,7 +3,7 @@ package com.awake.ve.virtual.service;
 
 import com.awake.ve.common.mybatis.core.page.PageQuery;
 import com.awake.ve.common.mybatis.core.page.TableDataInfo;
-import com.awake.ve.virtual.domain.bo.VeCreateVmBo;
+import com.awake.ve.virtual.domain.bo.VeCreateOrEditVmBo;
 import com.awake.ve.virtual.domain.vo.VeVmListVo;
 import com.awake.ve.virtual.domain.bo.VeVmInfoBo;
 import com.awake.ve.virtual.domain.vo.VeVmConfigVo;
@@ -156,9 +156,27 @@ public interface IVeVmInfoService {
     /**
      * 创建虚拟机
      *
-     * @param bo {@link VeCreateVmBo}
+     * @param bo {@link VeCreateOrEditVmBo}
      * @author wangjiaxing
      * @date 2025/3/20 9:46
      */
-    Boolean createVm(VeCreateVmBo bo);
+    Boolean createVm(VeCreateOrEditVmBo bo);
+
+    /**
+     * 异步修改虚拟机配置
+     *
+     * @param bo {@link VeCreateOrEditVmBo}
+     * @author wangjiaxing
+     * @date 2025/3/20 11:37
+     */
+    Boolean editAsync(VeCreateOrEditVmBo bo);
+
+    /**
+     * 同步修改虚拟机配置
+     *
+     * @param bo {@link VeCreateOrEditVmBo}
+     * @author wangjiaxing
+     * @date 2025/3/20 11:37
+     */
+    Boolean editSync(VeCreateOrEditVmBo bo);
 }

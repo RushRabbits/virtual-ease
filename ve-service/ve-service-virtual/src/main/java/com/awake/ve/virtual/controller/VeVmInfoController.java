@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.awake.ve.common.core.domain.R;
 import com.awake.ve.common.web.core.BaseController;
-import com.awake.ve.virtual.domain.bo.VeCreateVmBo;
+import com.awake.ve.virtual.domain.bo.VeCreateOrEditVmBo;
 import com.awake.ve.virtual.domain.vo.VeVmListVo;
 import com.awake.ve.virtual.domain.vo.VeVmConfigVo;
 import com.awake.ve.virtual.domain.vo.VeVmStatusVo;
@@ -148,13 +148,39 @@ public class VeVmInfoController extends BaseController {
     /**
      * 创建虚拟机
      *
-     * @param bo {@link VeCreateVmBo}
+     * @param bo {@link VeCreateOrEditVmBo}
      * @author wangjiaxing
      * @date 2025/3/20 9:46
      */
     @SaCheckPermission("ve:vmInfo:create")
     @PostMapping("/create")
-    public R<Boolean> createVm(@RequestBody VeCreateVmBo bo) {
+    public R<Boolean> createVm(@RequestBody VeCreateOrEditVmBo bo) {
         return R.ok(veVmInfoService.createVm(bo));
+    }
+
+    /**
+     * 异步修改虚拟机配置
+     *
+     * @param bo {@link VeCreateOrEditVmBo}
+     * @author wangjiaxing
+     * @date 2025/3/20 11:37
+     */
+    @SaCheckPermission("ve:vmInfo:editAsync")
+    @PostMapping("/edit/async")
+    public R<Boolean> editAsync(@RequestBody VeCreateOrEditVmBo bo) {
+        return R.ok(veVmInfoService.editAsync(bo));
+    }
+
+    /**
+     * 同步修改虚拟机配置
+     *
+     * @param bo {@link VeCreateOrEditVmBo}
+     * @author wangjiaxing
+     * @date 2025/3/20 11:37
+     */
+    @SaCheckPermission("ve:vmInfo:editSync")
+    @PutMapping("/edit/sync")
+    public R<Boolean> editSync(@RequestBody VeCreateOrEditVmBo bo) {
+        return R.ok(veVmInfoService.editSync(bo));
     }
 }

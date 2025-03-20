@@ -51,18 +51,15 @@ public class VeNetworkInfoServiceImpl implements IVeNetworkInfoService {
     @Override
     public Boolean create(VeCreateOrEditNetworkBo bo) {
         // api参数
-        // PVENodeCreateNetworkApiRequest request = PVENodeCreateNetworkApiRequest.builder()
-        //         .node(ecsProperties.getNode())
-        //         .type(bo.getType())
-        //         .autoStart(bo.getAutoStart())
-        //         .mtu(bo.getMtu())
-        //         .address(bo.getAddress())
-        //         .address6(bo.getAddress6())
-        //         .bondMode(bo.getBondMode())
-        //         .bondPrimary(bo.getBondPrimary())
-        //         .bondXmitHashPolicy(bo.getBondXmitHashPolicy())
-        //         .
-        return null;
+        PVENodeCreateNetworkApiRequest request = PVENodeCreateNetworkApiRequest.builder()
+                .node(ecsProperties.getNode())
+                .type(bo.getType())
+                .iface(bo.getIface())
+                .build();
+
+        // api响应
+        PVENodeCreateNetworkApiResponse response = (PVENodeCreateNetworkApiResponse) ecsClient.createNetwork(request);
+        return StringUtils.isNotBlank(response.getData());
     }
 
     /**

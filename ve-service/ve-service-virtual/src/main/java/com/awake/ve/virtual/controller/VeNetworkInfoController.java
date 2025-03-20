@@ -42,7 +42,7 @@ public class VeNetworkInfoController {
      */
     @SaCheckPermission("ve:network:create")
     @PostMapping("/create")
-    public R<Boolean> create(@RequestBody VeCreateOrEditNetworkBo bo) {
+    public R<Boolean> create(@Validated @RequestBody VeCreateOrEditNetworkBo bo) {
         return R.ok(veNetworkService.create(bo));
     }
 

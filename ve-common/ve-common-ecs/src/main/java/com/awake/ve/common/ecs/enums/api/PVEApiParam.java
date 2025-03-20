@@ -20,6 +20,7 @@ public enum PVEApiParam {
                     "如果是在pve存在的镜像,则参考 import-from=local:template/ubuntu-server.qcow2"
     ),
     NET(
+            // "model={model},bridge={bridge},firewall={firewall},tag={tag}",
             "model={model},bridge={bridge},firewall={firewall}",
             "pve 创建虚拟机api net[n] 参数项"
     ),

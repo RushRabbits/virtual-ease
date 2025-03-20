@@ -781,4 +781,9 @@ public interface ApiParamConstants {
      */
     String PROXY = "proxy";
 
+    /**
+     * vlan tag
+     */
+    String VLAN_TAG = "tag";
+
 }

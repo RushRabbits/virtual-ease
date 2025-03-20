@@ -135,6 +135,7 @@ public class EcsUtils {
             netParam.put(MODEL, n.getModel());
             netParam.put(BRIDGE, n.getBridge());
             netParam.put(FIREWALL, n.getFirewall());
+            // netParam.put(VLAN_TAG, n.getVlanTag());
             netList.add(StrFormatter.format(param, netParam, true));
             netParam.clear();
         }

@@ -18,4 +18,9 @@ public class Net {
      * 是否开启防火墙
      */
     private Integer firewall;
+
+    /**
+     * vlanTag
+     */
+    private Integer vlanTag;
 }

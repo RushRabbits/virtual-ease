@@ -95,4 +95,17 @@ public class VeNetworkInfoController {
     public R<Boolean> delete(VeDeleteNetworkBo bo) {
         return R.ok(veNetworkService.delete(bo));
     }
+
+    /**
+     * 编辑网络
+     *
+     * @param bo {@link VeCreateOrEditNetworkBo}
+     * @author wangjiaxing
+     * @date 2025/3/20 15:34
+     */
+    @SaCheckPermission("ve:network:edit")
+    @PutMapping("/edit")
+    public R<Boolean> edit(@Validated @RequestBody VeCreateOrEditNetworkBo bo){
+        return R.ok(veNetworkService.edit(bo));
+    }
 }

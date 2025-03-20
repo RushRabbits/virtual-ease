@@ -59,4 +59,13 @@ public interface IVeNetworkInfoService {
      * @date 2025/3/20 15:34
      */
     Boolean delete(VeDeleteNetworkBo bo);
+
+    /**
+     * 编辑网络
+     *
+     * @param bo {@link VeCreateOrEditNetworkBo}
+     * @author wangjiaxing
+     * @date 2025/3/20 15:34
+     */
+    Boolean edit(VeCreateOrEditNetworkBo bo);
 }

@@ -19,6 +19,7 @@ import com.awake.ve.common.mybatis.core.page.TableDataInfo;
 import com.awake.ve.common.translation.utils.RedisUtils;
 import com.awake.ve.virtual.domain.VeVmInfo;
 import com.awake.ve.virtual.domain.bo.VeCreateOrEditVmBo;
+import com.awake.ve.virtual.domain.bo.VeShutdownOrStopVmBo;
 import com.awake.ve.virtual.domain.vo.VeVmListVo;
 import com.awake.ve.virtual.domain.bo.VeVmInfoBo;
 import com.awake.ve.virtual.domain.vo.VeVmConfigVo;
@@ -499,6 +500,55 @@ public class VeVmInfoServiceImpl implements IVeVmInfoService {
         // api响应
         PVEPutVmConfigApiResponse response = (PVEPutVmConfigApiResponse) apiHandler.handle(request);
 
+        return StringUtils.isNotBlank(response.getData());
+    }
+
+    /**
+     * 关闭虚拟机(正常关闭)
+     *
+     * @param bo {@link VeShutdownOrStopVmBo}
+     * @author wangjiaxing
+     * @date 2025/3/20 12:08
+     */
+    @Override
+    public Boolean shutdown(VeShutdownOrStopVmBo bo) {
+        ApiHandler apiHandler = PVEApi.SHUTDOWN_VM.getApiHandler();
+
+        // api参数
+        PVEShutdownVmApiRequest request = PVEShutdownVmApiRequest.builder()
+                .node(ecsProperties.getNode())
+                .vmId(bo.getVmId())
+                .skipLock(bo.getSkipLock())
+                .timeout(bo.getTimeout())
+                .forceStop(bo.getForceStop())
+                .build();
+
+        // api响应
+        PVEShutdownVmApiResponse response = (PVEShutdownVmApiResponse) apiHandler.handle(request);
+        return StringUtils.isNotBlank(response.getData());
+    }
+
+    /**
+     * 关闭虚拟机(强制关闭)
+     *
+     * @param bo {@link VeShutdownOrStopVmBo}
+     * @author wangjiaxing
+     * @date 2025/3/20 12:08
+     */
+    @Override
+    public Boolean stop(VeShutdownOrStopVmBo bo) {
+        ApiHandler apiHandler = PVEApi.STOP_VM.getApiHandler();
+
+        // api参数
+        PVEStopVmApiRequest request = PVEStopVmApiRequest.builder()
+                .node(ecsProperties.getNode())
+                .vmId(bo.getVmId())
+                .skipLock(bo.getSkipLock())
+                .timeout(bo.getTimeout())
+                .build();
+
+        // api响应
+        PVEStopVmApiResponse response = (PVEStopVmApiResponse) apiHandler.handle(request);
         return StringUtils.isNotBlank(response.getData());
     }
 

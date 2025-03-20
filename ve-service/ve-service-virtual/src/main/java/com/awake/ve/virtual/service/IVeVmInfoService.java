@@ -4,6 +4,7 @@ package com.awake.ve.virtual.service;
 import com.awake.ve.common.mybatis.core.page.PageQuery;
 import com.awake.ve.common.mybatis.core.page.TableDataInfo;
 import com.awake.ve.virtual.domain.bo.VeCreateOrEditVmBo;
+import com.awake.ve.virtual.domain.bo.VeShutdownOrStopVmBo;
 import com.awake.ve.virtual.domain.vo.VeVmListVo;
 import com.awake.ve.virtual.domain.bo.VeVmInfoBo;
 import com.awake.ve.virtual.domain.vo.VeVmConfigVo;
@@ -179,4 +180,22 @@ public interface IVeVmInfoService {
      * @date 2025/3/20 11:37
      */
     Boolean editSync(VeCreateOrEditVmBo bo);
+
+    /**
+     * 关闭虚拟机(正常关闭)
+     *
+     * @param bo {@link VeShutdownOrStopVmBo}
+     * @author wangjiaxing
+     * @date 2025/3/20 12:08
+     */
+    Boolean shutdown(VeShutdownOrStopVmBo bo);
+
+    /**
+     * 关闭虚拟机(强制关闭)
+     *
+     * @param bo {@link VeShutdownOrStopVmBo}
+     * @author wangjiaxing
+     * @date 2025/3/20 12:08
+     */
+    Boolean stop(VeShutdownOrStopVmBo bo);
 }

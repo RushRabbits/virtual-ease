@@ -5,6 +5,7 @@ import java.util.List;
 import com.awake.ve.common.core.domain.R;
 import com.awake.ve.common.web.core.BaseController;
 import com.awake.ve.virtual.domain.bo.VeCreateOrEditVmBo;
+import com.awake.ve.virtual.domain.bo.VeShutdownOrStopVmBo;
 import com.awake.ve.virtual.domain.vo.VeVmListVo;
 import com.awake.ve.virtual.domain.vo.VeVmConfigVo;
 import com.awake.ve.virtual.domain.vo.VeVmStatusVo;
@@ -182,5 +183,31 @@ public class VeVmInfoController extends BaseController {
     @PutMapping("/edit/sync")
     public R<Boolean> editSync(@RequestBody VeCreateOrEditVmBo bo) {
         return R.ok(veVmInfoService.editSync(bo));
+    }
+
+    /**
+     * 关闭虚拟机(正常关闭)
+     *
+     * @param bo {@link VeShutdownOrStopVmBo}
+     * @author wangjiaxing
+     * @date 2025/3/20 12:08
+     */
+    @SaCheckPermission("ve:vmInfo:shutdown")
+    @PostMapping("/shutdown")
+    public R<Boolean> shutdown(@RequestBody VeShutdownOrStopVmBo bo) {
+        return R.ok(veVmInfoService.shutdown(bo));
+    }
+
+    /**
+     * 关闭虚拟机(强制关闭)
+     *
+     * @param bo {@link VeShutdownOrStopVmBo}
+     * @author wangjiaxing
+     * @date 2025/3/20 12:08
+     */
+    @SaCheckPermission("ve:vmInfo:stop")
+    @PostMapping("/stop")
+    public R<Boolean> stop(@RequestBody VeShutdownOrStopVmBo bo) {
+        return R.ok(veVmInfoService.stop(bo));
     }
 }

@@ -41,4 +41,12 @@ public interface IVeNetworkInfoService {
      * @date 2025/3/20 15:20
      */
     Boolean reloadConfig();
+
+    /**
+     * 恢复节点下的网络配置至上一个版本
+     *
+     * @author wangjiaxing
+     * @date 2025/3/20 15:27
+     */
+    Boolean revertConfig();
 }

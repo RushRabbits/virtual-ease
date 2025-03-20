@@ -69,4 +69,16 @@ public class VeNetworkInfoController {
     public R<Boolean> reloadConfig() {
         return R.ok(veNetworkService.reloadConfig());
     }
+
+    /**
+     * 恢复节点下的网络配置至上一个版本
+     *
+     * @author wangjiaxing
+     * @date 2025/3/20 15:27
+     */
+    @SaCheckPermission("ve:network:revertConfig")
+    @DeleteMapping("/revertConfig")
+    public R<Boolean> revertConfig() {
+        return R.ok(veNetworkService.revertConfig());
+    }
 }

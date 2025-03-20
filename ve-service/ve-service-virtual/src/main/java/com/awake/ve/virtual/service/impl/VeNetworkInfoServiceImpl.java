@@ -101,4 +101,22 @@ public class VeNetworkInfoServiceImpl implements IVeNetworkInfoService {
         PVENodeReloadNetworkConfigApiResponse response = (PVENodeReloadNetworkConfigApiResponse) ecsClient.reloadNetwork(request);
         return StringUtils.isNotBlank(response.getData());
     }
+
+    /**
+     * 恢复节点下的网络配置至上一个版本
+     *
+     * @author wangjiaxing
+     * @date 2025/3/20 15:27
+     */
+    @Override
+    public Boolean revertConfig() {
+        // api参数
+        PVENodeRevertNetworkConfigApiRequest request = PVENodeRevertNetworkConfigApiRequest.builder()
+                .node(ecsProperties.getNode())
+                .build();
+
+        // api响应
+        PVENodeRevertNetworkConfigApiResponse response = (PVENodeRevertNetworkConfigApiResponse) ecsClient.revertNetwork(request);
+        return StringUtils.isNotBlank(response.getData());
+    }
 }

@@ -2,6 +2,7 @@ package com.awake.ve.virtual.service;
 
 import com.awake.ve.common.ecs.domain.network.Network;
 import com.awake.ve.virtual.domain.bo.VeCreateOrEditNetworkBo;
+import com.awake.ve.virtual.domain.bo.VeDeleteNetworkBo;
 import com.awake.ve.virtual.domain.bo.VeGetNetworkConfigBo;
 
 import java.util.List;
@@ -49,4 +50,13 @@ public interface IVeNetworkInfoService {
      * @date 2025/3/20 15:27
      */
     Boolean revertConfig();
+
+    /**
+     * 删除网络
+     *
+     * @param bo {@link VeDeleteNetworkBo}
+     * @author wangjiaxing
+     * @date 2025/3/20 15:34
+     */
+    Boolean delete(VeDeleteNetworkBo bo);
 }

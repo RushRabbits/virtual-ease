@@ -4,6 +4,7 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.awake.ve.common.core.domain.R;
 import com.awake.ve.common.ecs.domain.network.Network;
 import com.awake.ve.virtual.domain.bo.VeCreateOrEditNetworkBo;
+import com.awake.ve.virtual.domain.bo.VeDeleteNetworkBo;
 import com.awake.ve.virtual.domain.bo.VeGetNetworkConfigBo;
 import com.awake.ve.virtual.service.IVeNetworkInfoService;
 import lombok.RequiredArgsConstructor;
@@ -80,5 +81,18 @@ public class VeNetworkInfoController {
     @DeleteMapping("/revertConfig")
     public R<Boolean> revertConfig() {
         return R.ok(veNetworkService.revertConfig());
+    }
+
+    /**
+     * 删除网络
+     *
+     * @param bo {@link VeDeleteNetworkBo}
+     * @author wangjiaxing
+     * @date 2025/3/20 15:34
+     */
+    @SaCheckPermission("ve:network:delete")
+    @DeleteMapping("/delete")
+    public R<Boolean> delete(VeDeleteNetworkBo bo) {
+        return R.ok(veNetworkService.delete(bo));
     }
 }

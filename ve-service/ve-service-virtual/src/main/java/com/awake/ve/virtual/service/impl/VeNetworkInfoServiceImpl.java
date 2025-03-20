@@ -7,6 +7,7 @@ import com.awake.ve.common.ecs.config.propterties.EcsProperties;
 import com.awake.ve.common.ecs.core.EcsClient;
 import com.awake.ve.common.ecs.domain.network.Network;
 import com.awake.ve.virtual.domain.bo.VeCreateOrEditNetworkBo;
+import com.awake.ve.virtual.domain.bo.VeDeleteNetworkBo;
 import com.awake.ve.virtual.domain.bo.VeGetNetworkConfigBo;
 import com.awake.ve.virtual.service.IVeNetworkInfoService;
 import lombok.RequiredArgsConstructor;
@@ -117,6 +118,26 @@ public class VeNetworkInfoServiceImpl implements IVeNetworkInfoService {
 
         // api响应
         PVENodeRevertNetworkConfigApiResponse response = (PVENodeRevertNetworkConfigApiResponse) ecsClient.revertNetwork(request);
+        return StringUtils.isNotBlank(response.getData());
+    }
+
+    /**
+     * 删除网络
+     *
+     * @param bo {@link VeDeleteNetworkBo}
+     * @author wangjiaxing
+     * @date 2025/3/20 15:34
+     */
+    @Override
+    public Boolean delete(VeDeleteNetworkBo bo) {
+        // api参数
+        PVENodeDeleteNetworkApiRequest request = PVENodeDeleteNetworkApiRequest.builder()
+                .node(ecsProperties.getNode())
+                .iface(bo.getIface())
+                .build();
+
+        // api响应
+        PVENodeDeleteNetworkApiResponse response = (PVENodeDeleteNetworkApiResponse) ecsClient.deleteNetworkConfig(request);
         return StringUtils.isNotBlank(response.getData());
     }
 }

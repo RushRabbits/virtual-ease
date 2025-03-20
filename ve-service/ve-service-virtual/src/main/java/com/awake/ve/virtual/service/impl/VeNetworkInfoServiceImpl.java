@@ -1,6 +1,7 @@
 package com.awake.ve.virtual.service.impl;
 
 import com.awake.ve.common.core.utils.SpringUtils;
+import com.awake.ve.common.core.utils.StringUtils;
 import com.awake.ve.common.ecs.api.network.*;
 import com.awake.ve.common.ecs.config.propterties.EcsProperties;
 import com.awake.ve.common.ecs.core.EcsClient;
@@ -81,5 +82,23 @@ public class VeNetworkInfoServiceImpl implements IVeNetworkInfoService {
 
         // api响应
         return response.getNetwork();
+    }
+
+    /**
+     * 重新加载节点下的网络配置
+     *
+     * @author wangjiaxing
+     * @date 2025/3/20 15:20
+     */
+    @Override
+    public Boolean reloadConfig() {
+        // api参数
+        PVENodeReloadNetworkConfigApiRequest request = PVENodeReloadNetworkConfigApiRequest.builder()
+                .node(ecsProperties.getNode())
+                .build();
+
+        // api响应
+        PVENodeReloadNetworkConfigApiResponse response = (PVENodeReloadNetworkConfigApiResponse) ecsClient.reloadNetwork(request);
+        return StringUtils.isNotBlank(response.getData());
     }
 }

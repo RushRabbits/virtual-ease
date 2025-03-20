@@ -33,4 +33,12 @@ public interface IVeNetworkInfoService {
      * @date 2025/3/20 15:00
      */
     Network getConfig(VeGetNetworkConfigBo bo);
+
+    /**
+     * 重新加载节点下的网络配置
+     *
+     * @author wangjiaxing
+     * @date 2025/3/20 15:20
+     */
+    Boolean reloadConfig();
 }

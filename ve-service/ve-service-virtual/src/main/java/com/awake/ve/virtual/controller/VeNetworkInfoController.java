@@ -57,4 +57,16 @@ public class VeNetworkInfoController {
     public R<Network> getConfig(VeGetNetworkConfigBo bo) {
         return R.ok(veNetworkService.getConfig(bo));
     }
+
+    /**
+     * 重新加载节点下的网络配置
+     *
+     * @author wangjiaxing
+     * @date 2025/3/20 15:20
+     */
+    @SaCheckPermission("ve:network:reloadConfig")
+    @GetMapping("/reloadConfig")
+    public R<Boolean> reloadConfig() {
+        return R.ok(veNetworkService.reloadConfig());
+    }
 }

@@ -92,7 +92,7 @@ public class VeTemplateInfoServiceImpl implements IVeTemplateInfoService {
     @Override
     public Boolean cloneVmByTemplate(VeCloneVmByTemplateBo bo) {
         // 判断目标vmId是否存在
-        List<Object> existIds = RedisUtils.getCacheList(CacheConstants.EXIST_VM_TEMPLATE_ID + CacheNames.PVE_EXIST_VM_TEMPLATE);
+        List<Long> existIds = RedisUtils.getCacheList(CacheConstants.EXIST_VM_TEMPLATE_ID + CacheNames.PVE_EXIST_VM_TEMPLATE);
         if (existIds.contains(bo.getNewId())) {
             log.warn("[VeTemplateInfoServiceImpl][cloneVmByTemplate] 目标虚拟机id已存在");
             throw new ServiceException("目标虚拟机id已存在", HttpStatus.WARN);

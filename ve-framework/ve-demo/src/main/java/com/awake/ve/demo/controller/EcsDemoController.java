@@ -199,6 +199,7 @@ public class EcsDemoController {
         String scsiParam = PVEApiParam.SCSI.getParam();
         Map<String, Object> scsiParamMap = new HashMap<>();
         scsiParamMap.put(IMAGE_PATH, "/opt/images/ubuntu-22.04.qcow2");
+        scsiParamMap.put(FORMAT, "qcow2");
         List<String> scsiList = List.of(StrFormatter.format(scsiParam, scsiParamMap, true));
 
         String netParam = PVEApiParam.NET.getParam();

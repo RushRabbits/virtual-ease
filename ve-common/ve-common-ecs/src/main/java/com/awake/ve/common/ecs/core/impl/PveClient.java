@@ -1,10 +1,12 @@
 package com.awake.ve.common.ecs.core.impl;
 
 import com.awake.ve.common.core.service.EcsService;
+import com.awake.ve.common.core.utils.SpringUtils;
 import com.awake.ve.common.ecs.api.request.BaseApiRequest;
 import com.awake.ve.common.ecs.api.response.BaseApiResponse;
 import com.awake.ve.common.ecs.api.vm.status.PVENodeVmListApiRequest;
 import com.awake.ve.common.ecs.api.vm.status.PVENodeVmListApiResponse;
+import com.awake.ve.common.ecs.config.propterties.EcsProperties;
 import com.awake.ve.common.ecs.core.EcsClient;
 import com.awake.ve.common.ecs.domain.vm.PveVmInfo;
 import com.awake.ve.common.ecs.enums.api.PVEApi;
@@ -21,6 +23,8 @@ import java.util.List;
  */
 @Component
 public class PveClient implements EcsClient, EcsService {
+
+    private final EcsProperties ecsProperties = SpringUtils.getBean(EcsProperties.class);
 
     /**
      * 获取ticket
@@ -260,9 +264,9 @@ public class PveClient implements EcsClient, EcsService {
      */
     @Override
     public List<Long> existVmAndTemplateIds() {
-        PVENodeVmListApiRequest request = PVENodeVmListApiRequest.builder().node("pve").full(0).build();
+        PVENodeVmListApiRequest request = PVENodeVmListApiRequest.builder().node(ecsProperties.getNode()).full(0).build();
         PVENodeVmListApiResponse response = (PVENodeVmListApiResponse) this.vmList(request);
         List<PveVmInfo> vmList = response.getVmList();
-        return vmList.stream().map(PveVmInfo::getVmId).toList();
+        return vmList.stream().map(PveVmInfo::getVmId).distinct().toList();
     }
 }

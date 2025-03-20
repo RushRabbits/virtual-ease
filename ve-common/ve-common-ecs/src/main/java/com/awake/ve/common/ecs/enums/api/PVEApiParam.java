@@ -14,7 +14,7 @@ public enum PVEApiParam {
             "ip={ip},ip6={ip6}",
             "pve 创建虚拟机api ipconfig[n] 参数项"),
     SCSI(
-            "local:0,import-from={imagePath},format=qcow2",
+            "local:0,import-from={imagePath},format={format}",
             "pve 创建虚拟机api scsi[n] 参数项," +
                     "如果为自己上传到宿主机的镜像,则写绝对路径," +
                     "如果是在pve存在的镜像,则参考 import-from=local:template/ubuntu-server.qcow2"

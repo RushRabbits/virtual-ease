@@ -3,6 +3,7 @@ package com.awake.ve.virtual.service;
 
 import com.awake.ve.common.mybatis.core.page.PageQuery;
 import com.awake.ve.common.mybatis.core.page.TableDataInfo;
+import com.awake.ve.virtual.domain.bo.VeCreateVmBo;
 import com.awake.ve.virtual.domain.vo.VeVmListVo;
 import com.awake.ve.virtual.domain.bo.VeVmInfoBo;
 import com.awake.ve.virtual.domain.vo.VeVmConfigVo;
@@ -151,4 +152,13 @@ public interface IVeVmInfoService {
      * @date 2025/3/19 19:04
      */
     Boolean resetVm(Long vmId);
+
+    /**
+     * 创建虚拟机
+     *
+     * @param bo {@link VeCreateVmBo}
+     * @author wangjiaxing
+     * @date 2025/3/20 9:46
+     */
+    Boolean createVm(VeCreateVmBo bo);
 }

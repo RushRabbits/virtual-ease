@@ -1,5 +1,9 @@
 package com.awake.ve.virtual.service.impl;
 
+import com.awake.ve.common.core.constant.CacheConstants;
+import com.awake.ve.common.core.constant.CacheNames;
+import com.awake.ve.common.core.constant.HttpStatus;
+import com.awake.ve.common.core.exception.ServiceException;
 import com.awake.ve.common.core.utils.MapstructUtils;
 import com.awake.ve.common.core.utils.SpringUtils;
 import com.awake.ve.common.core.utils.StringUtils;
@@ -10,9 +14,12 @@ import com.awake.ve.common.ecs.config.propterties.EcsProperties;
 import com.awake.ve.common.ecs.domain.vm.PveVmInfo;
 import com.awake.ve.common.ecs.enums.api.PVEApi;
 import com.awake.ve.common.ecs.handler.ApiHandler;
+import com.awake.ve.common.ecs.utils.EcsUtils;
 import com.awake.ve.common.mybatis.core.page.PageQuery;
 import com.awake.ve.common.mybatis.core.page.TableDataInfo;
+import com.awake.ve.common.translation.utils.RedisUtils;
 import com.awake.ve.virtual.domain.VeVmInfo;
+import com.awake.ve.virtual.domain.bo.VeCreateVmBo;
 import com.awake.ve.virtual.domain.vo.VeVmListVo;
 import com.awake.ve.virtual.domain.bo.VeVmInfoBo;
 import com.awake.ve.virtual.domain.vo.VeVmConfigVo;
@@ -24,6 +31,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -36,6 +44,7 @@ import java.util.*;
  */
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class VeVmInfoServiceImpl implements IVeVmInfoService {
 
     private final VeVmInfoMapper baseMapper;
@@ -347,5 +356,69 @@ public class VeVmInfoServiceImpl implements IVeVmInfoService {
         PVEResetVmApiResponse response = (PVEResetVmApiResponse) apiHandler.handle(request);
 
         return StringUtils.isNotBlank(response.getData());
+    }
+
+    /**
+     * 创建虚拟机
+     *
+     * @param bo {@link VeCreateVmBo}
+     * @author wangjiaxing
+     * @date 2025/3/20 9:46
+     */
+    @Override
+    public Boolean createVm(VeCreateVmBo bo) {
+        // 校验vmId是否存在
+        List<Long> idCache = existsVmIds(bo);
+        if (idCache.contains(bo.getVmId())) {
+            log.warn("[VeVmInfoServiceImpl][createVm] 目标虚拟机id已存在");
+            throw new ServiceException("目标虚拟机id已存在", HttpStatus.WARN);
+        }
+
+        ApiHandler apiHandler = PVEApi.CREATE_OR_RESTORE_VM.getApiHandler();
+
+        // api参数
+        PVECreateOrRestoreVmApiRequest request = PVECreateOrRestoreVmApiRequest.builder()
+                .node(ecsProperties.getNode())
+                .vmId(bo.getVmId())
+                .ipConfig(EcsUtils.ipConfig2String(bo.getIpConfig()))
+                .memory(bo.getMemory())
+                .boot(bo.getBoot().getBoot())
+                .ciUser(bo.getCiUser())
+                .ciPassword(bo.getCiPassword())
+                .ciUpgrade(bo.getCiUpgrade())
+                .sockets(bo.getSockets())
+                .cores(bo.getCores())
+                .vga(bo.getVga())
+                .agent(EcsUtils.agent2String(bo.getAgent()))
+                .cpu(bo.getCpu())
+                .osType(bo.getOsType())
+                .scsiHw(bo.getScsiHw())
+                .net(EcsUtils.net2String(bo.getNet()))
+                .scsi(EcsUtils.scsi2String(bo.getScsi()))
+                .ide(EcsUtils.ide2String(bo.getIde()))
+                .bios(bo.getBios())
+                .build();
+
+        // api响应
+        PVECreateOrRestoreVmApiResponse response = (PVECreateOrRestoreVmApiResponse) apiHandler.handle(request);
+
+        // 添加新的虚拟机id
+        idCache.add(bo.getVmId());
+        refreshExistsVmIds(idCache);
+
+        return StringUtils.isNotBlank(response.getData());
+    }
+
+    private void refreshExistsVmIds(List<Long> idCache) {
+        RedisUtils.deleteObject(existVmCacheKey());
+        RedisUtils.setCacheList(existVmCacheKey(), idCache);
+    }
+
+    private List<Long> existsVmIds(VeCreateVmBo bo) {
+        return RedisUtils.getCacheList(existVmCacheKey());
+    }
+
+    private String existVmCacheKey() {
+        return CacheConstants.EXIST_VM_TEMPLATE_ID + CacheNames.PVE_EXIST_VM_TEMPLATE;
     }
 }

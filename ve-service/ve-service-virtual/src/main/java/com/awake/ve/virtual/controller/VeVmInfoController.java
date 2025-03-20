@@ -3,23 +3,13 @@ package com.awake.ve.virtual.controller;
 import java.util.List;
 
 import com.awake.ve.common.core.domain.R;
-import com.awake.ve.common.core.validate.AddGroup;
-import com.awake.ve.common.core.validate.EditGroup;
-import com.awake.ve.common.excel.utils.ExcelUtil;
-import com.awake.ve.common.idempotent.annotation.RepeatSubmit;
-import com.awake.ve.common.log.annotation.Log;
-import com.awake.ve.common.log.enums.BusinessType;
-import com.awake.ve.common.mybatis.core.page.PageQuery;
-import com.awake.ve.common.mybatis.core.page.TableDataInfo;
 import com.awake.ve.common.web.core.BaseController;
+import com.awake.ve.virtual.domain.bo.VeCreateVmBo;
 import com.awake.ve.virtual.domain.vo.VeVmListVo;
-import com.awake.ve.virtual.domain.bo.VeVmInfoBo;
 import com.awake.ve.virtual.domain.vo.VeVmConfigVo;
-import com.awake.ve.virtual.domain.vo.VeVmInfoVo;
 import com.awake.ve.virtual.domain.vo.VeVmStatusVo;
 import com.awake.ve.virtual.service.IVeVmInfoService;
 import lombok.RequiredArgsConstructor;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.constraints.*;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import org.springframework.web.bind.annotation.*;
@@ -38,73 +28,6 @@ import org.springframework.validation.annotation.Validated;
 public class VeVmInfoController extends BaseController {
 
     private final IVeVmInfoService veVmInfoService;
-
-    /**
-     * 查询虚拟机信息列表
-     */
-    @SaCheckPermission("virtual:vmInfo:list")
-    @GetMapping("/list")
-    public TableDataInfo<VeVmInfoVo> list(VeVmInfoBo bo, PageQuery pageQuery) {
-        return veVmInfoService.queryPageList(bo, pageQuery);
-    }
-
-    /**
-     * 导出虚拟机信息列表
-     */
-    @SaCheckPermission("virtual:vmInfo:export")
-    @Log(title = "虚拟机信息", businessType = BusinessType.EXPORT)
-    @PostMapping("/export")
-    public void export(VeVmInfoBo bo, HttpServletResponse response) {
-        List<VeVmInfoVo> list = veVmInfoService.queryList(bo);
-        ExcelUtil.exportExcel(list, "虚拟机信息", VeVmInfoVo.class, response);
-    }
-
-    /**
-     * 获取虚拟机信息详细信息
-     *
-     * @param vmId 主键
-     */
-    @SaCheckPermission("virtual:vmInfo:query")
-    @GetMapping("/{vmId}")
-    public R<VeVmInfoVo> getInfo(@NotNull(message = "主键不能为空")
-                                 @PathVariable Long vmId) {
-        return R.ok(veVmInfoService.queryById(vmId));
-    }
-
-    /**
-     * 新增虚拟机信息
-     */
-    @SaCheckPermission("virtual:vmInfo:add")
-    @Log(title = "虚拟机信息", businessType = BusinessType.INSERT)
-    @RepeatSubmit()
-    @PostMapping()
-    public R<Void> add(@Validated(AddGroup.class) @RequestBody VeVmInfoBo bo) {
-        return toAjax(veVmInfoService.insertByBo(bo));
-    }
-
-    /**
-     * 修改虚拟机信息
-     */
-    @SaCheckPermission("virtual:vmInfo:edit")
-    @Log(title = "虚拟机信息", businessType = BusinessType.UPDATE)
-    @RepeatSubmit()
-    @PutMapping()
-    public R<Void> edit(@Validated(EditGroup.class) @RequestBody VeVmInfoBo bo) {
-        return toAjax(veVmInfoService.updateByBo(bo));
-    }
-
-    /**
-     * 删除虚拟机信息
-     *
-     * @param vmIds 主键串
-     */
-    @SaCheckPermission("virtual:vmInfo:remove")
-    @Log(title = "虚拟机信息", businessType = BusinessType.DELETE)
-    @DeleteMapping("/{vmIds}")
-    public R<Void> remove(@NotEmpty(message = "主键不能为空")
-                          @PathVariable Long[] vmIds) {
-        return toAjax(veVmInfoService.deleteWithValidByIds(List.of(vmIds), true));
-    }
 
     /**
      * 查询指定节点下的虚拟机列表
@@ -220,5 +143,18 @@ public class VeVmInfoController extends BaseController {
     @PostMapping("/reset/{vmId}")
     public R<Boolean> resetVm(@PathVariable Long vmId) {
         return R.ok(veVmInfoService.resetVm(vmId));
+    }
+
+    /**
+     * 创建虚拟机
+     *
+     * @param bo {@link VeCreateVmBo}
+     * @author wangjiaxing
+     * @date 2025/3/20 9:46
+     */
+    @SaCheckPermission("ve:vmInfo:create")
+    @PostMapping("/create")
+    public R<Boolean> createVm(@RequestBody VeCreateVmBo bo) {
+        return R.ok(veVmInfoService.createVm(bo));
     }
 }

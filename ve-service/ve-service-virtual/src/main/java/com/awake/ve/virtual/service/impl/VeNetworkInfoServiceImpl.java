@@ -1,11 +1,12 @@
 package com.awake.ve.virtual.service.impl;
 
 import com.awake.ve.common.core.utils.SpringUtils;
-import com.awake.ve.common.ecs.api.network.PVENodeNetWorkListApiRequest;
-import com.awake.ve.common.ecs.api.network.PVENodeNetworkListApiResponse;
+import com.awake.ve.common.ecs.api.network.*;
 import com.awake.ve.common.ecs.config.propterties.EcsProperties;
 import com.awake.ve.common.ecs.core.EcsClient;
 import com.awake.ve.common.ecs.domain.network.Network;
+import com.awake.ve.virtual.domain.bo.VeCreateOrEditNetworkBo;
+import com.awake.ve.virtual.domain.bo.VeGetNetworkConfigBo;
 import com.awake.ve.virtual.service.IVeNetworkInfoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,5 +37,49 @@ public class VeNetworkInfoServiceImpl implements IVeNetworkInfoService {
         // api响应
         PVENodeNetworkListApiResponse response = (PVENodeNetworkListApiResponse) ecsClient.networkList(request);
         return response.getNetworks();
+    }
+
+    /**
+     * 创建网络
+     *
+     * @param bo {@link VeCreateOrEditNetworkBo}
+     * @author wangjiaxing
+     * @date 2025/3/20 14:43
+     */
+    @Override
+    public Boolean create(VeCreateOrEditNetworkBo bo) {
+        // api参数
+        // PVENodeCreateNetworkApiRequest request = PVENodeCreateNetworkApiRequest.builder()
+        //         .node(ecsProperties.getNode())
+        //         .type(bo.getType())
+        //         .autoStart(bo.getAutoStart())
+        //         .mtu(bo.getMtu())
+        //         .address(bo.getAddress())
+        //         .address6(bo.getAddress6())
+        //         .bondMode(bo.getBondMode())
+        //         .bondPrimary(bo.getBondPrimary())
+        //         .bondXmitHashPolicy(bo.getBondXmitHashPolicy())
+        //         .
+        return null;
+    }
+
+    /**
+     * 获取网络配置
+     *
+     * @param bo {@link VeCreateOrEditNetworkBo}
+     * @author wangjiaxing
+     * @date 2025/3/20 15:00
+     */
+    @Override
+    public Network getConfig(VeGetNetworkConfigBo bo) {
+        // api参数
+        PVENodeGetNetworkConfigApiRequest request = PVENodeGetNetworkConfigApiRequest.builder()
+                .node(ecsProperties.getNode())
+                .iface(bo.getIface())
+                .build();
+        PVENodeGetNetworkConfigApiResponse response = (PVENodeGetNetworkConfigApiResponse) ecsClient.getNetworkConfig(request);
+
+        // api响应
+        return response.getNetwork();
     }
 }

@@ -1,0 +1,43 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.awake</groupId>
+        <artifactId>virtual-ease</artifactId>
+        <version>${revision}</version>
+    </parent>
+    <artifactId>ve-common</artifactId>
+
+    <description>virtual-ease common模块</description>
+
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>ve-common-core</module>
+        <module>ve-common-ecs</module>
+        <module>ve-common-json</module>
+        <module>ve-common-bom</module>
+        <module>ve-common-doc</module>
+        <module>ve-common-web</module>
+        <module>ve-common-redis</module>
+        <module>ve-common-satoken</module>
+        <module>ve-common-translation</module>
+        <module>ve-common-log</module>
+        <module>ve-common-mybatis</module>
+        <module>ve-common-oss</module>
+        <module>ve-common-excel</module>
+        <module>ve-common-idempotent</module>
+        <module>ve-common-tenant</module>
+        <module>ve-common-rateLimiter</module>
+        <module>ve-common-sensitive</module>
+        <module>ve-common-security</module>
+        <module>ve-common-sse</module>
+        <module>ve-common-websocket</module>
+        <module>ve-common-encrypt</module>
+        <module>ve-common-mail</module>
+        <module>ve-common-sms</module>
+        <module>ve-common-social</module>
+        <module>ve-common-ssh</module>
+    </modules>
+
+</project>

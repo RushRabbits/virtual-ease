@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.awake</groupId>
+        <artifactId>ve-framework</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <artifactId>ve-demo</artifactId>
+    <description>demo演示模块</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-rateLimiter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-satoken</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-ssh</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.awake</groupId>
+            <artifactId>ve-common-ecs</artifactId>
+        </dependency>
+    </dependencies>
+</project>

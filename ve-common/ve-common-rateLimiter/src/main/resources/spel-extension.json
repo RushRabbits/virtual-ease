@@ -1,0 +1,7 @@
+{
+  "com.awake.ve.common.rateLimiter.annotation.RateLimiter@key": {
+    "method": {
+      "parameters": true
+    }
+  }
+}

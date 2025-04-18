@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  pull_request:
+    paths-ignore:
+      - "docs/**"
+      - "**.md"
+      - ".*"
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ve-admin:
+    uses: ./.github/workflows/test.yml
+    with:
+      module: ve-admin
+
+  ve-common:
+    uses: ./.github/workflows/test.yml
+    with:
+      module: ve-common
+
+  ve-framework:
+    uses: ./.github/workflows/test.yml
+    with:
+      module: ve-framework
+
+  ve-service:
+    uses: ./.github/workflows/test.yml
+    with:
+      module: ve-service

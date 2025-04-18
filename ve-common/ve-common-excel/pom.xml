@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.awake</groupId>
         <artifactId>ve-common</artifactId>
-        <version>0.0.1</version>
+        <version>${revision}</version>
     </parent>
 
     <name>ve-common-excel</name>
